@@ -1,0 +1,78 @@
+﻿@page
+@model RezerwacjaSal.Pages.Messages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<h3>Wyślij wiadomość do administratora systemu</h3>
+<h5>Jeśli masz jakiś problem albo tak sobie chcesz pogadać.</h5>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span class="text-danger">@Model.EmailNotFoundError</span>
+            <div class="form-group">
+                <input type="checkbox" id="Cheker" onclick="Checked()" /> <label>Osoba z systemu</label>
+            </div>
+            <script>
+                function Checked() {
+                    var checker = document.getElementById("Cheker").checked;
+                    var pearsonNumber = document.getElementById('PearsonNumber');
+                    var pearsonName = document.getElementById('PearsonName');
+                    var pearsonEmail = document.getElementById('PearsonEmail');
+                    if (checker) {
+                        pearsonNumber.style.display = 'block';
+                        pearsonName.style.display = 'none';
+                        pearsonEmail.style.display = 'none';
+                    } else {
+                        pearsonNumber.style.display = 'none';
+                        pearsonName.style.display = 'block';
+                        pearsonEmail.style.display = 'block';
+                    }
+                }
+            </script>
+            <div class="form-group" id="PearsonNumber" style="display:none">
+                <label asp-for="Message.PearsonID" class="control-label">Numer osoby:</label>
+                <input asp-for="@Model.PearsonNumber" class="form-control" />
+                <span class="text-danger">@Model.PearsonNotFoundError</span>
+            </div>
+            <div class="form-group" id="PearsonName" style="display:block">
+                <label asp-for="Message.PearsonName" class="control-label">Imię: <text style="color:lightgray">(opcjonalne)</text></label>
+                <input asp-for="Message.PearsonName" class="form-control" />
+                <span asp-validation-for="Message.PearsonName" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="PearsonEmail">
+                <label asp-for="Message.Email" class="control-label">Email: <text style="color:lightgray">(opcjonalne)</text></label><br>
+                Na ten email zostanie wysłana wiadomość zwrotna:
+                <input asp-for="Message.Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Message.MessageSubject" class="control-label">Temat wiadomości:</label>
+                <input asp-for="Message.MessageSubject" class="form-control" />
+                <span asp-validation-for="Message.MessageSubject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message.MessageContent" class="control-label">Treść:</label>
+                <textarea asp-for="Message.MessageContent" class="form-control" rows="20"></textarea>
+                <span asp-validation-for="Message.MessageContent" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none">
+                <input asp-for="Message.IP" value="@HttpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString()" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Wyślij" class="btn btn-default btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<h4 style="color:forestgreen">@Model.EmailSendStatus</h4>
+<h4 style="color:red">@Model.EmailSendError</h4>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

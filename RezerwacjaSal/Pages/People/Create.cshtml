@@ -1,0 +1,126 @@
+﻿@page 
+@model RezerwacjaSal.Pages.People.CreateModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<body onload="automaticID()">
+    <h3>Dodaj nową osobę: </h3>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="SetAutoPearsonNumber" type="checkbox" id="IDchecker" onclick="automaticID()" checked="@Model.SetAutoPearsonNumber" />
+                    <span asp-validation-for="SetAutoPearsonNumber" class="text-danger"></span>
+                    <label class="form-check-label">Automatyczne ID: @Model.AutoPearsonNumber</label>
+                </div>
+                <div id="IDinput" style="display:none">
+                    <div class="form-group">
+                        <label asp-for="ManualPearsonNumber" class="control-label">ID:</label>
+                        <input asp-for="ManualPearsonNumber" class="form-control" />
+                        <span class="text-danger">@Model.DuplicatePearsonNumberExistError</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Pearson.FirstName" class="control-label">Imię:</label>
+                    <input asp-for="Pearson.FirstName" class="form-control" />
+                    <span asp-validation-for="Pearson.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Pearson.LastName" class="control-label">Nazwisko:</label>
+                    <input asp-for="Pearson.LastName" class="form-control" />
+                    <span asp-validation-for="Pearson.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Pearson.Email" class="control-label">Email:</label>
+                    <input asp-for="Pearson.Email" class="form-control" />
+                    <span asp-validation-for="Pearson.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Pearson.Phone" class="control-label">Telefon:</label>
+                    <input asp-for="Pearson.Phone" class="form-control" />
+                    <span asp-validation-for="Pearson.Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Pearson.Note" class="control-label">Dodatkowe informacje:</label>
+                    <textarea asp-for="Pearson.Note" class="form-control"  rows="5"></textarea>
+                    <span asp-validation-for="Pearson.Note" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Pearson.Employee" type="checkbox" id="employeeChecker" onclick="employeeChecked()" onload="employeeChecked()" />
+                    <span asp-validation-for="Pearson.Employee" class="text-danger"></span>
+                    <label class="form-check-label">Pracownik uczelni</label>
+                </div>
+                <script>
+                    function employeeChecked() {
+                        var checker = document.getElementById("employeeChecker").checked;
+                        var employment = document.getElementById('employment');
+                        if (checker) {
+                            employment.style.display = 'block';
+                        } else {
+                            employment.style.display = 'none';
+                        }
+                    }
+                    function doubleEmployeeChecked() {
+                        var checker = document.getElementById("doubleEmployeeChecker").checked;
+                        var employment = document.getElementById('secondEmployment');
+                        if (checker) {
+                            employment.style.display = 'block';
+                        } else {
+                            employment.style.display = 'none';
+                        }
+                    }
+                    function automaticID() {
+                        var checker = document.getElementById("IDchecker").checked;
+                        var id = document.getElementById('IDinput');
+                        if (checker) {
+                            id.style.display = 'none';
+
+                        } else {
+                            id.style.display = 'block';
+                        }
+                    }
+                </script>
+
+                <div id="employment" style="display:none">
+
+                    <div class="form-group">
+                        <label asp-for="Employment.Department" class="control-label">Wydział:</label>
+                        <select asp-for="Employment.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Employment.Position" class="control-label">Zatrudniony jako:</label>
+                        <input asp-for="Employment.Position" class="form-control" />
+                        <span asp-validation-for="Employment.Position" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="SecondEmploymentChecked" type="checkbox" id="doubleEmployeeChecker" onclick="doubleEmployeeChecked()" />
+                        <label class="form-check-label">Drugi etat</label>
+                    </div>
+                </div>
+                <div id="secondEmployment" style="display:none">
+                    <div class="form-group">
+                        <label asp-for="SecondEmployment.Department" class="control-label">Wydział:</label>
+                        <select asp-for="SecondEmployment.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SecondEmployment.Position" class="control-label">Zatrudniony jako:</label>
+                        <input asp-for="SecondEmployment.Position" class="form-control" />
+                        <span asp-validation-for="SecondEmployment.Position" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-default" asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
+                    <input type="submit" value="Zapisz" class="btn btn-default btn-primary"  />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

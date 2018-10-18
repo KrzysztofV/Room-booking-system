@@ -1,0 +1,82 @@
+﻿@page
+
+@model RezerwacjaSal.Pages.Reservations.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<p></p>
+<div class="btn-group">
+    <a class="btn btn-default" asp-page="/Departments/Index" asp-route-departmentid="@Model.DepartmentIdRoute">Wydziały</a>
+    <a class="btn btn-default" asp-page="/Buildings/Index" asp-route-departmentid="@Model.DepartmentIdRoute">Budynki</a>
+    <a class="btn btn-default" asp-page="./Index" asp-route-date="@Model.Date.ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Rezerwacje</a>
+
+</div>
+
+<h3>Czy jesteś pewien, że chcesz usunąć tą rezerwację?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            ID rezerwacji:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Reservation.ReservationID)
+        </dd>
+        <dt>
+            Data:
+        </dt>
+        <dd>
+            @Model.Reservation.Date.ToLongDateString()
+        </dd>
+        <dt>
+            Czas rozpoczęcia:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Reservation.StartTime.TimeOfDay)
+        </dd>
+        <dt>
+            Czas zakończenia:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Reservation.EndTime.TimeOfDay)
+        </dd>
+        <dt>
+            Osoba rezerwująca:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Reservation.Pearson.FirstName)
+            @Html.DisplayFor(model => model.Reservation.Pearson.LastName)
+        </dd>
+        <dt>
+            Numer pokoju:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Reservation.Room.Number)
+        </dd>
+        <dt>
+            Budynek:
+        </dt>
+        <dd>
+            @Model.Reservation.Room.Building.Name
+        </dd>
+        <dt>
+            Wydział:
+        </dt>
+        <dd>
+            @Model.Reservation.Room.Building.Department.Name
+        </dd>
+        <dt>
+            Notatka:
+        </dt>
+        <dd>
+            @Model.Reservation.Note
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Reservation.ReservationID" />
+        <a asp-page="./Details" class="btn btn-default" asp-route-reservationid="@Model.ReservationIdRoute" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" asp-route-date="@Model.Date.ToShortDateString()">Wróć</a>
+        <input type="submit" value="Deletnij" class="btn btn-default btn-danger"  />
+    </form>
+</div>

@@ -1,0 +1,93 @@
+﻿
+@page
+
+@model RezerwacjaSal.Pages.People.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>Szczegóły</h3>
+
+<div>
+    <h4>Dane tajnych współpracowników</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Numer:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pearson.PearsonNumber)
+        </dd>
+        <dt>
+            Imię:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pearson.FirstName)
+        </dd>
+        <dt>
+            Nazwisko:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pearson.LastName)
+        </dd>
+        <dt>
+            Pracownik:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pearson.Employee)
+        </dd>
+        <dt>
+            Email:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pearson.Email)
+        </dd>
+        <dt>
+            Telefun:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pearson.Phone)
+        </dd>
+        <dt>
+            Dodatkowe informacje:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pearson.Note)
+        </dd>
+        @if (Model.Pearson.Employee)
+        {
+            <dt>
+                Zatrudnienie:
+            </dt>
+            <dd>
+                <table class="table">
+                    <tr>
+                        <th>Pracuje w katedrze:</th>
+                        <th>Jako:</th>
+                    </tr>
+                    @*dla każdego zatrudnienia*@
+                    @foreach (var item in Model.Pearson.Employments)
+                    {
+                        <tr>
+                            <td>
+                                @*podaje nazwę katedry w której pracuje pracownik*@
+                                @Html.DisplayFor(modelItem => item.Department.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    <a class="btn btn-default" asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
+    <a class="btn btn-default btn-primary" asp-page="./Edit" asp-route-id="@Model.Pearson.PearsonID" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Edytuj</a> 
+</div>
+
+
+

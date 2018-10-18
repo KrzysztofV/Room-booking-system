@@ -1,0 +1,103 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<p></p>
+
+<h3>System rezerawcji sal</h3>
+<hr />
+<div class="row">
+    <div class="col-md-9">
+        <h4>
+            „Wiesz co robi ten kot? 
+            On odpowiada żywotnym potrzebom całego społeczeństwa. <br />
+            To jest kot na skalę naszych możliwości. 
+            Ty wiesz, co my robimy tym kotem? <br />
+            My otwieramy oczy niedowiarkom. 
+            Patrzcie – mówimy – to nasze, <br /> przez nas wykonane i to nie jest nasze ostatnie słowo!”
+        </h4>
+    </div>
+    <div class="col-md-3">
+        <img src="~/StaticFiles/cat.gif" alt="koteczek" class="img-responsive" data-toggle="tooltip" title="Koteł" style="width:200px;height:200px;"/>
+    </div>
+</div>
+
+
+
+
+
+<hr />
+<h4 style="color:#0086d3">Wolne pokoje w tej chwili</h4>
+
+<ul class="nav nav-tabs">
+    @{var first = true; }
+    @foreach (var building in Model.Buildings)
+    {
+        if (first == true)
+        {
+            if (Model.BuildingIdRoute == building.BuildingID)
+            {
+
+                <li class="active" ><a asp-route-buildingid="@building.BuildingID" data-toggle="tooltip" title="Wydział @building.Department.Name">@building.Name</a></li>
+            }
+            else
+            {
+                <li><a asp-route-buildingid="@building.BuildingID" data-toggle="tooltip" title="Wydział @building.Department.Name">@building.Name</a></li>
+            }
+            first = false;
+        }
+        else
+        {
+            if (Model.BuildingIdRoute == building.BuildingID)
+            {
+                <li class="active"><a asp-route-buildingid="@building.BuildingID" data-toggle="tooltip" title="Wydział @building.Department.Name">@building.Name</a></li>
+            }
+            else
+            {
+                <li><a asp-route-buildingid="@building.BuildingID" data-toggle="tooltip" title="Wydział @building.Department.Name">@building.Name</a></li>
+            }
+        }
+    }
+</ul>
+
+<table class="table table-hover table-condensed table-bordered" >
+    <thead>
+        <tr>
+            <th>Pokoje</th>
+            @foreach (var room in Model.Rooms)
+            {
+
+                <th>
+                    <a asp-page="/Rooms/Details" data-toggle="tooltip" title="Szczegóły pokoju" asp-route-roomid="@room.RoomID" asp-route-buildingid="@Model.BuildingIdRoute">@room.Number</a>
+                </th>
+
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            @foreach (var room2 in Model.Rooms)
+            {
+                <th>
+                    @if (Model.Reservations.Where(r => r.RoomID == room2.RoomID).Where(r => r.Date.Date == Model.Now.Date).Where(r => r.EndTime.TimeOfDay > Model.Now.TimeOfDay).Where(r => r.StartTime.TimeOfDay < Model.Now.TimeOfDay).Count() == 0)
+                    {
+                        var Time = Model.Reservations.Where(r => r.RoomID == room2.RoomID).Where(r => r.Date.Date == Model.Now.Date).Where(r => r.StartTime.TimeOfDay > Model.Now.TimeOfDay).Select(r => r.StartTime).FirstOrDefault().ToShortTimeString();
+                        if (Time == "00:00") { Time = "20:00"; }
+                        <a style="color:forestgreen" asp-page="/Reservations/Index" asp-route-buildingid="@Model.BuildingIdRoute">Wolne <br /> do <br /> @Time</a>
+
+                    }
+                    else
+                    {
+                        var Reservation = Model.Reservations.Where(r => r.RoomID == room2.RoomID).Where(r => r.Date.Date == Model.Now.Date).Where(r => r.StartTime.TimeOfDay <= Model.Now.TimeOfDay).Where(r => r.EndTime.TimeOfDay >= Model.Now.TimeOfDay).FirstOrDefault();
+                        var Time = Reservation.EndTime.ToShortTimeString();
+                        <a style="color:orangered" asp-page="/Reservations/Index" asp-route-buildingid="@Model.BuildingIdRoute" data-toggle="tooltip" title="@Reservation.Pearson.FirstName @Reservation.Pearson.LastName: @Reservation.StartTime.ToShortTimeString() - @Reservation.EndTime.ToShortTimeString()">Zajęte <br /> do <br /> @Time</a>
+                    }
+                </th>
+            }
+        </tr>
+    </tbody>
+</table>

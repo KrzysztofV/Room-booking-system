@@ -1,0 +1,114 @@
+﻿@page
+@model RezerwacjaSal.Pages.GlobalSearchModel
+
+@{
+    ViewData["Title"] = "GlobalSearch";
+}
+
+<h2>Wyszukiwajka dla "@Model.SearchString"</h2>
+
+<hr />
+
+@if (Model.Reservations.Count != 0)
+{
+    if (Model.Reservations.Count == 1)
+    {<p>Znaleziono jedną rezerwację o podanym numerze:</p>}
+    else
+    {
+        if (Model.Reservations.Count >= 2 && Model.Reservations.Count <= 4)
+        {<p>Znaleziono @Model.Reservations.Count() rezerwacje o podanym numerze:</p>}
+    else
+    {<p>Znaleziono @Model.Reservations.Count() rezerwacji o podanym numerze:</p>}
+}
+@foreach (var reservation in Model.Reservations)
+{
+    <a asp-page="./Reservations/Details" asp-route-reservationid="@reservation.ReservationID" asp-route-buildingid="@reservation.Room.BuildingID" asp-route-departmentid="@reservation.Room.Building.DepartmentID" asp-route-date="@reservation.Date.ToShortDateString()">@reservation.ReservationID - @reservation.Pearson.FirstName @reservation.Pearson.LastName</a><br />
+}
+}
+
+
+<p></p>
+@if (Model.People.Count != 0)
+{
+    if (Model.People.Count == 1)
+    {<p>Znaleziono jedną osobę o podanym imieniu lub nazwisku lub numerze:</p>}
+    else
+    {
+        if (Model.People.Count >= 2 && Model.People.Count <= 4)
+        {<p>Znaleziono @Model.People.Count() osoby o podanym imieniu / nazwisku / numerze:</p>}
+    else
+    {<p>Znaleziono @Model.People.Count() osób o podanym imieniu / nazwisku / numerze:</p>}
+}
+@foreach (var pearson in Model.People)
+{
+    <a asp-page="./People/Details" asp-route-id="@pearson.PearsonID">@pearson.PearsonNumber - @pearson.FirstName @pearson.LastName</a><br />
+
+}
+}
+
+<p></p>
+@if (Model.Departments.Count != 0)
+{
+    if (Model.Departments.Count == 1)
+    {<p>Znaleziono jeden wydział o podanej nazwie:</p>}
+    else
+    {
+        if (Model.Departments.Count >= 2 && Model.Departments.Count <= 4)
+        {<p>Znaleziono @Model.Departments.Count() wydziały o podanej nazwie:</p>}
+    else
+    {<p>Znaleziono @Model.Departments.Count() wydziałów o podanej nazwie:</p>}
+}
+
+@foreach (var department in Model.Departments)
+{
+    <a asp-page="./Departments/Details" asp-route-departmentid="@department.DepartmentID">@department.Name</a><br />
+
+}
+}
+
+<p></p>
+@if (Model.Buildings.Count != 0)
+{
+    if (Model.Buildings.Count == 1)
+    {<p>Znaleziono jeden budynek o podanym numerze:</p>}
+    else
+    {
+        if (Model.Buildings.Count >= 2 && Model.Buildings.Count <= 4)
+        {<p>Znaleziono @Model.Buildings.Count() budynki o podanym numerze:</p>}
+    else
+    {<p>Znaleziono @Model.Buildings.Count() budynków o podanym numerze:</p>}
+}
+@foreach (var building in Model.Buildings)
+{
+    <a asp-page="./Buildings/Details" asp-route-buildingid="@building.BuildingID" asp-route-departmentid="@building.DepartmentID">@building.Name - wydział @building.Department.Name</a><br />
+
+}
+}
+
+<p></p>
+@if (Model.Rooms.Count != 0)
+{
+    if (Model.Rooms.Count == 1)
+    {<p>Znaleziono jeden pokój o podanej nazwie:</p>}
+    else
+    {
+        if (Model.Rooms.Count >= 2 && Model.Rooms.Count <= 4)
+        {<p>Znaleziono @Model.Rooms.Count() pokoje o podanym numerze:</p>}
+    else
+    {<p>Znaleziono @Model.Rooms.Count() pokoi o podanym numerze:</p>}
+}
+@foreach (var room in Model.Rooms)
+{
+    <a asp-page="./Rooms/Details" asp-route-roomid="@room.RoomID" asp-route-buildingid="@room.BuildingID" asp-route-departmentid="@room.Building.DepartmentID">@room.Number - budynek @room.Building.Name - wydział @room.Building.Department.Name</a><br />
+
+
+}
+}
+
+<p></p>
+
+@if(Model.Reservations.Count == 0 && Model.People.Count == 0 && Model.Departments.Count == 0 && Model.Buildings.Count == 0 && Model.Rooms.Count == 0)
+{
+    <p>Nic nie znaleziono :( </p>
+
+}

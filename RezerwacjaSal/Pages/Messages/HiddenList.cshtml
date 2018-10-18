@@ -1,0 +1,66 @@
+﻿@page
+@model RezerwacjaSal.Pages.Messages.HiddenListModel
+
+@{
+    ViewData["Title"] = "HiddenList";
+}
+
+<h3>"Ukryta" lista wiadomości - tylko do celów testowych</h3>
+
+
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message[0].Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message[0].PearsonName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message[0].MessageSubject)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message[0].MessageContent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message[0].IP)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message[0].Date)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Message[0].Pearson)
+            </th>
+            </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Message)
+        {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PearsonName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MessageSubject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MessageContent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pearson.FirstName)
+                    </td>
+
+                </tr>
+        }
+    </tbody>
+</table>

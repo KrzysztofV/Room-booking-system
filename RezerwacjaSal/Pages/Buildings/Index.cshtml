@@ -1,0 +1,67 @@
+﻿@page
+
+@model RezerwacjaSal.Pages.Buildings.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<p></p>
+<a class="btn btn-default" asp-page="/Departments/Index" >Wydziały</a>
+
+<h3 >Dostępność sal</h3>
+<h4>Wybierz budynek</h4>
+<hr />
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="info">
+            <th>
+                Nazwa budynku
+            </th>
+            <th>
+                Adres
+            </th>
+            <th>
+                Wydział
+            </th>
+            <th>
+                Zarządzanie
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Building)
+        {
+            <tr>
+                <td>
+                    <a asp-page="/Reservations/Index" asp-route-buildingid="@item.BuildingID" asp-route-departmentid="@Model.DepartmentIdRoute">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    <a asp-page="/Buildings/Index" data-toggle="tooltip" title="Kliknij aby zawęzić do tego wydziału" asp-route-departmentid="@item.DepartmentID">
+                        @Model.Department.Where(p => p.DepartmentID == item.DepartmentID).Select(p => p.Name).FirstOrDefault()
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="/Rooms/Index" asp-route-buildingid="@item.BuildingID" asp-route-departmentid="@Model.DepartmentIdRoute">Pokoje</a> |
+                    <a asp-page="./Details" asp-route-buildingid="@item.BuildingID" asp-route-departmentid="@Model.DepartmentIdRoute">Szczegóły</a> |
+                    <a asp-page="./Edit" asp-route-buildingid="@item.BuildingID" asp-route-departmentid="@Model.DepartmentIdRoute">Edytuj</a> |
+                    <a asp-page="./Delete" asp-route-buildingid="@item.BuildingID" asp-route-departmentid="@Model.DepartmentIdRoute">Usuń</a>
+                </td>
+            </tr>
+        }
+        <tr class="active">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <a class="btn btn-default btn-primary" asp-page="Create" asp-route-departmentid="@Model.DepartmentIdRoute">Dodaj nowy budynek</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+

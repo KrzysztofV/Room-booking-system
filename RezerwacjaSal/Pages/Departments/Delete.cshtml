@@ -1,0 +1,45 @@
+﻿@page 
+@model RezerwacjaSal.Pages.Departments.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>Usuwanie</h3>
+
+<h4>Czy jesteś pewien że chcesz usunąć wydział?</h4>
+<h5 style="color:red">Usunięcie wydziału usunie powiązane budynki, pokoje i rezerwacje.</h5>
+<h5 style="color:red">Wśród zatrudnień, wydział zostanie pusty.</h5>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nazwa wydziału
+        </dt>
+        <dd>
+            @Model.Department.Name
+        </dd>
+        <dt>
+            Administrator
+        </dt>
+        <dd>
+            @Model.People.Where(p => p.PearsonID == Model.Department.Administrator).Select(p => p.FirstName).FirstOrDefault()
+            &shy;
+            @Model.People.Where(p => p.PearsonID == Model.Department.Administrator).Select(p => p.LastName).FirstOrDefault()
+        </dd>
+        <dt>
+            Kierownik
+        </dt>
+        <dd>
+            @Model.People.Where(p => p.PearsonID == Model.Department.Manager).Select(p => p.FirstName).FirstOrDefault()
+            &shy;
+            @Model.People.Where(p => p.PearsonID == Model.Department.Manager).Select(p => p.LastName).FirstOrDefault()
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Department.DepartmentID" />
+        <a class="btn btn-default" asp-page="Index">Lista wydziałów</a>
+        <input type="submit" value="Usuń" class="btn btn-default btn-danger"  />
+    </form>
+</div>

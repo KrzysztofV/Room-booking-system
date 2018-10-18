@@ -1,0 +1,59 @@
+﻿@page 
+@model RezerwacjaSal.Pages.Departments.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h3>Edycja</h3>
+
+<h4>Wydział</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Department.DepartmentID" />
+            <div class="form-group">
+                <label asp-for="Department.Name" class="control-label">Nazwa</label>
+                <input asp-for="Department.Name" class="form-control" />
+                <span asp-validation-for="Department.Name" class="text-danger"></span>
+                <span class="text-danger">@Model.DuplicateNameExistError</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Numer administratora</label>
+                <input asp-for="Department.Administrator" class="form-control" />
+                @if (Model.AdministratorIdError == null)
+                {
+                    <p>
+                        @Model.People.Where(p => p.PearsonNumber == Model.Department.Administrator).Select(p => p.FirstName).FirstOrDefault()
+                        @Model.People.Where(p => p.PearsonNumber == Model.Department.Administrator).Select(p => p.LastName).FirstOrDefault()
+                    </p>
+                }
+                <span asp-validation-for="Department.Administrator" class="text-danger"></span>
+                <span class="text-danger">@Model.AdministratorIdError</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Numer kierownika</label>
+                <input asp-for="Department.Manager" class="form-control" />
+                @if (Model.ManagerIdError == null)
+                {
+                    <p>
+                        @Model.People.Where(p => p.PearsonNumber == Model.Department.Manager).Select(p => p.FirstName).FirstOrDefault()
+                        @Model.People.Where(p => p.PearsonNumber == Model.Department.Manager).Select(p => p.LastName).FirstOrDefault()
+                    </p>
+                }
+                <span asp-validation-for="Department.Manager" class="text-danger"></span>
+                <span class="text-danger">@Model.ManagerIdError</span>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-default" asp-page="Index">Lista wydziałów</a>
+                <input type="submit" value="Zapisz" class="btn btn-default btn-primary"  />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

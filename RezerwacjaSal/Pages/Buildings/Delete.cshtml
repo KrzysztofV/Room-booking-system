@@ -1,0 +1,41 @@
+﻿@page
+
+@model RezerwacjaSal.Pages.Buildings.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>Usuwanie</h3>
+
+<h4>Czy jesteś pewien, że chcesz usunąć ten budynek?</h4>
+<h5 style="color:red">Usunięte zostaną także powiązane pokoje i rezerwacje.</h5>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nazwa:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Building.Name)
+        </dd>
+        <dt>
+            Adres:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Building.Address)
+        </dd>
+        <dt>
+            Wydział:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Building.Department.Name)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <a class="btn btn-default" asp-page="./Index" asp-route-departmentid="@Model.DepartmentIdRoute">Lista budynków</a>
+        <input type="submit" value="Usuń" class="btn btn-default btn-danger"  />
+    </form>
+</div>

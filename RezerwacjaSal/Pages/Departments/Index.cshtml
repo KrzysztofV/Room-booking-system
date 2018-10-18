@@ -1,0 +1,76 @@
+﻿@page 
+@model RezerwacjaSal.Pages.Departments.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Dostępność sal</h3>
+<h4>Wybierz wydział</h4>
+<hr />
+<table class="table table-striped table-hover ">
+    <thead>
+        <tr class="info">
+            <th>
+                Nazwa
+            </th>
+            <th>
+                Administrator
+            </th>
+            <th>
+                Kierownik
+            </th>
+            <th>
+                Zarządzanie
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <a asp-page="/Buildings/Index" asp-route-departmentid="0" style="color:#000">Wszystkie</a>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.Departments)
+        {
+            <tr>
+                <td>
+                    <a asp-page="/Buildings/Index" asp-route-departmentid="@item.DepartmentID">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    <a asp-page="/People/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
+                       asp-route-id="@Model.People.Where(p => p.PearsonNumber == item.Administrator).Select(p=>p.PearsonID).FirstOrDefault()">
+                        @Model.People.Where(p => p.PearsonNumber == item.Administrator).Select(p => p.FirstName).FirstOrDefault()
+                        &shy;
+                        @Model.People.Where(p => p.PearsonNumber == item.Administrator).Select(p => p.LastName).FirstOrDefault()
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="/People/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
+                       asp-route-id="@Model.People.Where(p => p.PearsonNumber == item.Manager).Select(p=>p.PearsonID).FirstOrDefault()">
+                        @Model.People.Where(p => p.PearsonNumber == item.Manager).Select(p => p.FirstName).FirstOrDefault()
+                        &shy;
+                        @Model.People.Where(p => p.PearsonNumber == item.Manager).Select(p => p.LastName).FirstOrDefault()
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-departmentid="@item.DepartmentID">Edytuj</a> |
+                    <a asp-page="./Details" asp-route-departmentid="@item.DepartmentID">Szczegóły</a> |
+                    <a asp-page="./Delete" asp-route-departmentid="@item.DepartmentID">Usuń</a>
+                </td>
+            </tr>
+        }
+        <tr class="active">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <a class="btn btn-default btn-primary" asp-page="./Create">Dodaj nowy wydział</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
