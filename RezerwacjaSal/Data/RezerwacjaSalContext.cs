@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 // potrzebne EF oraz nazwa.Models
 using Microsoft.EntityFrameworkCore;
 using RezerwacjaSal.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace RezerwacjaSal.Data
 {
     // RezerwacjaSalContext precyzuje które encje są włączone do modelu danych 
-    public class RezerwacjaSalContext : DbContext // musi dziedziczyć po DbContext! (łatwo zapomnieć)
+    public class RezerwacjaSalContext : IdentityDbContext
     {
         public RezerwacjaSalContext(DbContextOptions<RezerwacjaSalContext> options) : base(options)
         {
@@ -48,7 +49,7 @@ namespace RezerwacjaSal.Data
                 .HasOne(r => r.Room)                // ponieważ występuje kaskada buildingID -> roomID to trzeba takie coś aby przy usuwaniu się nie wykrzaczało 
                 .WithMany(b => b.Reservations)      // jeden pokój może posiadać wiele rezerwacji. Najwyraźniej trzeba to tu określić 
                 .OnDelete(DeleteBehavior.Cascade); // modyfikacja domyślnego zachowania przy usuwaniu 
-
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

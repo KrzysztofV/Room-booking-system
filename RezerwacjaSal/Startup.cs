@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using RezerwacjaSal.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 
 namespace RezerwacjaSal
 {
@@ -42,6 +43,8 @@ namespace RezerwacjaSal
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<RezerwacjaSalContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +65,7 @@ namespace RezerwacjaSal
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

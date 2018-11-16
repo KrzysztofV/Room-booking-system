@@ -131,7 +131,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n\r\n<div class=\"form-group\">\r\n    ");
             EndContext();
             BeginContext(1149, 63, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d2a35b2def7b4add9208bf0fa08a9a98", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3b71797d919a4368a6c8539fcf362309", async() => {
                 BeginContext(1193, 15, true);
                 WriteLiteral("Lista wydziałów");
                 EndContext();
@@ -154,7 +154,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(1218, 119, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8590a9c7bc164f2f8c5e8393303a18b6", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "35a9a6c0fe624255a7e0a0a3ee4cefd9", async() => {
                 BeginContext(1327, 6, true);
                 WriteLiteral("Edytuj");
                 EndContext();

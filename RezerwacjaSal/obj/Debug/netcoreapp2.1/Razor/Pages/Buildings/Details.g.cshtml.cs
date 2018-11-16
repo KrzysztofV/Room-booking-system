@@ -144,7 +144,7 @@ using RezerwacjaSal;
             WriteLiteral("\'\r\n        });\r\n    }\r\n\r\n</script>\r\n<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyAqUPXGLnI6TBQRSaU2YRZ5RkOJ42c1Jzo&callback=initMap\"\r\n        async defer></script>\r\n<p></p>\r\n\r\n\r\n<div>\r\n    ");
             EndContext();
             BeginContext(2165, 114, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "90d6ef4b09a84765b6d36b0b28a86983", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "85a67201f7fa4d78bc108b85f148c611", async() => {
                 BeginContext(2261, 14, true);
                 WriteLiteral("Lista budynków");
                 EndContext();
@@ -180,7 +180,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(2285, 168, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "198751b2da2a4f2d9cd2ad87009c0757", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1634d72697e94738a57e46603196be25", async() => {
                 BeginContext(2443, 6, true);
                 WriteLiteral("Edytuj");
                 EndContext();
