@@ -35,6 +35,7 @@ namespace RezerwacjaSal.Pages
 
             Reservations = await _context.Reservations
                 .Where(r => r.ReservationID.Equals(SearchStringInt))
+                .Include(r => r.Pearson)
                 .Include(r => r.Room)
                 .ThenInclude(r => r.Building)
                 .ThenInclude(r => r.Department)

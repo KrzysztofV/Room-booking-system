@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using RezerwacjaSal.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RezerwacjaSal
 {
@@ -28,10 +29,17 @@ namespace RezerwacjaSal
             // zdefiniowanie RezerwacjaSalContext jako us³ugi
             services.AddDbContext<RezerwacjaSalContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); // nazwa domyœlnego po³¹czenia z baz¹ danych w appsettings.json
-            services.AddMvc();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.Configure<IISOptions>(options =>
             {
                 options.ForwardClientCertificate = false;
+            });
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
@@ -41,7 +49,6 @@ namespace RezerwacjaSal
         {
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseStaticFiles();
 
@@ -50,10 +57,11 @@ namespace RezerwacjaSal
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
-
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCookiePolicy();
             app.UseMvc();
         }
     }

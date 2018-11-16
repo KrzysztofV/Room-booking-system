@@ -102,7 +102,7 @@ namespace RezerwacjaSal.Pages.Reservations
             Hours.Add(new DateTime(2018, 1, 1, 20, 00, 0).ToShortTimeString());
 
             ViewData["StartTime"] = new SelectList(Hours, Reservation.StartTime.ToShortTimeString());
-            ViewData["EndTime"] = new SelectList(Hours, Reservation.EndTime.ToShortTimeString());
+            ViewData["EndTime"] = new SelectList(Hours, Reservation.StartTime.ToShortTimeString());
 
 
             // lista, atrybut ustawiany, atrybut wyświetlany, domyślnie wybrana pozycja z listy 

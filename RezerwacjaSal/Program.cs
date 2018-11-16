@@ -20,7 +20,7 @@ namespace RezerwacjaSal
 
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
+            var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
             {
@@ -42,15 +42,15 @@ namespace RezerwacjaSal
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseApplicationInsights()
                 .UseStartup<Startup>()
                 .UseSetting("detailedErrors", "true")
                 .UseIISIntegration()
                 //.UseKestrel()
-                .CaptureStartupErrors(true)
-                .Build();
+                .CaptureStartupErrors(true);
+
 
 
 
