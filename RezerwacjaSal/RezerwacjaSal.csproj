@@ -15,4 +15,7 @@
   <ItemGroup>
     <None Include="wwwroot\StaticFiles\BazaDanychSchemat" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Services\" />
+  </ItemGroup>
 </Project>

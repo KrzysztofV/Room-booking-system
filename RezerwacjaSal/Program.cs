@@ -48,7 +48,6 @@ namespace RezerwacjaSal
                 .UseStartup<Startup>()
                 .UseSetting("detailedErrors", "true")
                 .UseIISIntegration()
-                //.UseKestrel()
                 .CaptureStartupErrors(true);
 
 

@@ -12,6 +12,8 @@ using RezerwacjaSal.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using RezerwacjaSal.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace RezerwacjaSal
 {
@@ -30,8 +32,7 @@ namespace RezerwacjaSal
             // zdefiniowanie RezerwacjaSalContext jako us³ugi
             services.AddDbContext<RezerwacjaSalContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); // nazwa domyœlnego po³¹czenia z baz¹ danych w appsettings.json
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.Configure<IISOptions>(options =>
             {
                 options.ForwardClientCertificate = false;
@@ -43,8 +44,29 @@ namespace RezerwacjaSal
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<RezerwacjaSalContext>();
+
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<RezerwacjaSalContext>()
+            .AddDefaultTokenProviders();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddRazorPagesOptions(options =>
+                {
+                    options.AllowAreas = true;
+                    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+
+        
+            services.AddSingleton<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,19 +75,20 @@ namespace RezerwacjaSal
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseStaticFiles();
-
-
+                app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
             app.UseAuthentication();
+
             app.UseMvc();
         }
     }

@@ -24,6 +24,8 @@ namespace RezerwacjaSal.Data
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Message> Messages { get; set; }
 
+        public DbSet<ApplicationUser> AppUsers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   // fluent API
             modelBuilder.Entity<Employment>().ToTable("Employment"); // nazwy tabeli w bazie danych, ale nie jest to konieczne bo 
