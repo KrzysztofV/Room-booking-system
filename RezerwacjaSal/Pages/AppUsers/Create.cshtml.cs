@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RezerwacjaSal.Data;
 using RezerwacjaSal.Models;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
+using RezerwacjaSal.Areas.Identity.Pages.Account;
 
 namespace RezerwacjaSal.Pages.AppUsers
 {
@@ -52,6 +55,37 @@ namespace RezerwacjaSal.Pages.AppUsers
         public int? PageIndexRoute { get; set; }
         public int? PageSizeRoute { get; set; }
 
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<RegisterModel> _logger;
+
+        public CreateModel(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ILogger<RegisterModel> logger)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _logger = logger;
+        }
+
+        public class InputModel
+        {
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            [Display(Name = "Password")]
+            public string Password { get; set; }
+
+            [DataType(DataType.Password)]
+            [Display(Name = "Confirm password")]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            public string ConfirmPassword { get; set; }
+        }
+
+        [BindProperty]
+        public InputModel Input { get; set; }
+
         public async Task<IActionResult> OnGet(string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
             // Ustalenie nowego ID dla nowej osoby
@@ -65,7 +99,7 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
-            // znalezienie wolnego numeru (wyszukuje też lukę)
+            // znalezienie wolnego numeru (wyszukuje też lukę np. 1,2,..,4,5)
             FreeNumber = 1;
             while (true)
             {
@@ -98,7 +132,6 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
-            // znalezienie wolnego numeru (wyszukuje też lukę)
             FreeNumber = 1;
             while (true)
             {
@@ -113,20 +146,50 @@ namespace RezerwacjaSal.Pages.AppUsers
                 return Page();
             }
 
-            var newApplicationUser = new ApplicationUser();
+            //var newApplicationUser = new ApplicationUser();
 
             // obsługa osoby
-            if (await TryUpdateModelAsync<ApplicationUser>(
-                newApplicationUser,
-                "ApplicationUser",   // Prefix for form value.
-                 s => s.FirstName, s => s.LastName, s => s.Employee, s => s.Email, s => s.Phone, s => s.Note))
+            //if (await TryUpdateModelAsync<ApplicationUser>(
+            //    newApplicationUser,
+            //    "ApplicationUser",   // Prefix for form value.
+            //     s => s.FirstName, s => s.LastName, s => s.Employee, s => s.Email, s => s.PhoneNumber, s => s.Note))
+            //{
+            //    newApplicationUser.UserName = newApplicationUser.Email; // username jest emailem
+            //    if (SetAutoNumber) newApplicationUser.Number = FreeNumber;
+            //    else newApplicationUser.Number = ManualNumber;
+
+
+
+            //    _context.AppUsers.Add(newApplicationUser);
+            //    await _context.SaveChangesAsync();
+
+
+            //}
+
+                // na podstawie Register.cshtml.cs
+                var newApplicationUser = new ApplicationUser
             {
-
-                if (SetAutoNumber) newApplicationUser.Number = FreeNumber;
-                else newApplicationUser.Number = ManualNumber;
-
-                _context.AppUsers.Add(newApplicationUser);
-                await _context.SaveChangesAsync();
+                UserName = ApplicationUser.Email,
+                Email = ApplicationUser.Email,
+                FirstName = ApplicationUser.FirstName,
+                LastName = ApplicationUser.LastName,
+                Employee = ApplicationUser.Employee,
+                PhoneNumber = ApplicationUser.PhoneNumber,
+                Note = ApplicationUser.Note,
+                Number = ApplicationUser.Number,
+                EmailConfirmed = true
+            };
+            
+            var result = await _userManager.CreateAsync(newApplicationUser, Input.Password);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("User created a new account with password.");
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(newApplicationUser);
+                await _signInManager.SignInAsync(newApplicationUser, isPersistent: false);
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
             }
 
             // obsługa zatrudnienia jeśli osoba jest pracownikiem
@@ -137,9 +200,9 @@ namespace RezerwacjaSal.Pages.AppUsers
                 if (await TryUpdateModelAsync<Employment>(
                 emptyEmployment,
                 "Employment",
-                s => s.Id, s => s.DepartmentID, s => s.Position)) // employmentID jest nadawane automatycznie - pacz Employment.cs
+                s => s.Id, s => s.DepartmentID, s => s.Position)) 
                 {
-                    emptyEmployment.Id = Int32.Parse(newApplicationUser.Id); // przekazanie ID pracownika do encji employment
+                    emptyEmployment.Id = newApplicationUser.Id; 
                     _context.Employments.Add(emptyEmployment);
                     await _context.SaveChangesAsync();
                 }
@@ -151,9 +214,9 @@ namespace RezerwacjaSal.Pages.AppUsers
                     if (await TryUpdateModelAsync<Employment>(
                     emptySecondEmployment,
                     "SecondEmployment",
-                    s => s.Id, s => s.DepartmentID, s => s.Position)) // employmentID jest nadawane automatycznie - pacz Employment.cs
+                    s => s.Id, s => s.DepartmentID, s => s.Position)) 
                     {
-                        emptySecondEmployment.Id = Int32.Parse(newApplicationUser.Id); // przekazanie ID pracownika do encji employment
+                        emptySecondEmployment.Id = newApplicationUser.Id; 
                         _context.Employments.Add(emptySecondEmployment);
                         await _context.SaveChangesAsync();
                     }

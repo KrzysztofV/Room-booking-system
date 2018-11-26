@@ -26,7 +26,7 @@ namespace RezerwacjaSal.Pages.AppUsers
         public int? PageIndexRoute { get; set; }
         public int? PageSizeRoute { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
+        public async Task<IActionResult> OnGetAsync(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
             if (id == null)
                 return NotFound();
@@ -38,10 +38,10 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageSizeRoute = pageSize;
 
             ApplicationUser = await _context.AppUsers
-                .Include(s=>s.Employments)      // wczytuje naviagtion properties z Employment
-                .ThenInclude(e => e.Department) // wczytuje naviagtion properties z Department
-                .AsNoTracking()                 // poprawia wydajność w przypadku gdy wczytane encje nie są modyfikowane w tej stronie
-                .FirstOrDefaultAsync(m => Int32.Parse(m.Id) == id);  // domyślne
+                .Include(s=>s.Employments)      
+                .ThenInclude(e => e.Department) 
+                .AsNoTracking()                 
+                .FirstOrDefaultAsync(m => m.Id == id);  // domyślne
 
             if (ApplicationUser == null)
                 return NotFound();

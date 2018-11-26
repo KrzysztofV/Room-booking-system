@@ -23,69 +23,6 @@ namespace RezerwacjaSal.Data
                 return;   // są więc nie nadpisuj Bazy danych 
             }
 
-            //var people = new ApplicationUser[]
-            //{
-            //new ApplicationUser{Number=1,FirstName="Putin",  LastName="Władimir",        Employee=false,Email="Put@in.ru",Phone="123456789",Note="Gość z zagranicy :P"},
-            //new ApplicationUser{Number=2,FirstName="Donald", LastName="Trump",           Employee=false,Email="Trump@manhatan.com",Phone="123456789",Note="Gość z zagranicy :P"},
-            //new ApplicationUser{Number=3,FirstName="Andrzej",LastName="Duda",            Employee=false,Email="Buziaczek@interia.pl",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=4,FirstName="Arnold", LastName="Schwarzenegger",  Employee=false,Email="Arni@hoolybool.com",Phone="123456789",Note="Gość z zagranicy :P"},
-            //new ApplicationUser{Number=5,FirstName="Kim Dzong",LastName="Un",            Employee=false,Email="",Phone="123456789",Note="Gość z zagranicy :P"},
-            //new ApplicationUser{Number=6,FirstName="Jan",    LastName="Kowalski",        Employee=true,Email="JK275@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=7,FirstName="Brajanusz",LastName="Kowalski",      Employee=true,Email="BrajaneX@wp.pl",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=8,FirstName="Brajan", LastName="Kowalski",        Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=9,FirstName="Mr.Potato",LastName="French Fries",  Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=10,FirstName="Antonio",LastName="Banderas",       Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=11,FirstName="Tomasz",LastName="Kowalski",        Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=12,FirstName="Mateusz",LastName="Kowalski",       Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=13,FirstName="Jakub", LastName="Miszcz",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=14,FirstName="Wojciech",LastName="Harasymowicz",  Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=15,FirstName="Rafał", LastName="Ileczko",         Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=16,FirstName="Krzysztof",LastName="Cisło",        Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=17,FirstName="Damian",LastName="Drozda",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=18,FirstName="X",LastName="Drozda",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=19,FirstName="X",LastName="Drozda",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=20,FirstName="X",LastName="Drozda",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=21,FirstName="X",LastName="Drozda",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=22,FirstName="X",LastName="Drozda",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=23,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=24,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=25,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=26,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=27,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=28,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=29,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=30,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=31,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=32,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=33,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=34,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=35,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=36,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=37,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=38,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=39,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=40,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=41,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=42,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=43,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=44,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=45,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=46,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=47,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=48,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=49,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=50,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=51,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=52,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""},
-            //new ApplicationUser{Number=53,FirstName="X",LastName="Y",          Employee=true,Email="123@gmail.com",Phone="123456789",Note=""}
-            //};
-
-            //foreach (ApplicationUser s in people)
-            //{
-            //    context.AppUsers.Add(s);
-            //}
-            //context.SaveChanges();
-
             var departments = new Department[]
             {
             new Department { Name = "Automatyki i Robotyki", Administrator = 6, Manager = 16},
@@ -99,32 +36,7 @@ namespace RezerwacjaSal.Data
                 context.Departments.Add(c);
             }
             context.SaveChanges();
-
-            //var employments = new Employment[]
-            //{
-            //    // nie podaję EmploymentID ponieważ w class Employment, EmploymentID jest on automatycznie nadawany przez Entity Framework
-            //new Employment{Id=people.Single( i => i.Number == 6).Id, DepartmentID=departments.Single( i => i.Name == "Automatyki i Robotyki").DepartmentID,  Position="Administrator",       },
-            //new Employment{Id=people.Single( i => i.Number == 7).Id, DepartmentID=departments.Single( i => i.Name == "Informatyki").DepartmentID,  Position="Administrator",       },
-            //new Employment{Id=people.Single( i => i.Number == 8).Id, DepartmentID=departments.Single( i => i.Name == "Materiałoznastwa").DepartmentID,  Position="Administrator",       },
-            //new Employment{Id=people.Single( i => i.Number == 9).Id,  DepartmentID=departments.Single( i => i.Name == "Informatyki").DepartmentID,  Position="Adiunk",              },
-            //new Employment{Id=people.Single( i => i.Number == 10).Id, DepartmentID=departments.Single( i => i.Name == "Materiałoznastwa").DepartmentID, Position="Adiunk",              },
-            //new Employment{Id=people.Single( i => i.Number == 11).Id, DepartmentID=departments.Single( i => i.Name == "Elektrotechniki").DepartmentID, Position="Administrator",       },
-            //new Employment{Id=people.Single( i => i.Number == 12).Id, DepartmentID=departments.Single( i => i.Name == "Miernictwa").DepartmentID, Position="Administrator",       },
-            //new Employment{Id=people.Single( i => i.Number == 13).Id, DepartmentID=departments.Single( i => i.Name == "Materiałoznastwa").DepartmentID, Position="Kierownik katedry",   },
-            //new Employment{Id=people.Single( i => i.Number == 14).Id, DepartmentID=departments.Single( i => i.Name == "Miernictwa").DepartmentID, Position="Kierownik katedry",   },
-            //new Employment{Id=people.Single( i => i.Number == 15).Id, DepartmentID=departments.Single( i => i.Name == "Elektrotechniki").DepartmentID, Position="Kierownik katedry",   },
-            //new Employment{Id=people.Single( i => i.Number == 16).Id, DepartmentID=departments.Single( i => i.Name == "Automatyki i Robotyki").DepartmentID, Position="Kierownik katedry",   },
-            //new Employment{Id=people.Single( i => i.Number == 16).Id, DepartmentID=departments.Single( i => i.Name == "Informatyki").DepartmentID, Position="Takie tam",   },
-            //new Employment{Id=people.Single( i => i.Number == 17).Id, DepartmentID=departments.Single( i => i.Name == "Materiałoznastwa").DepartmentID, Position="Takie tam",},
-            //new Employment{Id=people.Single( i => i.Number == 17).Id, DepartmentID=departments.Single( i => i.Name == "Informatyki").DepartmentID, Position="Kierownik katedry"}
-
-            //};
-            //foreach (Employment e in employments)
-            //{
-            //    context.Employments.Add(e);
-            //}
-            //context.SaveChanges();
-
+       
 
             var buildings = new Building[]
             {
@@ -242,47 +154,7 @@ namespace RezerwacjaSal.Data
             }
             context.SaveChanges();
 
-            //var reservations = new Reservation[]
-            //{
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==10 && r.BuildingID==buildings.Single( n => n.Name == "A").BuildingID).RoomID, Id=people.Single( i => i.Number == 1).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==11 && r.BuildingID==buildings.Single( n => n.Name == "A").BuildingID).RoomID, Id=people.Single( i => i.Number == 2).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00) , Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==12 && r.BuildingID==buildings.Single( n => n.Name == "A").BuildingID).RoomID , Id=people.Single( i => i.Number == 3).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00) , Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==13 && r.BuildingID==buildings.Single( n => n.Name == "A").BuildingID).RoomID , Id=people.Single( i => i.Number == 4).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00) , Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==14 && r.BuildingID==buildings.Single( n => n.Name == "A").BuildingID).RoomID , Id=people.Single( i => i.Number == 5).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00) , Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==20 && r.BuildingID==buildings.Single( n => n.Name == "A").BuildingID).RoomID , Id=people.Single( i => i.Number == 6).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00) , Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==21 && r.BuildingID==buildings.Single( n => n.Name == "A").BuildingID).RoomID , Id=people.Single( i => i.Number == 7).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00) , Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==22 && r.BuildingID==buildings.Single( n => n.Name == "A").BuildingID).RoomID , Id=people.Single( i => i.Number == 8).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00) , Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==23 && r.BuildingID==buildings.Single( n => n.Name == "A").BuildingID).RoomID , Id=people.Single( i => i.Number == 9).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00) , Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==24 && r.BuildingID==buildings.Single( n => n.Name == "A").BuildingID).RoomID , Id=people.Single( i => i.Number == 10).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu" },
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==10 && r.BuildingID==buildings.Single( n => n.Name == "B").BuildingID).RoomID , Id=people.Single( i => i.Number == 11).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00) , Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==11 && r.BuildingID==buildings.Single( n => n.Name == "B").BuildingID).RoomID , Id=people.Single( i => i.Number == 12).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu" },
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==12 && r.BuildingID==buildings.Single( n => n.Name == "B").BuildingID).RoomID , Id=people.Single( i => i.Number == 13).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu" },
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==13 && r.BuildingID==buildings.Single( n => n.Name == "B").BuildingID).RoomID , Id=people.Single( i => i.Number == 14).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00) , Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==14 && r.BuildingID==buildings.Single( n => n.Name == "B").BuildingID).RoomID , Id=people.Single( i => i.Number == 16).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00) , Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==21 && r.BuildingID==buildings.Single( n => n.Name == "B").BuildingID).RoomID , Id=people.Single( i => i.Number == 17).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00) , Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==22 && r.BuildingID==buildings.Single( n => n.Name == "B").BuildingID).RoomID , Id=people.Single( i => i.Number == 17).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00) , Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==23 && r.BuildingID==buildings.Single( n => n.Name == "B").BuildingID).RoomID , Id=people.Single( i => i.Number == 16).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00) , Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==24 && r.BuildingID==buildings.Single( n => n.Name == "B").BuildingID).RoomID , Id=people.Single( i => i.Number == 16).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00), Date= new DateTime(2018,07,14,00,00,00) , Note="Łubudu"},
-            //new Reservation{RoomID=rooms.Single(r=>r.Number==31 && r.BuildingID==buildings.Single( n => n.Name == "B").BuildingID).RoomID , Id=people.Single( i => i.Number == 14).Id, StartTime=new DateTime(2018,07,14,10,00,00), EndTime=new DateTime(2018,07,14,12,00,00) , Date= new DateTime(2018,07,14,00,00,00), Note="Łubudu"}
-            //};
-            //foreach (Reservation e in reservations)
-            //{
-            //    context.Reservations.Add(e);
-            //}
-            //context.SaveChanges();
 
-            //var messages = new Message[]
-            //{
-            //    new Message{ Email = "123@123.com", Name = "Imie1 Nazwisko1", MessageSubject="Temat", MessageContent="Treść",IP="31.120.152.175", Date = new DateTime(2018,07,14,10,00,00), Id = people.Single( r => r.Number == 1).Id  },
-            //    new Message{ Email = "234@234.com", Name = "Imie2 Nazwisko2", MessageSubject="Temat", MessageContent="Treść",IP="31.120.152.176", Date = new DateTime(2018,07,14,10,00,00), Id = people.Single( r => r.Number == 2).Id  },
-            //    new Message{ Email = "345@345.com", Name = "Imie3 Nazwisko3", MessageSubject="Temat", MessageContent="Treść",IP="31.120.152.177", Date = new DateTime(2018,07,14,10,00,00), Id = people.Single( r => r.Number == 3).Id  }
-
-            //};
-            //foreach (Message e in messages)
-            //{
-            //    context.Messages.Add(e);
-            //}
-            //context.SaveChanges();
         }
     }
 }

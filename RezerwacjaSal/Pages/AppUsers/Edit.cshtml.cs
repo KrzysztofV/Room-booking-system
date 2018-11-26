@@ -37,7 +37,7 @@ namespace RezerwacjaSal.Pages.AppUsers
         public bool SecondEmploymentChecked { get; set; }
         public string ErrorSameNumber { get; set; }
         private List<int> AllOthersNumbers;
-        public async Task<IActionResult> OnGet(int id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
+        public async Task<IActionResult> OnGet(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
 
             SortOrderRoute = sortOrder;
@@ -50,7 +50,7 @@ namespace RezerwacjaSal.Pages.AppUsers
                 .Include(s => s.Employments)      // wczytuje naviagtion properties z Employment
                 .ThenInclude(e => e.Department) // wczytuje naviagtion properties z Department
                 .AsNoTracking()                 // poprawia wydajność w przypadku gdy wczytane encje nie są modyfikowane w tej stronie
-                .FirstOrDefaultAsync(m => Int32.Parse(m.Id) == id);  // dla danego ID
+                .FirstOrDefaultAsync(m => m.Id == id);  // dla danego ID
 
             Employments = await _context.Employments
                 .Where(s => s.Id == id)
@@ -76,7 +76,7 @@ namespace RezerwacjaSal.Pages.AppUsers
         }
 
 
-        public async Task<IActionResult> OnPostAsync(int id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
+        public async Task<IActionResult> OnPostAsync(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
             SortOrderRoute = sortOrder;
             CurrentFilterRoute = currentFilter;
@@ -85,7 +85,7 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageSizeRoute = pageSize;
 
             AllOthersNumbers = await _context.AppUsers
-                .Where(i => Int32.Parse(i.Id) != id)
+                .Where(i => i.Id != id)
                 .Select(i => i.Number)
                 .ToListAsync();
 
@@ -101,7 +101,7 @@ namespace RezerwacjaSal.Pages.AppUsers
             if (await TryUpdateModelAsync<ApplicationUser>(
                 appUserToUpdate,
                 "ApplicationUser",   
-                 s => s.Number, s => s.FirstName, s => s.LastName, s => s.Employee, s => s.Email, s => s.Phone, s => s.Note))
+                 s => s.Number, s => s.FirstName, s => s.LastName, s => s.Employee, s => s.Email, s => s.PhoneNumber, s => s.Note))
             {
                 await _context.SaveChangesAsync();
             }
@@ -120,7 +120,7 @@ namespace RezerwacjaSal.Pages.AppUsers
                 else
                     FirstEmployment = new Employment(); // osoba nie miała pierwszego etatu -> nowy pierwszy etat
 
-                FirstEmployment.Id = Int32.Parse(appUserToUpdate.Id); // przekazanie ID z osoby do zatrudnienia
+                FirstEmployment.Id = appUserToUpdate.Id; // przekazanie ID z osoby do zatrudnienia
 
                 if (await TryUpdateModelAsync<Employment>(
                     FirstEmployment,
@@ -139,7 +139,7 @@ namespace RezerwacjaSal.Pages.AppUsers
                     else
                         SecondEmployment = new Employment();  // osoba nie miała drugiego etatu -> nowy drugi etat
 
-                    SecondEmployment.Id = Int32.Parse(appUserToUpdate.Id); // przekazanie ID z osoby do zatrudnienia
+                    SecondEmployment.Id = appUserToUpdate.Id; // przekazanie ID z osoby do zatrudnienia
 
                     if (await TryUpdateModelAsync<Employment>(
                                         SecondEmployment,

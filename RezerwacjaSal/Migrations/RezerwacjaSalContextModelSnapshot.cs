@@ -237,24 +237,22 @@ namespace RezerwacjaSal.Migrations
 
             modelBuilder.Entity("RezerwacjaSal.Models.Employment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EmploymentID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<int?>("DepartmentID");
 
-                    b.Property<int>("EmploymentID");
+                    b.Property<string>("Id");
 
                     b.Property<string>("Position")
                         .HasMaxLength(50);
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
+                    b.HasKey("EmploymentID");
 
                     b.HasIndex("DepartmentID");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("Employment");
                 });
@@ -364,8 +362,6 @@ namespace RezerwacjaSal.Migrations
 
                     b.Property<int>("Number");
 
-                    b.Property<string>("Phone");
-
                     b.ToTable("ApplicationUser");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
@@ -426,14 +422,14 @@ namespace RezerwacjaSal.Migrations
 
             modelBuilder.Entity("RezerwacjaSal.Models.Employment", b =>
                 {
-                    b.HasOne("RezerwacjaSal.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Employments")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("RezerwacjaSal.Models.Department", "Department")
                         .WithMany("Employments")
                         .HasForeignKey("DepartmentID")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("RezerwacjaSal.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Employments")
+                        .HasForeignKey("Id");
                 });
 
             modelBuilder.Entity("RezerwacjaSal.Models.Message", b =>

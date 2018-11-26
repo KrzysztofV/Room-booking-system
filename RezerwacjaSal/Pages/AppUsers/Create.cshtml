@@ -13,7 +13,7 @@
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <input asp-for="SetAutoNumber" type="checkbox" id="IDchecker" onclick="automaticID()" checked="@Model.SetAutoNumber" />
+                    <input asp-for="SetAutoNumber" type="checkbox" id="IDchecker" onclick="automaticID()" @*checked="@Model.SetAutoNumber" *@ />
                     <span asp-validation-for="SetAutoNumber" class="text-danger"></span>
                     <label class="form-check-label">Automatyczne ID: @Model.AutoNumber</label>
                 </div>
@@ -25,6 +25,21 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label asp-for="ApplicationUser.Email" class="control-label">Email (nazwa użytkownika):</label>
+                    <input asp-for="ApplicationUser.Email" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password">Hasło:</label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword">Potwierdź hasło:</label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="ApplicationUser.FirstName" class="control-label">Imię:</label>
                     <input asp-for="ApplicationUser.FirstName" class="form-control" />
                     <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
@@ -34,19 +49,15 @@
                     <input asp-for="ApplicationUser.LastName" class="form-control" />
                     <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="ApplicationUser.Email" class="control-label">Email:</label>
-                    <input asp-for="ApplicationUser.Email" class="form-control" />
-                    <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ApplicationUser.Phone" class="control-label">Telefon:</label>
-                    <input asp-for="ApplicationUser.Phone" class="form-control" />
-                    <span asp-validation-for="ApplicationUser.Phone" class="text-danger"></span>
+                    <label asp-for="ApplicationUser.PhoneNumber" class="control-label">Telefon:</label>
+                    <input asp-for="ApplicationUser.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ApplicationUser.Note" class="control-label">Dodatkowe informacje:</label>
-                    <textarea asp-for="ApplicationUser.Note" class="form-control"  rows="5"></textarea>
+                    <textarea asp-for="ApplicationUser.Note" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="ApplicationUser.Note" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -114,7 +125,7 @@
                 </div>
                 <div class="form-group">
                     <a class="btn btn-default" asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
-                    <input type="submit" value="Zapisz" class="btn btn-default btn-primary"  />
+                    <input type="submit" value="Zapisz" class="btn btn-default btn-primary" />
                 </div>
             </form>
         </div>

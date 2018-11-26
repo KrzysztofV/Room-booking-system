@@ -25,12 +25,6 @@ namespace RezerwacjaSal.Models
 
         public bool Employee { get; set; } // czy jest pracownikiem uczelni
 
-        [EmailAddress(ErrorMessage = "To nie jest poprawny adres e-mail.")]
-        public string Email { get; set; }
-
-        [Phone(ErrorMessage = "To nie przypomina telefunu.")]
-        public string Phone { get; set; }
-
         [StringLength(200, ErrorMessage = "Notatka nie może być dłuższa niż 200 znaków.")]
         public string Note { get; set; }
 

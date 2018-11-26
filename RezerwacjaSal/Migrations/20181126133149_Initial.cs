@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RezerwacjaSal.Migrations
 {
-    public partial class Update : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,7 +46,6 @@ namespace RezerwacjaSal.Migrations
                     FirstName = table.Column<string>(maxLength: 50, nullable: true),
                     LastName = table.Column<string>(maxLength: 50, nullable: true),
                     Employee = table.Column<bool>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
                     Note = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
@@ -228,28 +227,27 @@ namespace RezerwacjaSal.Migrations
                 name: "Employment",
                 columns: table => new
                 {
-                    EmploymentID = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
+                    EmploymentID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: true),
                     DepartmentID = table.Column<int>(nullable: true),
-                    Position = table.Column<string>(maxLength: 50, nullable: true),
-                    ApplicationUserId = table.Column<string>(nullable: true)
+                    Position = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Employment_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Employment", x => x.EmploymentID);
                     table.ForeignKey(
                         name: "FK_Employment_Department_DepartmentID",
                         column: x => x.DepartmentID,
                         principalTable: "Department",
                         principalColumn: "DepartmentID",
                         onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Employment_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -351,14 +349,14 @@ namespace RezerwacjaSal.Migrations
                 column: "DepartmentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employment_ApplicationUserId",
-                table: "Employment",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Employment_DepartmentID",
                 table: "Employment",
                 column: "DepartmentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employment_Id",
+                table: "Employment",
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Message_ApplicationUserId",

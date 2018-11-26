@@ -73,7 +73,7 @@ using RezerwacjaSal;
             WriteLiteral("<p>\r\n</p>\r\n<div class=\"btn-group\">\r\n\r\n    ");
             EndContext();
             BeginContext(139, 119, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "42098c6e19c443cb94715b4831a7905f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a12febfbba61487ba573cb9c7bcee7c0", async() => {
                 BeginContext(246, 8, true);
                 WriteLiteral("Wydziały");
                 EndContext();
@@ -109,7 +109,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(264, 116, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "06f8f7b7ebaa4eabb5b3d302048e3b7c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bc588806d81942ada19f871ccedeb75f", async() => {
                 BeginContext(369, 7, true);
                 WriteLiteral("Budynki");
                 EndContext();
@@ -225,7 +225,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n                </td>\r\n                <td>\r\n                    ");
             EndContext();
             BeginContext(1482, 159, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74fcc601f0fb4f3a974752321f32d472", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "12ccfa158a5b46ab8d2c9ad5ac6d11be", async() => {
                 BeginContext(1631, 6, true);
                 WriteLiteral("Edytuj");
                 EndContext();
@@ -278,7 +278,7 @@ using RezerwacjaSal;
             WriteLiteral(" |\r\n                    ");
             EndContext();
             BeginContext(1665, 165, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c5a733fb1ec54b72b521b6c4f5f0dd3c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff0b44d52045410eaca93f534a1ffac7", async() => {
                 BeginContext(1817, 9, true);
                 WriteLiteral("Szczegóły");
                 EndContext();
@@ -331,7 +331,7 @@ using RezerwacjaSal;
             WriteLiteral(" |\r\n                    ");
             EndContext();
             BeginContext(1854, 159, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "816db5208e9344f2b6e9de29a6f80aee", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a90ec7c8cd4241e2bda4e361dc6d5e1e", async() => {
                 BeginContext(2005, 4, true);
                 WriteLiteral("Usuń");
                 EndContext();
@@ -392,7 +392,7 @@ using RezerwacjaSal;
             WriteLiteral("        <tr class=\"active\">\r\n            <td></td>\r\n            <td></td>\r\n            <td></td>\r\n            <td>\r\n                ");
             EndContext();
             BeginContext(2200, 173, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "69f21ac1749e483d98610d4847ee4c91", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e44a6a10243c4973b9e35507c0d76a87", async() => {
                 BeginContext(2353, 16, true);
                 WriteLiteral("Dodaj nowy pokój");
                 EndContext();

@@ -92,4 +92,3 @@ C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\net
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\AppUsers\Details.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\AppUsers\Edit.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\AppUsers\Index.g.cshtml.cs
-C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.csprojAssemblyReference.cache

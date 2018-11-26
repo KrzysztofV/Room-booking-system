@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,10 +11,11 @@ namespace RezerwacjaSal.Models
     public class Employment
     {
         // EF samo generuje sobie liczbę ID - nie muszę jej znać ani ustawiać 
+        [Key]
         public int EmploymentID { get; set; }
         
-        public int Id { get; set; } 
-        public int? DepartmentID { get; set; }// opcjonalne ("?")
+        public string Id { get; set; } 
+        public int? DepartmentID { get; set; }
 
         [StringLength(50, ErrorMessage = "Opis pozycji nie może być dłuższy niż 50 znaków.")]
         public string Position { get; set; }
