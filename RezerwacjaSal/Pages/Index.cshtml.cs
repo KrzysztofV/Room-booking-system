@@ -43,7 +43,7 @@ namespace RezerwacjaSal.Pages
             Now = DateTime.Now;
 
             Reservations = await _context.Reservations
-                .Include(r => r.Pearson)
+                .Include(r => r.ApplicationUser)
                 .AsNoTracking()
                 .ToListAsync();
 

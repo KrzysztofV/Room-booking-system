@@ -1,5 +1,5 @@
 ﻿@page 
-@model RezerwacjaSal.Pages.People.CreateModel
+@model RezerwacjaSal.Pages.AppUsers.CreateModel
 @{
     ViewData["Title"] = "Create";
 }
@@ -13,45 +13,45 @@
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <input asp-for="SetAutoPearsonNumber" type="checkbox" id="IDchecker" onclick="automaticID()" checked="@Model.SetAutoPearsonNumber" />
-                    <span asp-validation-for="SetAutoPearsonNumber" class="text-danger"></span>
-                    <label class="form-check-label">Automatyczne ID: @Model.AutoPearsonNumber</label>
+                    <input asp-for="SetAutoNumber" type="checkbox" id="IDchecker" onclick="automaticID()" checked="@Model.SetAutoNumber" />
+                    <span asp-validation-for="SetAutoNumber" class="text-danger"></span>
+                    <label class="form-check-label">Automatyczne ID: @Model.AutoNumber</label>
                 </div>
                 <div id="IDinput" style="display:none">
                     <div class="form-group">
-                        <label asp-for="ManualPearsonNumber" class="control-label">ID:</label>
-                        <input asp-for="ManualPearsonNumber" class="form-control" />
-                        <span class="text-danger">@Model.DuplicatePearsonNumberExistError</span>
+                        <label asp-for="ManualNumber" class="control-label">ID:</label>
+                        <input asp-for="ManualNumber" class="form-control" />
+                        <span class="text-danger">@Model.DuplicateNumberExistError</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Pearson.FirstName" class="control-label">Imię:</label>
-                    <input asp-for="Pearson.FirstName" class="form-control" />
-                    <span asp-validation-for="Pearson.FirstName" class="text-danger"></span>
+                    <label asp-for="ApplicationUser.FirstName" class="control-label">Imię:</label>
+                    <input asp-for="ApplicationUser.FirstName" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Pearson.LastName" class="control-label">Nazwisko:</label>
-                    <input asp-for="Pearson.LastName" class="form-control" />
-                    <span asp-validation-for="Pearson.LastName" class="text-danger"></span>
+                    <label asp-for="ApplicationUser.LastName" class="control-label">Nazwisko:</label>
+                    <input asp-for="ApplicationUser.LastName" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Pearson.Email" class="control-label">Email:</label>
-                    <input asp-for="Pearson.Email" class="form-control" />
-                    <span asp-validation-for="Pearson.Email" class="text-danger"></span>
+                    <label asp-for="ApplicationUser.Email" class="control-label">Email:</label>
+                    <input asp-for="ApplicationUser.Email" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Pearson.Phone" class="control-label">Telefon:</label>
-                    <input asp-for="Pearson.Phone" class="form-control" />
-                    <span asp-validation-for="Pearson.Phone" class="text-danger"></span>
+                    <label asp-for="ApplicationUser.Phone" class="control-label">Telefon:</label>
+                    <input asp-for="ApplicationUser.Phone" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.Phone" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Pearson.Note" class="control-label">Dodatkowe informacje:</label>
-                    <textarea asp-for="Pearson.Note" class="form-control"  rows="5"></textarea>
-                    <span asp-validation-for="Pearson.Note" class="text-danger"></span>
+                    <label asp-for="ApplicationUser.Note" class="control-label">Dodatkowe informacje:</label>
+                    <textarea asp-for="ApplicationUser.Note" class="form-control"  rows="5"></textarea>
+                    <span asp-validation-for="ApplicationUser.Note" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input asp-for="Pearson.Employee" type="checkbox" id="employeeChecker" onclick="employeeChecked()" onload="employeeChecked()" />
-                    <span asp-validation-for="Pearson.Employee" class="text-danger"></span>
+                    <input asp-for="ApplicationUser.Employee" type="checkbox" id="employeeChecker" onclick="employeeChecked()" onload="employeeChecked()" />
+                    <span asp-validation-for="ApplicationUser.Employee" class="text-danger"></span>
                     <label class="form-check-label">Pracownik uczelni</label>
                 </div>
                 <script>

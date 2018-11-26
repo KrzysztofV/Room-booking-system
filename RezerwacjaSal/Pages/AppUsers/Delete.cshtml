@@ -1,6 +1,6 @@
 ﻿
 @page 
-@model RezerwacjaSal.Pages.People.DeleteModel
+@model RezerwacjaSal.Pages.AppUsers.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -20,45 +20,45 @@
             Numer:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Pearson.PearsonNumber)
+            @Html.DisplayFor(model => model.ApplicationUser.Number)
         </dd>
         <dt>
             Imię:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Pearson.FirstName)
+            @Html.DisplayFor(model => model.ApplicationUser.FirstName)
         </dd>
         <dt>
             Nazwisko:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Pearson.LastName)
+            @Html.DisplayFor(model => model.ApplicationUser.LastName)
         </dd>
         <dt>
             Pracownik:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Pearson.Employee)
+            @Html.DisplayFor(model => model.ApplicationUser.Employee)
         </dd>
         <dt>
             Email:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Pearson.Email)
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
         </dd>
         <dt>
             Telefun:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Pearson.Phone)
+            @Html.DisplayFor(model => model.ApplicationUser.Phone)
         </dd>
         <dt>
             Dodatkowe informacje:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Pearson.Note)
+            @Html.DisplayFor(model => model.ApplicationUser.Note)
         </dd>
-        @if (Model.Pearson.Employee)
+        @if (Model.ApplicationUser.Employee)
         {
             <dt>
                 Zatrudnienie:
@@ -70,7 +70,7 @@
                         <th>Jako:</th>
                     </tr>
                     @*dla każdego zatrudnienia*@
-                    @foreach (var item in Model.Pearson.Employments)
+                    @foreach (var item in Model.ApplicationUser.Employments)
                     {
                         <tr>
                             <td>
@@ -87,7 +87,7 @@
         }
     </dl>
     <form method="post">
-        <input type="hidden" asp-for="Pearson.PearsonID" />
+        <input type="hidden" asp-for="ApplicationUser.Id" />
         <a class="btn btn-default"asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
         <input type="submit" value="Usuń" class="btn btn-default btn-danger"  /> 
     </form>

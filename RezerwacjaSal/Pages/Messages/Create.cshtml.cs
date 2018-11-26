@@ -32,21 +32,21 @@ namespace RezerwacjaSal.Pages.Messages
         [BindProperty]
         public Message Message { get; set; }
         [BindProperty]
-        public int PearsonNumber { get; set; }
-        public string PearsonNotFoundError { get; private set; }
+        public int Number { get; set; }
+        public string AppUserNotFoundError { get; private set; }
         public string EmailNotFoundError { get; private set; }
         public string EmailSendError { get; private set; }
         public string EmailSendStatus { get; private set; }
 
-        private List<int> AllPearsonNumbers { get; set; }
+        private List<int> AllNumbers { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
 
-            AllPearsonNumbers = await _context.People
-                    .Select(i => i.PearsonNumber)
+            AllNumbers = await _context.AppUsers
+                    .Select(i => i.Number)
                     .ToListAsync();
 
             var newMessage = new Message();
@@ -54,16 +54,16 @@ namespace RezerwacjaSal.Pages.Messages
             DateTime Now = DateTime.Now;
             newMessage.Date = Now;
 
-            if (PearsonNumber != 0)
-                if (AllPearsonNumbers.Contains(PearsonNumber))
+            if (Number != 0)
+                if (AllNumbers.Contains(Number))
                 {
-                    newMessage.PearsonID = await _context.People
-                        .Where(r => r.PearsonNumber == PearsonNumber)
-                        .Select(r => r.PearsonID)
+                    newMessage.Id = await _context.AppUsers
+                        .Where(r => r.Number == Number)
+                        .Select(r => Int32.Parse(r.Id))
                         .FirstOrDefaultAsync();
 
-                    newMessage.Email = await _context.People
-                        .Where(r => r.PearsonNumber == PearsonNumber)
+                    newMessage.Email = await _context.AppUsers
+                        .Where(r => r.Number == Number)
                         .Select(r => r.Email)
                         .FirstOrDefaultAsync();
 
@@ -75,21 +75,21 @@ namespace RezerwacjaSal.Pages.Messages
                 }
                 else
                 {
-                    PearsonNotFoundError = "Nie znaleziono takiej osoby.";
+                    AppUserNotFoundError = "Nie znaleziono takiej osoby.";
                     return Page();
                 }
 
             if (await TryUpdateModelAsync<Message>(
                 newMessage,
                 "Message", 
-                 s => s.PearsonName, s => s.MessageSubject, s => s.MessageContent, s => s.IP))
+                 s => s.Name, s => s.MessageSubject, s => s.MessageContent, s => s.IP))
             {
                 _context.Messages.Add(newMessage);
                 await _context.SaveChangesAsync();
             }
 
-            if (PearsonNumber != 0)
-                Message.Email = await _context.People.Where(r => r.PearsonNumber == PearsonNumber)
+            if (Number != 0)
+                Message.Email = await _context.AppUsers.Where(r => r.Number == Number)
                     .Select(r => r.Email)
                     .FirstOrDefaultAsync();
 

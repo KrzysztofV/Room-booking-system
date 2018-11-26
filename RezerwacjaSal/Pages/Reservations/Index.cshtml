@@ -87,8 +87,8 @@
                         <th style="border-color:#808080" class="danger">
                             @{
                                 var Id = reservation.ReservationID;
-                                var FirstName = Model.People.Where(p => p.PearsonID == Model.Reservations.Where(r => r.ReservationID == Id).Select(i => i.PearsonID).First()).Select(p => p.FirstName).FirstOrDefault();
-                                var LastName = Model.People.Where(p => p.PearsonID == Model.Reservations.Where(r => r.ReservationID == Id).Select(i => i.PearsonID).First()).Select(p => p.LastName).FirstOrDefault();
+                                var FirstName = Model.AppUsers.Where(p => Int32.Parse(p.Id) == Model.Reservations.Where(r => r.ReservationID == Id).Select(i => i.Id).First()).Select(p => p.FirstName).FirstOrDefault();
+                                var LastName = Model.AppUsers.Where(p => Int32.Parse(p.Id) == Model.Reservations.Where(r => r.ReservationID == Id).Select(i => i.Id).First()).Select(p => p.LastName).FirstOrDefault();
                                 var Beginning = reservation.StartTime.ToShortTimeString();
                                 var Ending = reservation.EndTime.ToShortTimeString();
                                 var TooltipTitle = "ID: " + Id.ToString() + "\n" + Beginning + " - " + Ending + "\nKliknij aby przejść do szczegółów";

@@ -41,19 +41,19 @@
                     <a asp-page="/Buildings/Index" asp-route-departmentid="@item.DepartmentID">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
                 <td>
-                    <a asp-page="/People/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
-                       asp-route-id="@Model.People.Where(p => p.PearsonNumber == item.Administrator).Select(p=>p.PearsonID).FirstOrDefault()">
-                        @Model.People.Where(p => p.PearsonNumber == item.Administrator).Select(p => p.FirstName).FirstOrDefault()
+                    <a asp-page="/AppUsers/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
+                       asp-route-id="@Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p=>p.Id).FirstOrDefault()">
+                        @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.FirstName).FirstOrDefault()
                         &shy;
-                        @Model.People.Where(p => p.PearsonNumber == item.Administrator).Select(p => p.LastName).FirstOrDefault()
+                        @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.LastName).FirstOrDefault()
                     </a>
                 </td>
                 <td>
-                    <a asp-page="/People/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
-                       asp-route-id="@Model.People.Where(p => p.PearsonNumber == item.Manager).Select(p=>p.PearsonID).FirstOrDefault()">
-                        @Model.People.Where(p => p.PearsonNumber == item.Manager).Select(p => p.FirstName).FirstOrDefault()
+                    <a asp-page="/AppUsers/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
+                       asp-route-id="@Model.AppUsers.Where(p => p.Number == item.Manager).Select(p=>p.Id).FirstOrDefault()">
+                        @Model.AppUsers.Where(p => p.Number == item.Manager).Select(p => p.FirstName).FirstOrDefault()
                         &shy;
-                        @Model.People.Where(p => p.PearsonNumber == item.Manager).Select(p => p.LastName).FirstOrDefault()
+                        @Model.AppUsers.Where(p => p.Number == item.Manager).Select(p => p.LastName).FirstOrDefault()
                     </a>
                 </td>
                 <td>

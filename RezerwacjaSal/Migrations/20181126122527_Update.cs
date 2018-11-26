@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RezerwacjaSal.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class Update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,14 @@ namespace RezerwacjaSal.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Number = table.Column<int>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(maxLength: 50, nullable: true),
+                    Employee = table.Column<bool>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,25 +67,6 @@ namespace RezerwacjaSal.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Department", x => x.DepartmentID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Pearson",
-                columns: table => new
-                {
-                    PearsonID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PearsonNumber = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    Employee = table.Column<bool>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    Note = table.Column<string>(maxLength: 200, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pearson", x => x.PearsonID);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,6 +176,32 @@ namespace RezerwacjaSal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Message",
+                columns: table => new
+                {
+                    MessageID = table.Column<int>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    MessageSubject = table.Column<string>(nullable: false),
+                    MessageContent = table.Column<string>(nullable: false),
+                    IP = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ApplicationUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Message", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Message_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Building",
                 columns: table => new
                 {
@@ -214,52 +228,28 @@ namespace RezerwacjaSal.Migrations
                 name: "Employment",
                 columns: table => new
                 {
-                    EmploymentID = table.Column<int>(nullable: false)
+                    EmploymentID = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PearsonID = table.Column<int>(nullable: false),
                     DepartmentID = table.Column<int>(nullable: true),
-                    Position = table.Column<string>(maxLength: 50, nullable: true)
+                    Position = table.Column<string>(maxLength: 50, nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employment", x => x.EmploymentID);
+                    table.PrimaryKey("PK_Employment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employment_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Employment_Department_DepartmentID",
                         column: x => x.DepartmentID,
                         principalTable: "Department",
                         principalColumn: "DepartmentID",
                         onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "FK_Employment_Pearson_PearsonID",
-                        column: x => x.PearsonID,
-                        principalTable: "Pearson",
-                        principalColumn: "PearsonID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Message",
-                columns: table => new
-                {
-                    MessageID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(nullable: true),
-                    PearsonName = table.Column<string>(nullable: true),
-                    MessageSubject = table.Column<string>(nullable: false),
-                    MessageContent = table.Column<string>(nullable: false),
-                    IP = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    PearsonID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Message", x => x.MessageID);
-                    table.ForeignKey(
-                        name: "FK_Message_Pearson_PearsonID",
-                        column: x => x.PearsonID,
-                        principalTable: "Pearson",
-                        principalColumn: "PearsonID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -289,24 +279,25 @@ namespace RezerwacjaSal.Migrations
                 name: "Reservation",
                 columns: table => new
                 {
-                    ReservationID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ReservationID = table.Column<int>(nullable: false),
                     RoomID = table.Column<int>(nullable: false),
-                    PearsonID = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: false),
-                    Note = table.Column<string>(maxLength: 200, nullable: true)
+                    Note = table.Column<string>(maxLength: 200, nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservation", x => x.ReservationID);
+                    table.PrimaryKey("PK_Reservation", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservation_Pearson_PearsonID",
-                        column: x => x.PearsonID,
-                        principalTable: "Pearson",
-                        principalColumn: "PearsonID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Reservation_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reservation_Room_RoomID",
                         column: x => x.RoomID,
@@ -360,24 +351,24 @@ namespace RezerwacjaSal.Migrations
                 column: "DepartmentID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employment_ApplicationUserId",
+                table: "Employment",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employment_DepartmentID",
                 table: "Employment",
                 column: "DepartmentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employment_PearsonID",
-                table: "Employment",
-                column: "PearsonID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Message_PearsonID",
+                name: "IX_Message_ApplicationUserId",
                 table: "Message",
-                column: "PearsonID");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservation_PearsonID",
+                name: "IX_Reservation_ApplicationUserId",
                 table: "Reservation",
-                column: "PearsonID");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservation_RoomID",
@@ -421,9 +412,6 @@ namespace RezerwacjaSal.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Pearson");
 
             migrationBuilder.DropTable(
                 name: "Room");

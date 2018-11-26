@@ -35,7 +35,7 @@ namespace RezerwacjaSal.Pages.Reservations
 
 
             Reservation = await _context.Reservations
-                .Include(r => r.Pearson)
+                .Include(r => r.ApplicationUser)
                 .Include(r => r.Room)
                 .ThenInclude(b=>b.Building)
                 .ThenInclude(d=>d.Department)

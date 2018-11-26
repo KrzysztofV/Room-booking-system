@@ -24,7 +24,7 @@ namespace RezerwacjaSal.Pages.Messages
         public async Task OnGetAsync()
         {
             Message = await _context.Messages
-                .Include(m => m.Pearson)
+                .Include(m => m.ApplicationUser)
                 .AsNoTracking()
                 .ToListAsync();
         }

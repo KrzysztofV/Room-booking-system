@@ -15,7 +15,7 @@
                     @Html.DisplayNameFor(model => model.Message[0].Email)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Message[0].PearsonName)
+                    @Html.DisplayNameFor(model => model.Message[0].Name)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Message[0].MessageSubject)
@@ -30,7 +30,7 @@
                     @Html.DisplayNameFor(model => model.Message[0].Date)
                 </th>
             <th>
-                @Html.DisplayNameFor(model => model.Message[0].Pearson)
+                @Html.DisplayNameFor(model => model.Message[0].ApplicationUser)
             </th>
             </tr>
     </thead>
@@ -42,7 +42,7 @@
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PearsonName)
+                        @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.MessageSubject)
@@ -57,7 +57,7 @@
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Pearson.FirstName)
+                        @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName)
                     </td>
 
                 </tr>

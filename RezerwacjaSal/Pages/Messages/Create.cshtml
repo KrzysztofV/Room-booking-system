@@ -21,31 +21,31 @@
             <script>
                 function Checked() {
                     var checker = document.getElementById("Cheker").checked;
-                    var pearsonNumber = document.getElementById('PearsonNumber');
-                    var pearsonName = document.getElementById('PearsonName');
-                    var pearsonEmail = document.getElementById('PearsonEmail');
+                    var Number = document.getElementById('Number');
+                    var Name = document.getElementById('Name');
+                    var Email = document.getElementById('Email');
                     if (checker) {
-                        pearsonNumber.style.display = 'block';
-                        pearsonName.style.display = 'none';
-                        pearsonEmail.style.display = 'none';
+                        Number.style.display = 'block';
+                        Name.style.display = 'none';
+                        Email.style.display = 'none';
                     } else {
-                        pearsonNumber.style.display = 'none';
-                        pearsonName.style.display = 'block';
-                        pearsonEmail.style.display = 'block';
+                        Number.style.display = 'none';
+                        Name.style.display = 'block';
+                        Email.style.display = 'block';
                     }
                 }
             </script>
-            <div class="form-group" id="PearsonNumber" style="display:none">
-                <label asp-for="Message.PearsonID" class="control-label">Numer osoby:</label>
-                <input asp-for="@Model.PearsonNumber" class="form-control" />
-                <span class="text-danger">@Model.PearsonNotFoundError</span>
+            <div class="form-group" id="Number" style="display:none">
+                <label asp-for="Message.Id" class="control-label">Numer osoby:</label>
+                <input asp-for="@Model.Number" class="form-control" />
+                <span class="text-danger">@Model.AppUserNotFoundError</span>
             </div>
-            <div class="form-group" id="PearsonName" style="display:block">
-                <label asp-for="Message.PearsonName" class="control-label">Imię: <text style="color:lightgray">(opcjonalne)</text></label>
-                <input asp-for="Message.PearsonName" class="form-control" />
-                <span asp-validation-for="Message.PearsonName" class="text-danger"></span>
+            <div class="form-group" id="Name" style="display:block">
+                <label asp-for="Message.Name" class="control-label">Imię: <text style="color:lightgray">(opcjonalne)</text></label>
+                <input asp-for="Message.Name" class="form-control" />
+                <span asp-validation-for="Message.Name" class="text-danger"></span>
             </div>
-            <div class="form-group" id="PearsonEmail">
+            <div class="form-group" id="Email">
                 <label asp-for="Message.Email" class="control-label">Email: <text style="color:lightgray">(opcjonalne)</text></label><br>
                 Na ten email zostanie wysłana wiadomość zwrotna:
                 <input asp-for="Message.Email" class="form-control" />

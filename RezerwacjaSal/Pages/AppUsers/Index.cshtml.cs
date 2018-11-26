@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using RezerwacjaSal.Data;
 using RezerwacjaSal.Models;
 
-namespace RezerwacjaSal.Pages.People
+namespace RezerwacjaSal.Pages.AppUsers
 {
     public class IndexModel : PageModel
     {
@@ -27,7 +27,7 @@ namespace RezerwacjaSal.Pages.People
         public string CurrentFilter { get; set; }
         public string CurrentSort { get; set; }
         public int PageSize { get; set; }
-        public PaginatedList<Pearson> Pearson { get; set; }
+        public PaginatedList<ApplicationUser> ApplicationUser { get; set; }
         public IList<int> PageSizesList { get; set; }
         public string SortOrderRoute { get; set; }
         public string CurrentFilterRoute { get; set; }
@@ -80,7 +80,7 @@ namespace RezerwacjaSal.Pages.People
 
             CurrentFilter = searchString;
 
-            IQueryable<Pearson> pearsonIQ = from s in _context.People
+            IQueryable<ApplicationUser> appUserIQ = from s in _context.AppUsers
                                             select s;
 
             // wyszukiwanie
@@ -88,38 +88,38 @@ namespace RezerwacjaSal.Pages.People
             {
                 int Number;
                 var searchStringIsNumber= int.TryParse(searchString, out Number);
-                pearsonIQ = pearsonIQ.Where(s => s.LastName.Contains(searchString)
+                appUserIQ = appUserIQ.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstName.Contains(searchString)
-                                       || s.PearsonNumber.Equals(Number));
+                                       || s.Number.Equals(Number));
             }
 
             // przełączanie sortowania
             switch (sortOrder)
             {
                 case "first_name_desc":
-                    pearsonIQ = pearsonIQ.OrderByDescending(s => s.FirstName);
+                    appUserIQ = appUserIQ.OrderByDescending(s => s.FirstName);
                     break;
                 case "first_name_ascen":
-                    pearsonIQ = pearsonIQ.OrderBy(s => s.FirstName);
+                    appUserIQ = appUserIQ.OrderBy(s => s.FirstName);
                     break;
                 case "last_name_ascen":
-                    pearsonIQ = pearsonIQ.OrderBy(s => s.LastName);
+                    appUserIQ = appUserIQ.OrderBy(s => s.LastName);
                     break;
                 case "last_name_desc":
-                    pearsonIQ = pearsonIQ.OrderByDescending(s => s.LastName);
+                    appUserIQ = appUserIQ.OrderByDescending(s => s.LastName);
                     break;
                 case "number_desc":
-                    pearsonIQ = pearsonIQ.OrderByDescending(s => s.PearsonNumber);
+                    appUserIQ = appUserIQ.OrderByDescending(s => s.Number);
                     break;
                 default:
-                    pearsonIQ = pearsonIQ.OrderBy(s => s.PearsonNumber);
+                    appUserIQ = appUserIQ.OrderBy(s => s.Number);
                     break;
             }
 
             PageSize = pageSize ?? 15;
 
-            Pearson = await PaginatedList<Pearson>.CreateAsync(
-                    pearsonIQ.AsNoTracking(), pageIndex ?? 1, PageSize);
+            ApplicationUser = await PaginatedList<ApplicationUser>.CreateAsync(
+                    appUserIQ.AsNoTracking(), pageIndex ?? 1, PageSize);
         }
     }
 }

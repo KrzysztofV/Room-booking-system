@@ -24,7 +24,7 @@ namespace RezerwacjaSal.Pages.Reservations
 
         public Building Building { get; set; }
         public IList<Room> Rooms { get; set; }
-        public IList<Pearson> People { get; set; }
+        public IList<ApplicationUser> AppUsers { get; set; }
         public IList<Reservation> Reservations { get; set; }
         public IList<DateTime> Hours { get; set; }
         public DateTime Date { get; set; }
@@ -79,12 +79,12 @@ namespace RezerwacjaSal.Pages.Reservations
                 .AsNoTracking()
                 .ToListAsync();
 
-            People = await _context.People
+            AppUsers = await _context.AppUsers
                 .AsNoTracking()
                 .ToListAsync();
 
             Reservations = await _context.Reservations
-                            .Include(r => r.Pearson)
+                            .Include(r => r.ApplicationUser)
                             .Include(r => r.Room)
                             // kaskada rezerwacja<-pokój<-budynek, aby dostać się do ID budynku trzeba "przejść" przez pokój 
                             .ThenInclude(b => b.Building)

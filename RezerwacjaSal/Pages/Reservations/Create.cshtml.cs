@@ -21,20 +21,20 @@ namespace RezerwacjaSal.Pages.Reservations
             _context = context;
         }
         public Room Room { get; set; }
-        public IList<Pearson> People { get; set; }
+        public IList<ApplicationUser> AppUsers { get; set; }
         public IList<Reservation> Reservations { get; set; }
 
         public List<String> Hours;
         public DateTime Date { get; private set; }
 
-        private List<int> AllPearsonNumbers;
+        private List<int> AllNumbers;
 
         public int BuildingIdRoute { get; set; }
         public int DepartmentIdRoute { get; set; }
         public DateTime StartTime { get; private set; }
         public int RoomId { get; set; }
         [BindProperty]
-        public int PearsonNumber { get; set; }
+        public int Number { get; set; }
 
         public async Task<IActionResult> OnGetAsync( int roomid, int buildingid, int departmentid, string date, string time)
         {
@@ -58,7 +58,7 @@ namespace RezerwacjaSal.Pages.Reservations
 
 
             Reservations = await _context.Reservations
-                            .Include(r => r.Pearson)
+                            .Include(r => r.ApplicationUser)
                             .Include(r => r.Room)
                             .ThenInclude(b => b.Building)
                             .Where(b => b.Room.BuildingID == buildingid)
@@ -105,7 +105,7 @@ namespace RezerwacjaSal.Pages.Reservations
         [BindProperty]
         public string DateInputString { get; set; }
         public string ErrorString { get; private set; }
-        public string PearsonNumberError { get; private set; }
+        public string NumberError { get; private set; }
 
         public async Task<IActionResult> OnPostAsync(int roomid, int buildingid, int departmentid, string date)
         {
@@ -115,8 +115,8 @@ namespace RezerwacjaSal.Pages.Reservations
             DateTime.TryParse(date, out var ParseDate);
             Date = ParseDate;
 
-            AllPearsonNumbers = await _context.People
-                .Select(i => i.PearsonNumber)
+            AllNumbers = await _context.AppUsers
+                .Select(i => i.Number)
                 .ToListAsync();
 
             RoomId = roomid;
@@ -138,7 +138,7 @@ namespace RezerwacjaSal.Pages.Reservations
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
-            People = await _context.People
+            AppUsers = await _context.AppUsers
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -186,9 +186,9 @@ namespace RezerwacjaSal.Pages.Reservations
 
             if (ErrorString != null) return Page();
 
-            if (!AllPearsonNumbers.Contains(PearsonNumber))
+            if (!AllNumbers.Contains(Number))
             {
-                PearsonNumberError = String.Format("Nie ma takiego człeka o numerze: {0}", PearsonNumber);
+                NumberError = String.Format("Nie ma takiego człeka o numerze: {0}", Number);
                 return Page();
             }
 
@@ -197,7 +197,7 @@ namespace RezerwacjaSal.Pages.Reservations
             DateTime.TryParse(DateInputString, out var ParseStringDate);
             newReservation.Date = ParseStringDate;
 
-            newReservation.PearsonID = People.Where(i => i.PearsonNumber == PearsonNumber).Select(i => i.PearsonID).FirstOrDefault();
+            newReservation.Id = AppUsers.Where(i => i.Number == Number).Select(i => Int32.Parse(i.Id)).FirstOrDefault();
 
             if (await TryUpdateModelAsync<Reservation>(
                 newReservation,

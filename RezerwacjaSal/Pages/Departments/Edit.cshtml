@@ -25,8 +25,8 @@
                 @if (Model.AdministratorIdError == null)
                 {
                     <p>
-                        @Model.People.Where(p => p.PearsonNumber == Model.Department.Administrator).Select(p => p.FirstName).FirstOrDefault()
-                        @Model.People.Where(p => p.PearsonNumber == Model.Department.Administrator).Select(p => p.LastName).FirstOrDefault()
+                        @Model.AppUsers.Where(p => p.Number == Model.Department.Administrator).Select(p => p.FirstName).FirstOrDefault()
+                        @Model.AppUsers.Where(p => p.Number == Model.Department.Administrator).Select(p => p.LastName).FirstOrDefault()
                     </p>
                 }
                 <span asp-validation-for="Department.Administrator" class="text-danger"></span>
@@ -38,8 +38,8 @@
                 @if (Model.ManagerIdError == null)
                 {
                     <p>
-                        @Model.People.Where(p => p.PearsonNumber == Model.Department.Manager).Select(p => p.FirstName).FirstOrDefault()
-                        @Model.People.Where(p => p.PearsonNumber == Model.Department.Manager).Select(p => p.LastName).FirstOrDefault()
+                        @Model.AppUsers.Where(p => p.Number == Model.Department.Manager).Select(p => p.FirstName).FirstOrDefault()
+                        @Model.AppUsers.Where(p => p.Number == Model.Department.Manager).Select(p => p.LastName).FirstOrDefault()
                     </p>
                 }
                 <span asp-validation-for="Department.Manager" class="text-danger"></span>

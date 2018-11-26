@@ -24,11 +24,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Reservation.ReservationID" />
             <div class="form-group">
-                <label asp-for="Reservation.Pearson.PearsonNumber" class="control-label">Numer osoby:</label>
-                <input asp-for="@Model.PearsonNumber" class="form-control">
-                <span asp-validation-for="Reservation.Pearson.PearsonNumber" class="text-danger"></span>
-                @Model.Reservation.Pearson.FirstName @Model.Reservation.Pearson.LastName
-                <span class="text-danger">@Model.PearsonNumberError</span>
+                <label asp-for="Reservation.ApplicationUser.Number" class="control-label">Numer osoby:</label>
+                <input asp-for="@Model.Number" class="form-control">
+                <span asp-validation-for="Reservation.ApplicationUser.Number" class="text-danger"></span>
+                @Model.Reservation.ApplicationUser.FirstName @Model.Reservation.ApplicationUser.LastName
+                <span class="text-danger">@Model.NumberError</span>
             </div>
             <div class="form-group">
                 <label asp-for="Reservation.RoomID" class="control-label">Pokój:</label>

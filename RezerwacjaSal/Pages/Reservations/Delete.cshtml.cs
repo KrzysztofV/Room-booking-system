@@ -37,7 +37,7 @@ namespace RezerwacjaSal.Pages.Reservations
             ReservationIdRoute = reservationid;
 
             Reservation = await _context.Reservations
-                .Include(r => r.Pearson)
+                .Include(r => r.ApplicationUser)
                 .Include(r => r.Room)
                 .ThenInclude(r => r.Building)
                 .ThenInclude(r => r.Department)

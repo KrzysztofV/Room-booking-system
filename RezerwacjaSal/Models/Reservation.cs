@@ -16,7 +16,7 @@ namespace RezerwacjaSal.Models
         public int RoomID { get; set; }
 
         [Required(ErrorMessage = "Wymagana jest osoba rezerwująca.")]
-        public int PearsonID { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Data rezerwacji jest wymagana.")]
         [DataType(DataType.Date)]
@@ -36,7 +36,7 @@ namespace RezerwacjaSal.Models
         [StringLength(200, ErrorMessage = "Notatka nie może być dłuższa niż 200 znaków.")]
         public string Note { get; set; }
 
-        public Pearson Pearson { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public Room Room { get; set; }
 
     }

@@ -94,7 +94,7 @@
                     {
                         var Reservation = Model.Reservations.Where(r => r.RoomID == room2.RoomID).Where(r => r.Date.Date == Model.Now.Date).Where(r => r.StartTime.TimeOfDay <= Model.Now.TimeOfDay).Where(r => r.EndTime.TimeOfDay >= Model.Now.TimeOfDay).FirstOrDefault();
                         var Time = Reservation.EndTime.ToShortTimeString();
-                        <a style="color:orangered" asp-page="/Reservations/Index" asp-route-buildingid="@Model.BuildingIdRoute" data-toggle="tooltip" title="@Reservation.Pearson.FirstName @Reservation.Pearson.LastName: @Reservation.StartTime.ToShortTimeString() - @Reservation.EndTime.ToShortTimeString()">Zajęte <br /> do <br /> @Time</a>
+                        <a style="color:orangered" asp-page="/Reservations/Index" asp-route-buildingid="@Model.BuildingIdRoute" data-toggle="tooltip" title="@Reservation.ApplicationUser.FirstName @Reservation.ApplicationUser.LastName: @Reservation.StartTime.ToShortTimeString() - @Reservation.EndTime.ToShortTimeString()">Zajęte <br /> do <br /> @Time</a>
                     }
                 </th>
             }

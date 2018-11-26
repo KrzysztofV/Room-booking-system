@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using RezerwacjaSal.Data;
 using RezerwacjaSal.Models;
 
-namespace RezerwacjaSal.Pages.People
+namespace RezerwacjaSal.Pages.AppUsers
 {
     public class EditModel : PageModel
     {
@@ -26,7 +26,7 @@ namespace RezerwacjaSal.Pages.People
         [BindProperty]
         public Employment SecondEmployment { get; set; }
         [BindProperty]
-        public Pearson Pearson { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public string SortOrderRoute { get; set; }
         public string CurrentFilterRoute { get; set; }
         public string SearchStringRoute { get; set; }
@@ -35,8 +35,8 @@ namespace RezerwacjaSal.Pages.People
 
         [BindProperty]
         public bool SecondEmploymentChecked { get; set; }
-        public string ErrorSamePearsonNumber { get; set; }
-        private List<int> AllOthersPearsonNumbers;
+        public string ErrorSameNumber { get; set; }
+        private List<int> AllOthersNumbers;
         public async Task<IActionResult> OnGet(int id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
 
@@ -46,14 +46,14 @@ namespace RezerwacjaSal.Pages.People
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
-            Pearson = await _context.People
+            ApplicationUser = await _context.AppUsers
                 .Include(s => s.Employments)      // wczytuje naviagtion properties z Employment
                 .ThenInclude(e => e.Department) // wczytuje naviagtion properties z Department
                 .AsNoTracking()                 // poprawia wydajność w przypadku gdy wczytane encje nie są modyfikowane w tej stronie
-                .FirstOrDefaultAsync(m => m.PearsonID == id);  // dla danego ID
+                .FirstOrDefaultAsync(m => Int32.Parse(m.Id) == id);  // dla danego ID
 
             Employments = await _context.Employments
-                .Where(s => s.PearsonID == id)
+                .Where(s => s.Id == id)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -69,7 +69,7 @@ namespace RezerwacjaSal.Pages.People
             else
                 SecondEmploymentChecked = false;
 
-            if (Pearson == null)
+            if (ApplicationUser == null)
                 return NotFound();
 
             return Page();
@@ -84,43 +84,43 @@ namespace RezerwacjaSal.Pages.People
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
-            AllOthersPearsonNumbers = await _context.People
-                .Where(i => i.PearsonID != id)
-                .Select(i => i.PearsonNumber)
+            AllOthersNumbers = await _context.AppUsers
+                .Where(i => Int32.Parse(i.Id) != id)
+                .Select(i => i.Number)
                 .ToListAsync();
 
-            if (AllOthersPearsonNumbers.Contains(Pearson.PearsonNumber))      // własna validacja numeru osoby
+            if (AllOthersNumbers.Contains(ApplicationUser.Number))      // własna validacja numeru osoby
             {
-                ErrorSamePearsonNumber = "Doopanuj się! Ten numer jest już zajęty.";
+                ErrorSameNumber = "Doopanuj się! Ten numer jest już zajęty.";
                 return Page();
             }
 
             // aktualizacja osoby
-            var pearsonToUpdate = await _context.People.FindAsync(id);
+            var appUserToUpdate = await _context.AppUsers.FindAsync(id);
 
-            if (await TryUpdateModelAsync<Pearson>(
-                pearsonToUpdate,
-                "Pearson",   
-                 s => s.PearsonNumber, s => s.FirstName, s => s.LastName, s => s.Employee, s => s.Email, s => s.Phone, s => s.Note))
+            if (await TryUpdateModelAsync<ApplicationUser>(
+                appUserToUpdate,
+                "ApplicationUser",   
+                 s => s.Number, s => s.FirstName, s => s.LastName, s => s.Employee, s => s.Email, s => s.Phone, s => s.Note))
             {
                 await _context.SaveChangesAsync();
             }
 
             // zatrudnienia dla danej osoby
             Employments = await _context.Employments
-                .Where(s => s.PearsonID == id)
+                .Where(s => s.Id == id)
                 .AsNoTracking()
                 .ToListAsync();
 
             // jeśli zaznaczono "pracownik"
-            if (pearsonToUpdate.Employee)
+            if (appUserToUpdate.Employee)
             {
                 if (Employments.Any())
                     FirstEmployment = Employments.FirstOrDefault(); // jeśli osoba miała pierwszy etat -> aktualizacja
                 else
                     FirstEmployment = new Employment(); // osoba nie miała pierwszego etatu -> nowy pierwszy etat
 
-                FirstEmployment.PearsonID = pearsonToUpdate.PearsonID; // przekazanie ID z osoby do zatrudnienia
+                FirstEmployment.Id = Int32.Parse(appUserToUpdate.Id); // przekazanie ID z osoby do zatrudnienia
 
                 if (await TryUpdateModelAsync<Employment>(
                     FirstEmployment,
@@ -139,7 +139,7 @@ namespace RezerwacjaSal.Pages.People
                     else
                         SecondEmployment = new Employment();  // osoba nie miała drugiego etatu -> nowy drugi etat
 
-                    SecondEmployment.PearsonID = pearsonToUpdate.PearsonID; // przekazanie ID z osoby do zatrudnienia
+                    SecondEmployment.Id = Int32.Parse(appUserToUpdate.Id); // przekazanie ID z osoby do zatrudnienia
 
                     if (await TryUpdateModelAsync<Employment>(
                                         SecondEmployment,
@@ -208,9 +208,9 @@ namespace RezerwacjaSal.Pages.People
             return RedirectToPage("./Index");
         }
 
-        private bool PearsonExists(int id)
+        private bool AppUserExists(int id)
         {
-            return _context.People.Any(e => e.PearsonID == id);
+            return _context.AppUsers.Any(e => Int32.Parse(e.Id) == id);
         }
     }
 }

@@ -18,10 +18,10 @@ namespace RezerwacjaSal.Models
         public string Name { get; set; }
 
         [Range(1,10000000000, ErrorMessage = "Numer pracownika może zawierać wyłącznie liczby.")]
-        public int Administrator { get; set; } // PearsonNumber
+        public int Administrator { get; set; } // Number
 
         [Range(1, 10000000000, ErrorMessage = "Numer pracownika może zawierać wyłącznie liczby.")]
-        public int Manager { get; set; } // PearsonNumber
+        public int Manager { get; set; } // Number
 
         // navigation property - z którą inecją Department się łączy
         // Encja Department odnosi się do wielu Employment (relacja jeden do wielu) więc 

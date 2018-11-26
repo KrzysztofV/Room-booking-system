@@ -20,14 +20,14 @@ namespace RezerwacjaSal.Pages.Departments
         }
 
         public IEnumerable<Department> Departments { get; set; }
-        public IEnumerable<Pearson> People { get; set; }
+        public IEnumerable<ApplicationUser> AppUsers { get; set; }
         public async Task OnGetAsync()
         {
             Departments = await _context.Departments
                 .AsNoTracking()
                 .OrderBy(n=>n.Name)
                 .ToListAsync();
-            People = await _context.People
+            AppUsers = await _context.AppUsers
                 .AsNoTracking()
                 .ToListAsync();
         }

@@ -10,8 +10,8 @@ using RezerwacjaSal.Data;
 namespace RezerwacjaSal.Migrations
 {
     [DbContext(typeof(RezerwacjaSalContext))]
-    [Migration("20181116204913_UpdateIdentitySchema")]
-    partial class UpdateIdentitySchema
+    [Migration("20181126122527_Update")]
+    partial class Update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -239,31 +239,35 @@ namespace RezerwacjaSal.Migrations
 
             modelBuilder.Entity("RezerwacjaSal.Models.Employment", b =>
                 {
-                    b.Property<int>("EmploymentID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<int?>("DepartmentID");
 
-                    b.Property<int>("PearsonID");
+                    b.Property<int>("EmploymentID");
 
                     b.Property<string>("Position")
                         .HasMaxLength(50);
 
-                    b.HasKey("EmploymentID");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("DepartmentID");
-
-                    b.HasIndex("PearsonID");
 
                     b.ToTable("Employment");
                 });
 
             modelBuilder.Entity("RezerwacjaSal.Models.Message", b =>
                 {
-                    b.Property<int>("MessageID")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<DateTime>("Date");
 
@@ -274,55 +278,27 @@ namespace RezerwacjaSal.Migrations
                     b.Property<string>("MessageContent")
                         .IsRequired();
 
+                    b.Property<int>("MessageID");
+
                     b.Property<string>("MessageSubject")
                         .IsRequired();
 
-                    b.Property<int?>("PearsonID");
+                    b.Property<string>("Name");
 
-                    b.Property<string>("PearsonName");
+                    b.HasKey("Id");
 
-                    b.HasKey("MessageID");
-
-                    b.HasIndex("PearsonID");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Message");
                 });
 
-            modelBuilder.Entity("RezerwacjaSal.Models.Pearson", b =>
-                {
-                    b.Property<int>("PearsonID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email");
-
-                    b.Property<bool>("Employee");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Note")
-                        .HasMaxLength(200);
-
-                    b.Property<int>("PearsonNumber");
-
-                    b.Property<string>("Phone");
-
-                    b.HasKey("PearsonID");
-
-                    b.ToTable("Pearson");
-                });
-
             modelBuilder.Entity("RezerwacjaSal.Models.Reservation", b =>
                 {
-                    b.Property<int>("ReservationID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<DateTime>("Date");
 
@@ -331,15 +307,15 @@ namespace RezerwacjaSal.Migrations
                     b.Property<string>("Note")
                         .HasMaxLength(200);
 
-                    b.Property<int>("PearsonID");
+                    b.Property<int>("ReservationID");
 
                     b.Property<int>("RoomID");
 
                     b.Property<DateTime>("StartTime");
 
-                    b.HasKey("ReservationID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("PearsonID");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("RoomID");
 
@@ -375,6 +351,22 @@ namespace RezerwacjaSal.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<bool>("Employee");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(200);
+
+                    b.Property<int>("Number");
+
+                    b.Property<string>("Phone");
 
                     b.ToTable("ApplicationUser");
 
@@ -436,30 +428,28 @@ namespace RezerwacjaSal.Migrations
 
             modelBuilder.Entity("RezerwacjaSal.Models.Employment", b =>
                 {
+                    b.HasOne("RezerwacjaSal.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Employments")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("RezerwacjaSal.Models.Department", "Department")
                         .WithMany("Employments")
                         .HasForeignKey("DepartmentID")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("RezerwacjaSal.Models.Pearson", "Pearson")
-                        .WithMany("Employments")
-                        .HasForeignKey("PearsonID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("RezerwacjaSal.Models.Message", b =>
                 {
-                    b.HasOne("RezerwacjaSal.Models.Pearson", "Pearson")
+                    b.HasOne("RezerwacjaSal.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Messages")
-                        .HasForeignKey("PearsonID");
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("RezerwacjaSal.Models.Reservation", b =>
                 {
-                    b.HasOne("RezerwacjaSal.Models.Pearson", "Pearson")
+                    b.HasOne("RezerwacjaSal.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("PearsonID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("RezerwacjaSal.Models.Room", "Room")
                         .WithMany("Reservations")

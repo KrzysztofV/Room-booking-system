@@ -1,6 +1,6 @@
 ﻿@page
 @using Microsoft.AspNetCore.Mvc.RazorPages
-@model RezerwacjaSal.Pages.People.IndexModel
+@model RezerwacjaSal.Pages.AppUsers.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -51,11 +51,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Pearson)
+        @foreach (var item in Model.ApplicationUser)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PearsonNumber)
+                    @Html.DisplayFor(modelItem => item.Number)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
@@ -70,9 +70,9 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.PearsonID" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Edytuj</a> |
-                    <a asp-page="./Details" asp-route-id="@item.PearsonID" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Szczegóły</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.PearsonID" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Usuń</a>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Edytuj</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Szczegóły</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Usuń</a>
                 </td>
             </tr>
         }
@@ -91,8 +91,8 @@
 
 @* stronowanie listy *@
 @{
-    var prevDisabled = !Model.Pearson.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.Pearson.HasNextPage ? "disabled" : "";
+    var prevDisabled = !Model.ApplicationUser.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.ApplicationUser.HasNextPage ? "disabled" : "";
 }
 
 
@@ -103,7 +103,7 @@
     {
         <li class="active">
             <a asp-route-sortOrder="@Model.CurrentSort"
-               asp-route-pageIndex="@(Model.Pearson.PageIndex)"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="15">15</a>
         </li>
@@ -112,7 +112,7 @@
     {
         <li>
             <a asp-route-sortOrder="@Model.CurrentSort"
-               asp-route-pageIndex="@(Model.Pearson.PageIndex)"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="15">15</a>
         </li>
@@ -121,7 +121,7 @@
     {
         <li class="active">
             <a asp-route-sortOrder="@Model.CurrentSort"
-               asp-route-pageIndex="@(Model.Pearson.PageIndex)"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="50">50</a>
         </li>
@@ -130,7 +130,7 @@
     {
         <li>
             <a asp-route-sortOrder="@Model.CurrentSort"
-               asp-route-pageIndex="@(Model.Pearson.PageIndex)"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="50">50</a>
         </li>
@@ -139,7 +139,7 @@
     {
         <li class="active">
             <a asp-route-sortOrder="@Model.CurrentSort"
-               asp-route-pageIndex="@(Model.Pearson.PageIndex)"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="200">200</a>
         </li>
@@ -148,7 +148,7 @@
     {
         <li>
             <a asp-route-sortOrder="@Model.CurrentSort"
-               asp-route-pageIndex="@(Model.Pearson.PageIndex)"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="200">200</a>
         </li>
@@ -156,10 +156,10 @@
 </ul>
 
 <div style="float:right">
-    @for (var i = 1; i <= Model.Pearson.TotalPages; i++)
+    @for (var i = 1; i <= Model.ApplicationUser.TotalPages; i++)
     {
         <ul class="pagination">
-            @if (Model.Pearson.PageIndex == i)
+            @if (Model.ApplicationUser.PageIndex == i)
             {
                 <li class="active">
                     <a asp-route-sortOrder="@Model.CurrentSort"
@@ -186,13 +186,13 @@
 <ul class="pager">
     <li class="@prevDisabled">
         <a asp-route-sortOrder="@Model.CurrentSort"
-           asp-route-pageIndex="@(Model.Pearson.PageIndex - 1)"
+           asp-route-pageIndex="@(Model.ApplicationUser.PageIndex - 1)"
            asp-route-currentFilter="@Model.CurrentFilter"
            asp-route-pageSize="@Model.PageSize">Wcześniejsza strona</a>
     </li>
     <li class="@nextDisabled">
         <a asp-route-sortOrder="@Model.CurrentSort"
-           asp-route-pageIndex="@(Model.Pearson.PageIndex + 1)"
+           asp-route-pageIndex="@(Model.ApplicationUser.PageIndex + 1)"
            asp-route-currentFilter="@Model.CurrentFilter"
            asp-route-pageSize="@Model.PageSize">Następna strona</a>
     </li>

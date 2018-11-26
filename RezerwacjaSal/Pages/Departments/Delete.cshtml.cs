@@ -22,18 +22,18 @@ namespace RezerwacjaSal.Pages.Departments
 
         [BindProperty]
         public Department Department { get; set; }
-        public IEnumerable<Pearson> People { get; set; }
+        public IEnumerable<ApplicationUser> AppUsers { get; set; }
         public async Task<IActionResult> OnGetAsync(int departmentid)
         {
             Department = await _context.Departments
                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.DepartmentID == departmentid);
 
-            People = await _context.People
+            AppUsers = await _context.AppUsers
                 .AsNoTracking()
                 .ToListAsync();
 
-            if (Department == null || People == null)
+            if (Department == null || AppUsers == null)
                 return NotFound();
 
             return Page();

@@ -26,7 +26,7 @@ namespace RezerwacjaSal.Pages.Departments
 
         [BindProperty]
         public Department Department { get; set; }
-        private List<int> AllPearsonIDs { get; set; }
+        private List<int> AllAppUsersIDs { get; set; }
         private List<string> AllDepartmentsNames { get; set; }
         public string AdministratorIdError { get; set; }
         public string ManagerIdError { get; set; }
@@ -37,19 +37,19 @@ namespace RezerwacjaSal.Pages.Departments
             if (!ModelState.IsValid)
                 return Page();
 
-            AllPearsonIDs = await _context.People
-                .Select(i => i.PearsonID)
+            AllAppUsersIDs = await _context.AppUsers
+                .Select(i => Int32.Parse(i.Id))
                 .ToListAsync();
 
             AllDepartmentsNames = await _context.Departments
                 .Select(i => i.Name)
                 .ToListAsync();
 
-            if (!AllPearsonIDs.Contains(Department.Administrator))
+            if (!AllAppUsersIDs.Contains(Department.Administrator))
             {
                 AdministratorIdError = String.Format("Nie ma takiego człeka dla ID: {0}", Department.Administrator);
 
-                if (!AllPearsonIDs.Contains(Department.Manager))
+                if (!AllAppUsersIDs.Contains(Department.Manager))
                     ManagerIdError = String.Format("Nie ma takiego człeka dla ID: {0}", Department.Manager);
 
                 return Page();

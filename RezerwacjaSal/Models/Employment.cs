@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace RezerwacjaSal.Models
 {
-    // encja zatrudnienie - tabela pośrednia w relacji wiele do wielu pomiędzy Department<->Pearson
+    // encja zatrudnienie - tabela pośrednia w relacji wiele do wielu pomiędzy Department<->ApplicationUser
     public class Employment
     {
         // EF samo generuje sobie liczbę ID - nie muszę jej znać ani ustawiać 
         public int EmploymentID { get; set; }
         
-        public int PearsonID { get; set; } 
+        public int Id { get; set; } 
         public int? DepartmentID { get; set; }// opcjonalne ("?")
 
         [StringLength(50, ErrorMessage = "Opis pozycji nie może być dłuższy niż 50 znaków.")]
         public string Position { get; set; }
 
         // property jest rozpoznawane jako klucz obcy kiedy się nazywa <navigation property name><primary key property name>
-        public Pearson Pearson { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public Department Department { get; set; }
 
     }

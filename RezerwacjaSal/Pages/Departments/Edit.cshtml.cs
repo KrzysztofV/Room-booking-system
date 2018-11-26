@@ -20,12 +20,12 @@ namespace RezerwacjaSal.Pages.Departments
             _context = context;
         }
 
-        private List<int> AllPearsonNumbers { get; set; }
+        private List<int> AllNumbers { get; set; }
         public string AdministratorIdError { get; set; }
         public string ManagerIdError { get; set; }
         [BindProperty]
         public Department Department { get; set; }
-        public IEnumerable<Pearson> People { get; set; }
+        public IEnumerable<ApplicationUser> AppUsers { get; set; }
         public string DuplicateNameExistError { get; private set; }
         private List<string> AllOtherDepartmentsNames { get; set; }
 
@@ -35,7 +35,7 @@ namespace RezerwacjaSal.Pages.Departments
                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.DepartmentID == departmentid);
 
-            People = await _context.People
+            AppUsers = await _context.AppUsers
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -47,8 +47,8 @@ namespace RezerwacjaSal.Pages.Departments
 
         public async Task<IActionResult> OnPostAsync(int departmentid)
         {
-            AllPearsonNumbers = await _context.People
-                .Select(i => i.PearsonNumber)
+            AllNumbers = await _context.AppUsers
+                .Select(i => i.Number)
                 .ToListAsync();
 
             AllOtherDepartmentsNames = await _context.Departments
@@ -56,7 +56,7 @@ namespace RezerwacjaSal.Pages.Departments
                 .Select(i => i.Name)
                 .ToListAsync();
 
-            People = await _context.People
+            AppUsers = await _context.AppUsers
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -69,11 +69,11 @@ namespace RezerwacjaSal.Pages.Departments
             if (!ModelState.IsValid)
                 return Page();
 
-            if (!AllPearsonNumbers.Contains(Department.Administrator))
+            if (!AllNumbers.Contains(Department.Administrator))
             {
                 AdministratorIdError = String.Format("Nie ma takiego człeka o numerze: {0}", Department.Administrator);
 
-                if (!AllPearsonNumbers.Contains(Department.Manager))
+                if (!AllNumbers.Contains(Department.Manager))
                     ManagerIdError = String.Format("Nie ma takiego człeka o numerze: {0}", Department.Manager);
 
                 return Page();

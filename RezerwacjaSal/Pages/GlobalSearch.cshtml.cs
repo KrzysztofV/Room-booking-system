@@ -21,7 +21,7 @@ namespace RezerwacjaSal.Pages
 
         public string SearchString { get; set; }
         public IList<Reservation> Reservations { get;set; }
-        public IList<Pearson> People { get; set; }
+        public IList<ApplicationUser> AppUsers { get; set; }
         public IList<Department> Departments { get; set; }
         public IList<Room> Rooms { get; set; }
         public IList<Building> Buildings { get; set; }
@@ -35,15 +35,15 @@ namespace RezerwacjaSal.Pages
 
             Reservations = await _context.Reservations
                 .Where(r => r.ReservationID.Equals(SearchStringInt))
-                .Include(r => r.Pearson)
+                .Include(r => r.ApplicationUser)
                 .Include(r => r.Room)
                 .ThenInclude(r => r.Building)
                 .ThenInclude(r => r.Department)
                 .AsNoTracking()
                 .ToListAsync();
 
-            People = await _context.People
-                .Where(r => r.PearsonNumber.Equals(SearchStringInt) || r.FirstName.Contains(SearchString) || r.LastName.Contains(SearchString))
+            AppUsers = await _context.AppUsers
+                .Where(r => r.Number.Equals(SearchStringInt) || r.FirstName.Contains(SearchString) || r.LastName.Contains(SearchString))
                 .AsNoTracking()
                 .ToListAsync();
 

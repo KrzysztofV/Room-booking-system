@@ -20,7 +20,7 @@ namespace RezerwacjaSal.Pages.Departments
         }
 
         public Department Department { get; set; }
-        public IEnumerable<Pearson> People { get; set; }
+        public IEnumerable<ApplicationUser> AppUsers { get; set; }
         public int DepartmentIdRoute { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int? departmentid)
@@ -34,7 +34,7 @@ namespace RezerwacjaSal.Pages.Departments
                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.DepartmentID == departmentid);
 
-            People = await _context.People
+            AppUsers = await _context.AppUsers
                 .AsNoTracking()
                 .ToListAsync();
 

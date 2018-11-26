@@ -45,10 +45,10 @@ namespace RezerwacjaSal
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<RezerwacjaSalContext>()
-            .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddEntityFrameworkStores<RezerwacjaSalContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddRazorPagesOptions(options =>

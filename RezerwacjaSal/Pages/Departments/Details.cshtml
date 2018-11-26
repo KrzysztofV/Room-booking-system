@@ -21,8 +21,8 @@
         </dt>
         <dd>
             @Model.Department.Administrator - 
-            @Model.People.Where(p => p.PearsonNumber == Model.Department.Administrator).Select(p => p.FirstName).FirstOrDefault()
-            @Model.People.Where(p => p.PearsonNumber == Model.Department.Administrator).Select(p => p.LastName).FirstOrDefault()
+            @Model.AppUsers.Where(p => p.Number == Model.Department.Administrator).Select(p => p.FirstName).FirstOrDefault()
+            @Model.AppUsers.Where(p => p.Number == Model.Department.Administrator).Select(p => p.LastName).FirstOrDefault()
         </dd>
         <dt>
             Kierownik:
@@ -30,8 +30,8 @@
         <dd>
             @Model.Department.Manager -
 
-            @Model.People.Where(p => p.PearsonNumber == Model.Department.Manager).Select(p => p.FirstName).FirstOrDefault()
-            @Model.People.Where(p => p.PearsonNumber == Model.Department.Manager).Select(p => p.LastName).FirstOrDefault()
+            @Model.AppUsers.Where(p => p.Number == Model.Department.Manager).Select(p => p.FirstName).FirstOrDefault()
+            @Model.AppUsers.Where(p => p.Number == Model.Department.Manager).Select(p => p.LastName).FirstOrDefault()
         </dd>
     </dl>
 </div>

@@ -13,7 +13,7 @@ namespace RezerwacjaSal.Models
 
         [EmailAddress(ErrorMessage = "To nie jest poprawny adres e-mail.")]
         public string Email { get; set; }
-        public string PearsonName { get; set; }
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "Temat wiadomości jest wymagany.")]
         public string MessageSubject { get; set; }
@@ -22,9 +22,9 @@ namespace RezerwacjaSal.Models
         public string MessageContent { get; set; }
         public string IP { get; set; }
         public DateTime Date { get; set; }
-        public int? PearsonID { get; set; }
+        public int? Id { get; set; }
 
-        public Pearson Pearson { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
     }
 }

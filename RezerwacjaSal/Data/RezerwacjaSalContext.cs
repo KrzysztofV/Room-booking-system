@@ -9,15 +9,12 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace RezerwacjaSal.Data
 {
-    // RezerwacjaSalContext precyzuje które encje są włączone do modelu danych 
     public class RezerwacjaSalContext : IdentityDbContext
     {
         public RezerwacjaSalContext(DbContextOptions<RezerwacjaSalContext> options) : base(options)
         {
         }
-        // tworzy tabele
         public DbSet<Employment> Employments { get; set; }
-        public DbSet<Pearson> People { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Room> Rooms { get; set; }
@@ -28,8 +25,7 @@ namespace RezerwacjaSal.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   // fluent API
-            modelBuilder.Entity<Employment>().ToTable("Employment"); // nazwy tabeli w bazie danych, ale nie jest to konieczne bo 
-            modelBuilder.Entity<Pearson>().ToTable("Pearson");       // domyślnie EF nazywa tabele tak samo jak property DbSet
+            modelBuilder.Entity<Employment>().ToTable("Employment"); 
             modelBuilder.Entity<Message>().ToTable("Message");
             modelBuilder.Entity<Department>().ToTable("Department")
                 .ToTable("Department")

@@ -22,26 +22,26 @@
 }
 @foreach (var reservation in Model.Reservations)
 {
-    <a asp-page="./Reservations/Details" asp-route-reservationid="@reservation.ReservationID" asp-route-buildingid="@reservation.Room.BuildingID" asp-route-departmentid="@reservation.Room.Building.DepartmentID" asp-route-date="@reservation.Date.ToShortDateString()">@reservation.ReservationID - @reservation.Pearson.FirstName @reservation.Pearson.LastName</a><br />
+    <a asp-page="./Reservations/Details" asp-route-reservationid="@reservation.ReservationID" asp-route-buildingid="@reservation.Room.BuildingID" asp-route-departmentid="@reservation.Room.Building.DepartmentID" asp-route-date="@reservation.Date.ToShortDateString()">@reservation.ReservationID - @reservation.ApplicationUser.FirstName @reservation.ApplicationUser.LastName</a><br />
 }
 }
 
 
 <p></p>
-@if (Model.People.Count != 0)
+@if (Model.AppUsers.Count != 0)
 {
-    if (Model.People.Count == 1)
+    if (Model.AppUsers.Count == 1)
     {<p>Znaleziono jedną osobę o podanym imieniu lub nazwisku lub numerze:</p>}
     else
     {
-        if (Model.People.Count >= 2 && Model.People.Count <= 4)
-        {<p>Znaleziono @Model.People.Count() osoby o podanym imieniu / nazwisku / numerze:</p>}
+        if (Model.AppUsers.Count >= 2 && Model.AppUsers.Count <= 4)
+        {<p>Znaleziono @Model.AppUsers.Count() osoby o podanym imieniu / nazwisku / numerze:</p>}
     else
-    {<p>Znaleziono @Model.People.Count() osób o podanym imieniu / nazwisku / numerze:</p>}
+    {<p>Znaleziono @Model.AppUsers.Count() osób o podanym imieniu / nazwisku / numerze:</p>}
 }
-@foreach (var pearson in Model.People)
+@foreach (var appUser in Model.AppUsers)
 {
-    <a asp-page="./People/Details" asp-route-id="@pearson.PearsonID">@pearson.PearsonNumber - @pearson.FirstName @pearson.LastName</a><br />
+    <a asp-page="./AppUsers/Details" asp-route-id="@appUser.Id">@appUser.Number - @appUser.FirstName @appUser.LastName</a><br />
 
 }
 }
@@ -107,7 +107,7 @@
 
 <p></p>
 
-@if(Model.Reservations.Count == 0 && Model.People.Count == 0 && Model.Departments.Count == 0 && Model.Buildings.Count == 0 && Model.Rooms.Count == 0)
+@if(Model.Reservations.Count == 0 && Model.AppUsers.Count == 0 && Model.Departments.Count == 0 && Model.Buildings.Count == 0 && Model.Rooms.Count == 0)
 {
     <p>Nic nie znaleziono :( </p>
 
