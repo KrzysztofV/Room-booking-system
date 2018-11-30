@@ -17,10 +17,10 @@ namespace RezerwacjaSal.Data
         {
             context.Database.EnsureCreated();
 
-            // Sprawdź czy są jacyś pracownicy
-            if (context.AppUsers.Any())
+            // Sprawdź czy są jakieś wydziały
+            if (context.Departments.Any())
             {
-                return;   // są więc nie nadpisuj Bazy danych 
+                return;   // są więc nie nadpisuj bazy danych 
             }
 
             var departments = new Department[]

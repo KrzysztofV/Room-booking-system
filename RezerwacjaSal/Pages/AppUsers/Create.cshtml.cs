@@ -20,9 +20,16 @@ namespace RezerwacjaSal.Pages.AppUsers
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
         private List<int> AllNumbers;
 
-        public CreateModel(RezerwacjaSal.Data.RezerwacjaSalContext context)
+        public CreateModel(
+            RezerwacjaSal.Data.RezerwacjaSalContext context,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ILogger<RegisterModel> logger)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _logger = logger;
         }
 
         [BindProperty] // wiązanie modelu
@@ -59,15 +66,8 @@ namespace RezerwacjaSal.Pages.AppUsers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
 
-        public CreateModel(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            ILogger<RegisterModel> logger)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
-        }
+
+        
 
         public class InputModel
         {

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RezerwacjaSal.Data;
 using RezerwacjaSal.Models;
 
@@ -15,9 +19,16 @@ namespace RezerwacjaSal.Pages.AppUsers
     {
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
 
-        public EditModel(RezerwacjaSal.Data.RezerwacjaSalContext context)
+        public EditModel(
+            RezerwacjaSal.Data.RezerwacjaSalContext context,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ILogger<RegisterModel> logger)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _logger = logger;
         }
 
         public IEnumerable<Employment> Employments { get; set; }
@@ -37,6 +48,30 @@ namespace RezerwacjaSal.Pages.AppUsers
         public bool SecondEmploymentChecked { get; set; }
         public string ErrorSameNumber { get; set; }
         private List<int> AllOthersNumbers;
+
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<RegisterModel> _logger;
+
+        [BindProperty]
+        public InputModel Input { get; set; }
+        [BindProperty]
+        public bool ChangePassword { get; set; }
+
+        public class InputModel
+        {
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            [Display(Name = "Password")]
+            public string Password { get; set; }
+
+            [DataType(DataType.Password)]
+            [Display(Name = "Confirm password")]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            public string ConfirmPassword { get; set; }
+        }
+
         public async Task<IActionResult> OnGet(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
 
@@ -95,8 +130,23 @@ namespace RezerwacjaSal.Pages.AppUsers
                 return Page();
             }
 
-            // aktualizacja osoby
+            // Aktualizacja osoby
             var appUserToUpdate = await _context.AppUsers.FindAsync(id);
+
+            // Zmiana hasła
+
+            if (ChangePassword)
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(appUserToUpdate);
+                var result = await _userManager.ResetPasswordAsync(appUserToUpdate, token, Input.Password);
+                if (result.Succeeded) { }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            // Aktualizacja pozostałych danych osoby
 
             if (await TryUpdateModelAsync<ApplicationUser>(
                 appUserToUpdate,
@@ -122,6 +172,7 @@ namespace RezerwacjaSal.Pages.AppUsers
 
                 FirstEmployment.Id = appUserToUpdate.Id; // przekazanie ID z osoby do zatrudnienia
 
+                // TODO Nie aktualizuje position employment
                 if (await TryUpdateModelAsync<Employment>(
                     FirstEmployment,
                     "FirstEmployment",

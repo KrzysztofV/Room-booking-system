@@ -208,7 +208,7 @@ using RezerwacjaSal;
             WriteLiteral("    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(2322, 292, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b20c4f87421c4f1fa468b2f6aed1dc64", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d3c545709b494ae3a314afc629e53784", async() => {
                 BeginContext(2600, 10, true);
                 WriteLiteral("Lista osób");
                 EndContext();
@@ -280,7 +280,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(2620, 340, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1855a04150d64e3bb489551d57376331", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "105e19f97fd6466eb81f7ef08262fcc8", async() => {
                 BeginContext(2950, 6, true);
                 WriteLiteral("Edytuj");
                 EndContext();

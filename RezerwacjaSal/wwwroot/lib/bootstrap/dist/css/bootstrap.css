@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -4589,28 +4589,30 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ccc;
 }
 .navbar-inverse {
-  background-color: #222;
-  border-color: #080808;
+    /*background-color: #222;*/
+    background-color: #006fae;
+    /*border-color: #080808;*/
+    border-color: #006fae;
 }
 .navbar-inverse .navbar-brand {
-  color: #9d9d9d;
-}
-.navbar-inverse .navbar-brand:hover,
-.navbar-inverse .navbar-brand:focus {
   color: #fff;
-  background-color: transparent;
 }
-.navbar-inverse .navbar-text {
-  color: #9d9d9d;
-}
-.navbar-inverse .navbar-nav > li > a {
-  color: #9d9d9d;
-}
-.navbar-inverse .navbar-nav > li > a:hover,
-.navbar-inverse .navbar-nav > li > a:focus {
-  color: #fff;
-  background-color: transparent;
-}
+    .navbar-inverse .navbar-brand:hover,
+    .navbar-inverse .navbar-brand:focus {
+        color: #9ddbff;
+        background-color: transparent;
+    }
+    .navbar-inverse .navbar-text {
+        color: #fff;
+    }
+    .navbar-inverse .navbar-nav > li > a {
+        color: #fff;
+    }
+        .navbar-inverse .navbar-nav > li > a:hover,
+        .navbar-inverse .navbar-nav > li > a:focus {
+            color: #9ddbff;
+            background-color: transparent;
+        }
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
@@ -4623,19 +4625,19 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #444;
   background-color: transparent;
 }
-.navbar-inverse .navbar-toggle {
-  border-color: #333;
-}
-.navbar-inverse .navbar-toggle:hover,
-.navbar-inverse .navbar-toggle:focus {
-  background-color: #333;
-}
+    .navbar-inverse .navbar-toggle {
+        border-color: #0086d3;
+    }
+        .navbar-inverse .navbar-toggle:hover,
+        .navbar-inverse .navbar-toggle:focus {
+            background-color: #0086d3;
+        }
 .navbar-inverse .navbar-toggle .icon-bar {
   background-color: #fff;
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
-  border-color: #101010;
+  border-color: #fff;
 }
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,

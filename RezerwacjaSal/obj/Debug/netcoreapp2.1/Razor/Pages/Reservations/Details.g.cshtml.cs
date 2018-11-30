@@ -73,7 +73,7 @@ using RezerwacjaSal;
             WriteLiteral("<p></p>\r\n<div class=\"btn-group\">\r\n    ");
             EndContext();
             BeginContext(146, 119, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "102aa3bd2096453c97e1b94b7cd2c4f0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cfd9baa786984b60b6bb3e01c16c466a", async() => {
                 BeginContext(253, 8, true);
                 WriteLiteral("Wydziały");
                 EndContext();
@@ -109,7 +109,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(271, 116, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "106a1307c86e46a9a6c6055eae430701", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "601a43ab0353448bad5b783bd2c8ffc9", async() => {
                 BeginContext(376, 7, true);
                 WriteLiteral("Budynki");
                 EndContext();
@@ -145,7 +145,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(393, 205, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ab37f31874c64509b6abde11dabd3e89", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b81f34e9653744a3bf0c5e56e74acf91", async() => {
                 BeginContext(584, 10, true);
                 WriteLiteral("Rezerwacje");
                 EndContext();
@@ -299,7 +299,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(2151, 213, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e0e25fe0b83a4cd29bfc8a72c7ac8739", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5711d1cc4517481aab16a938992558da", async() => {
                 BeginContext(2343, 17, true);
                 WriteLiteral("Tabela rezerwacji");
                 EndContext();
@@ -353,7 +353,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(2370, 272, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "20154536c46d442ab2463709db1cbd91", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "91da9234908a407e87f8b991d3a96a57", async() => {
                 BeginContext(2632, 6, true);
                 WriteLiteral("Edytuj");
                 EndContext();
@@ -416,7 +416,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(2648, 271, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b353abce2ef5407d9804c713ee5fcf9a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cdacc45072b34889ac300a762cebb4a6", async() => {
                 BeginContext(2911, 4, true);
                 WriteLiteral("Usuń");
                 EndContext();
