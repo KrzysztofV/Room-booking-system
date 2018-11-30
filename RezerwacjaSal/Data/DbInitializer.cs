@@ -7,14 +7,23 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 // dodano
 using RezerwacjaSal.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal;
 
 namespace RezerwacjaSal.Data
 {
     // Inicjalizacja bazy danych jakimiś przykładowymi danymi 
     public class DbInitializer
     {
-        public static void Initialize(RezerwacjaSalContext context)
+
+        public static async Task InitializeAsync(
+            RezerwacjaSalContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            ILogger<DbInitializer> logger)
         {
+
             context.Database.EnsureCreated();
 
             // Sprawdź czy są jakieś wydziały
@@ -24,18 +33,71 @@ namespace RezerwacjaSal.Data
             }
 
             var departments = new Department[]
-            {
-            new Department { Name = "Automatyki i Robotyki", Administrator = 6, Manager = 16},
-            new Department { Name = "Informatyki", Administrator = 7, Manager = 17 },
-            new Department { Name = "Materiałoznastwa", Administrator =  8, Manager =  13 },
-            new Department { Name = "Elektrotechniki", Administrator =  11, Manager =  15 },
-            new Department { Name = "Miernictwa", Administrator = 12, Manager =  14 },
-            };
+{
+            new Department { Name = "Automatyki i Robotyki", Administrator = 6},
+            new Department { Name = "Informatyki", Administrator = 7 },
+            new Department { Name = "Materiałoznastwa", Administrator =  8 },
+            new Department { Name = "Elektrotechniki", Administrator =  11 },
+            new Department { Name = "Miernictwa", Administrator = 12 },
+};
             foreach (Department c in departments)
             {
                 context.Departments.Add(c);
             }
             context.SaveChanges();
+
+            var adminRole = new IdentityRole
+            {
+                Id = "0",
+                Name = "administrator"
+            };
+
+            var resultDefaultAdminRole = await roleManager.CreateAsync(adminRole);
+            if (resultDefaultAdminRole.Succeeded) logger.LogInformation("Utworzono rolę administratora.");
+
+            var userRole = new IdentityRole
+            {
+                Id = "1",
+                Name = "użytkownik"
+            };
+
+            var resultDefaultUserRole = await roleManager.CreateAsync(userRole);
+            if (resultDefaultUserRole.Succeeded) logger.LogInformation("Utworzono rolę użytkownika.");
+
+            var newAdmin = new ApplicationUser
+            {
+                UserName = "webapp0@outlook.com",
+                Email = "webapp0@outlook.com",
+                FirstName = "Admin",
+                LastName = "Admin",
+                Note = "Administrator systemu Bulbulator",
+                Number = 0,
+                EmailConfirmed = true,
+                Employment = "Administrator systemu",
+                DepartmentID = departments.Single(i => i.Name == "Automatyki i Robotyki").DepartmentID
+            };
+
+            var resultDefaultAdmin = await userManager.CreateAsync(newAdmin, "Password.1");
+            if (resultDefaultAdmin.Succeeded) logger.LogInformation("Utworzono domyślnego administratora.");
+
+            var newApplicationUser = new ApplicationUser
+            {
+                UserName = "kowalski@gmail.com",
+                Email = "kowalski@gmail.com",
+                FirstName = "Kowalski",
+                LastName = "Kowalski",
+                Note = "Przykładowy użytkownik",
+                Number = 1,
+                EmailConfirmed = true,
+                Employment = "Taki tam ...",
+                DepartmentID = departments.Single(i => i.Name == "Automatyki i Robotyki").DepartmentID
+            };
+
+            var resultDefaultUser = await userManager.CreateAsync(newApplicationUser, "Password.1");
+            if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
+
+
+
        
 
             var buildings = new Building[]

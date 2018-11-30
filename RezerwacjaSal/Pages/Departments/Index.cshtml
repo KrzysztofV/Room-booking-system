@@ -18,9 +18,6 @@
                 Administrator
             </th>
             <th>
-                Kierownik
-            </th>
-            <th>
                 Zarządzanie
             </th>
         </tr>
@@ -30,7 +27,6 @@
             <td>
                 <a asp-page="/Buildings/Index" asp-route-departmentid="0" style="color:#000">Wszystkie</a>
             </td>
-            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -46,14 +42,6 @@
                         @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.FirstName).FirstOrDefault()
                         &shy;
                         @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.LastName).FirstOrDefault()
-                    </a>
-                </td>
-                <td>
-                    <a asp-page="/AppUsers/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
-                       asp-route-id="@Model.AppUsers.Where(p => p.Number == item.Manager).Select(p=>p.Id).FirstOrDefault()">
-                        @Model.AppUsers.Where(p => p.Number == item.Manager).Select(p => p.FirstName).FirstOrDefault()
-                        &shy;
-                        @Model.AppUsers.Where(p => p.Number == item.Manager).Select(p => p.LastName).FirstOrDefault()
                     </a>
                 </td>
                 <td>

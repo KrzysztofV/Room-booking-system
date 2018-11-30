@@ -49,41 +49,12 @@
                     <input asp-for="ApplicationUser.LastName" class="form-control" />
                     <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
                 </div>
-
                 <div class="form-group">
                     <label asp-for="ApplicationUser.PhoneNumber" class="control-label">Telefon:</label>
                     <input asp-for="ApplicationUser.PhoneNumber" class="form-control" />
                     <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="ApplicationUser.Note" class="control-label">Dodatkowe informacje:</label>
-                    <textarea asp-for="ApplicationUser.Note" class="form-control" rows="5"></textarea>
-                    <span asp-validation-for="ApplicationUser.Note" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input asp-for="ApplicationUser.Employee" type="checkbox" id="employeeChecker" onclick="employeeChecked()" onload="employeeChecked()" />
-                    <span asp-validation-for="ApplicationUser.Employee" class="text-danger"></span>
-                    <label class="form-check-label">Pracownik uczelni</label>
-                </div>
                 <script>
-                    function employeeChecked() {
-                        var checker = document.getElementById("employeeChecker").checked;
-                        var employment = document.getElementById('employment');
-                        if (checker) {
-                            employment.style.display = 'block';
-                        } else {
-                            employment.style.display = 'none';
-                        }
-                    }
-                    function doubleEmployeeChecked() {
-                        var checker = document.getElementById("doubleEmployeeChecker").checked;
-                        var employment = document.getElementById('secondEmployment');
-                        if (checker) {
-                            employment.style.display = 'block';
-                        } else {
-                            employment.style.display = 'none';
-                        }
-                    }
                     function automaticID() {
                         var checker = document.getElementById("IDchecker").checked;
                         var id = document.getElementById('IDinput');
@@ -95,34 +66,21 @@
                         }
                     }
                 </script>
-
-                <div id="employment" style="display:none">
-
                     <div class="form-group">
-                        <label asp-for="Employment.Department" class="control-label">Wydział:</label>
-                        <select asp-for="Employment.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"></select>
+                        <label asp-for="ApplicationUser.DepartmentID" class="control-label">Wydział:</label>
+                        <select asp-for="ApplicationUser.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"><option value=@null>Brak</option></select>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Employment.Position" class="control-label">Zatrudniony jako:</label>
-                        <input asp-for="Employment.Position" class="form-control" />
-                        <span asp-validation-for="Employment.Position" class="text-danger"></span>
+                        <label asp-for="ApplicationUser.Employment" class="control-label">Pracownik:</label>
+                        <input asp-for="ApplicationUser.Employment" class="form-control" />
+                        <span asp-validation-for="ApplicationUser.Employment" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <input asp-for="SecondEmploymentChecked" type="checkbox" id="doubleEmployeeChecker" onclick="doubleEmployeeChecked()" />
-                        <label class="form-check-label">Drugi etat</label>
-                    </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationUser.Note" class="control-label">Dodatkowe informacje:</label>
+                    <textarea asp-for="ApplicationUser.Note" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="ApplicationUser.Note" class="text-danger"></span>
                 </div>
-                <div id="secondEmployment" style="display:none">
-                    <div class="form-group">
-                        <label asp-for="SecondEmployment.Department" class="control-label">Wydział:</label>
-                        <select asp-for="SecondEmployment.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SecondEmployment.Position" class="control-label">Zatrudniony jako:</label>
-                        <input asp-for="SecondEmployment.Position" class="form-control" />
-                        <span asp-validation-for="SecondEmployment.Position" class="text-danger"></span>
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <a class="btn btn-default" asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
                     <input type="submit" value="Zapisz" class="btn btn-default btn-primary" />

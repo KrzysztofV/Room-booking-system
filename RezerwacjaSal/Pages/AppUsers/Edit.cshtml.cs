@@ -31,11 +31,6 @@ namespace RezerwacjaSal.Pages.AppUsers
             _logger = logger;
         }
 
-        public IEnumerable<Employment> Employments { get; set; }
-        [BindProperty]
-        public Employment FirstEmployment { get; set; }
-        [BindProperty]
-        public Employment SecondEmployment { get; set; }
         [BindProperty]
         public ApplicationUser ApplicationUser { get; set; }
         public string SortOrderRoute { get; set; }
@@ -44,8 +39,6 @@ namespace RezerwacjaSal.Pages.AppUsers
         public int? PageIndexRoute { get; set; }
         public int? PageSizeRoute { get; set; }
 
-        [BindProperty]
-        public bool SecondEmploymentChecked { get; set; }
         public string ErrorSameNumber { get; set; }
         private List<int> AllOthersNumbers;
 
@@ -57,6 +50,7 @@ namespace RezerwacjaSal.Pages.AppUsers
         public InputModel Input { get; set; }
         [BindProperty]
         public bool ChangePassword { get; set; }
+
 
         public class InputModel
         {
@@ -82,27 +76,14 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageSizeRoute = pageSize;
 
             ApplicationUser = await _context.AppUsers
-                .Include(s => s.Employments)      // wczytuje naviagtion properties z Employment
-                .ThenInclude(e => e.Department) // wczytuje naviagtion properties z Department
+                .Include(e => e.Department) // wczytuje naviagtion properties z Department
                 .AsNoTracking()                 // poprawia wydajność w przypadku gdy wczytane encje nie są modyfikowane w tej stronie
                 .FirstOrDefaultAsync(m => m.Id == id);  // dla danego ID
 
-            Employments = await _context.Employments
-                .Where(s => s.Id == id)
-                .AsNoTracking()
-                .ToListAsync();
+
 
             ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
 
-            FirstEmployment = Employments.FirstOrDefault();
-
-            if (Employments.Count() > 1)
-            {
-                SecondEmployment = Employments.Last();
-                SecondEmploymentChecked = true;
-            }
-            else
-                SecondEmploymentChecked = false;
 
             if (ApplicationUser == null)
                 return NotFound();
@@ -130,6 +111,7 @@ namespace RezerwacjaSal.Pages.AppUsers
                 return Page();
             }
 
+
             // Aktualizacja osoby
             var appUserToUpdate = await _context.AppUsers.FindAsync(id);
 
@@ -146,116 +128,17 @@ namespace RezerwacjaSal.Pages.AppUsers
                 }
             }
 
+
             // Aktualizacja pozostałych danych osoby
 
             if (await TryUpdateModelAsync<ApplicationUser>(
                 appUserToUpdate,
                 "ApplicationUser",   
-                 s => s.Number, s => s.FirstName, s => s.LastName, s => s.Employee, s => s.Email, s => s.PhoneNumber, s => s.Note))
+                 s => s.Employment, s=> s.DepartmentID, s => s.Number, s => s.FirstName, s => s.LastName, s => s.Email, s => s.PhoneNumber, s => s.Note))
             {
                 await _context.SaveChangesAsync();
             }
 
-            // zatrudnienia dla danej osoby
-            Employments = await _context.Employments
-                .Where(s => s.Id == id)
-                .AsNoTracking()
-                .ToListAsync();
-
-            // jeśli zaznaczono "pracownik"
-            if (appUserToUpdate.Employee)
-            {
-                if (Employments.Any())
-                    FirstEmployment = Employments.FirstOrDefault(); // jeśli osoba miała pierwszy etat -> aktualizacja
-                else
-                    FirstEmployment = new Employment(); // osoba nie miała pierwszego etatu -> nowy pierwszy etat
-
-                FirstEmployment.Id = appUserToUpdate.Id; // przekazanie ID z osoby do zatrudnienia
-
-                // TODO Nie aktualizuje position employment
-                if (await TryUpdateModelAsync<Employment>(
-                    FirstEmployment,
-                    "FirstEmployment",
-                    s => s.DepartmentID, s => s.Position))
-                {
-                    if (!Employments.Any()) _context.Employments.Add(FirstEmployment);  //ewentualne dodanie zatrudnienia
-                    await _context.SaveChangesAsync();
-                }
-
-                // jeśli zaznaczono drugi etat
-                if (SecondEmploymentChecked)
-                {
-                    if (Employments.Count() > 1)
-                        SecondEmployment = Employments.Last(); // osoba miała drugi etat -> aktualizacja
-                    else
-                        SecondEmployment = new Employment();  // osoba nie miała drugiego etatu -> nowy drugi etat
-
-                    SecondEmployment.Id = appUserToUpdate.Id; // przekazanie ID z osoby do zatrudnienia
-
-                    if (await TryUpdateModelAsync<Employment>(
-                                        SecondEmployment,
-                                        "SecondEmployment",
-                                        s => s.DepartmentID, s => s.Position))
-                    {
-                        if (Employments.Count() < 2) _context.Employments.Add(SecondEmployment);  //ewentualne dodanie zatrudnienia
-                        await _context.SaveChangesAsync();
-                    }
-                }
-                else // jeśli nie zaznaczono drugi etat
-                {
-                    if (Employments.Count() > 1) // jeśli osoba miała drugi etat -> usuń
-                    {
-                        SecondEmployment = Employments.Last();
-                        try
-                        {
-                            _context.Employments.Remove(SecondEmployment);
-                            await _context.SaveChangesAsync();
-                        }
-                        catch (DbUpdateException /* ex */)
-                        {
-                            //Log the error (uncomment ex variable name and write a log.)
-                            return RedirectToAction("./Index",
-                                                 new { id = id, saveChangesError = true });
-                        }
-                    }
-                }
-            }
-
-            else // jeśli nie zaznaczono pracownik
-            {
-                if (Employments.Any()) // jeśli miała pierwsze zatrudnienie -> usuń pierwsze
-                {
-                    FirstEmployment = Employments.FirstOrDefault();
-
-                    try
-                    {
-                        _context.Employments.Remove(FirstEmployment);
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateException /* ex */)
-                    {
-                        //Log the error (uncomment ex variable name and write a log.)
-                        return RedirectToAction("./Index",
-                                             new { id = id, saveChangesError = true });
-                    }
-                }
-                if (Employments.Count() > 1) // jeśli miała drugie zatrudnienie -> usuń drugie
-                {
-                    SecondEmployment = Employments.Last();
-
-                    try
-                    {
-                        _context.Employments.Remove(SecondEmployment);
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateException /* ex */)
-                    {
-                        //Log the error (uncomment ex variable name and write a log.)
-                        return RedirectToAction("./Index",
-                                             new { id = id, saveChangesError = true });
-                    }
-                }
-            }
             return RedirectToPage("./Index");
         }
 

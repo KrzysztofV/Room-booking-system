@@ -29,7 +29,6 @@ namespace RezerwacjaSal.Pages.Departments
         private List<int> AllAppUsersIDs { get; set; }
         private List<string> AllDepartmentsNames { get; set; }
         public string AdministratorIdError { get; set; }
-        public string ManagerIdError { get; set; }
         public string DuplicateNameExistError { get; private set; }
 
         public async Task<IActionResult> OnPostAsync()
@@ -48,10 +47,6 @@ namespace RezerwacjaSal.Pages.Departments
             if (!AllAppUsersIDs.Contains(Department.Administrator))
             {
                 AdministratorIdError = String.Format("Nie ma takiego człeka dla ID: {0}", Department.Administrator);
-
-                if (!AllAppUsersIDs.Contains(Department.Manager))
-                    ManagerIdError = String.Format("Nie ma takiego człeka dla ID: {0}", Department.Manager);
-
                 return Page();
             }
             if (AllDepartmentsNames.Contains(Department.Name))
@@ -65,7 +60,7 @@ namespace RezerwacjaSal.Pages.Departments
             if (await TryUpdateModelAsync<Department>(
                 newDepartment,
                 "Department",   // Prefix for form value.
-                 s => s.Name, s => s.Administrator, s => s.Manager))
+                 s => s.Name, s => s.Administrator))
             {
                 _context.Departments.Add(newDepartment);
                 await _context.SaveChangesAsync();

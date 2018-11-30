@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using RezerwacjaSal.Data;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using RezerwacjaSal.Models;
 
 namespace RezerwacjaSal
 {
@@ -28,9 +30,10 @@ namespace RezerwacjaSal
                 try
                 {
                     var context = services.GetRequiredService<RezerwacjaSalContext>();
-
-                    // inicjalizacja bazy danych wstępnymi danymi. Przekazanie RezerwacjaSalContext.
-                    DbInitializer.Initialize(context);
+                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    var dbInitializerLogger = services.GetRequiredService<ILogger<DbInitializer>>();
+                    DbInitializer.InitializeAsync(context, userManager, roleManager, dbInitializerLogger).Wait();
                 }
                 catch (Exception ex)
                 {

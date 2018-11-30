@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RezerwacjaSal.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace RezerwacjaSal.Data
 {
-    public class RezerwacjaSalContext : IdentityDbContext
+    public class RezerwacjaSalContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public RezerwacjaSalContext(DbContextOptions<RezerwacjaSalContext> options) : base(options)
         {
         }
-        public DbSet<Employment> Employments { get; set; }
+
         public DbSet<Department> Departments { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Room> Rooms { get; set; }
@@ -25,11 +26,11 @@ namespace RezerwacjaSal.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   // fluent API
-            modelBuilder.Entity<Employment>().ToTable("Employment"); 
+
             modelBuilder.Entity<Message>().ToTable("Message");
             modelBuilder.Entity<Department>().ToTable("Department")
                 .ToTable("Department")
-                .HasMany(r => r.Employments)
+                .HasMany(r => r.AppUsers)
                 .WithOne(r => r.Department)
                 .OnDelete(DeleteBehavior.SetNull);
             modelBuilder.Entity<Building>().ToTable("Building")

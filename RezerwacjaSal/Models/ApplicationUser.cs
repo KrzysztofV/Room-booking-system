@@ -23,13 +23,16 @@ namespace RezerwacjaSal.Models
         [RegularExpression(@"^[A-Z]+[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ""'\s-]*$", ErrorMessage = "Nazwisko może zawierać wyłącznie znaki a-z oraz musi się zaczynać od dużej litery")]
         public string LastName { get; set; }
 
-        public bool Employee { get; set; } // czy jest pracownikiem uczelni
-
         [StringLength(200, ErrorMessage = "Notatka nie może być dłuższa niż 200 znaków.")]
         public string Note { get; set; }
 
-        // Employment posiada Id jako klucz obcy 
-        public ICollection<Employment> Employments { get; set; }
+
+        public int? DepartmentID { get; set; }
+        [StringLength(100, ErrorMessage = "Max 100 znaków.")]
+
+        public string Employment { get; set; }
+
+        public Department Department { get; set; }
 
         public ICollection<Message> Messages { get; set; }
     }

@@ -10,8 +10,8 @@ using RezerwacjaSal.Data;
 namespace RezerwacjaSal.Migrations
 {
     [DbContext(typeof(RezerwacjaSalContext))]
-    [Migration("20181126133149_Initial")]
-    partial class Initial
+    [Migration("20181130162128_Update")]
+    partial class Update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,11 +143,9 @@ namespace RezerwacjaSal.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -178,11 +176,9 @@ namespace RezerwacjaSal.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -226,8 +222,6 @@ namespace RezerwacjaSal.Migrations
 
                     b.Property<int>("Administrator");
 
-                    b.Property<int>("Manager");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50);
@@ -235,28 +229,6 @@ namespace RezerwacjaSal.Migrations
                     b.HasKey("DepartmentID");
 
                     b.ToTable("Department");
-                });
-
-            modelBuilder.Entity("RezerwacjaSal.Models.Employment", b =>
-                {
-                    b.Property<int>("EmploymentID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("DepartmentID");
-
-                    b.Property<string>("Id");
-
-                    b.Property<string>("Position")
-                        .HasMaxLength(50);
-
-                    b.HasKey("EmploymentID");
-
-                    b.HasIndex("DepartmentID");
-
-                    b.HasIndex("Id");
-
-                    b.ToTable("Employment");
                 });
 
             modelBuilder.Entity("RezerwacjaSal.Models.Message", b =>
@@ -349,7 +321,10 @@ namespace RezerwacjaSal.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<bool>("Employee");
+                    b.Property<int?>("DepartmentID")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Employment");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -363,6 +338,8 @@ namespace RezerwacjaSal.Migrations
                         .HasMaxLength(200);
 
                     b.Property<int>("Number");
+
+                    b.HasIndex("DepartmentID");
 
                     b.ToTable("ApplicationUser");
 
@@ -422,18 +399,6 @@ namespace RezerwacjaSal.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("RezerwacjaSal.Models.Employment", b =>
-                {
-                    b.HasOne("RezerwacjaSal.Models.Department", "Department")
-                        .WithMany("Employments")
-                        .HasForeignKey("DepartmentID")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("RezerwacjaSal.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Employments")
-                        .HasForeignKey("Id");
-                });
-
             modelBuilder.Entity("RezerwacjaSal.Models.Message", b =>
                 {
                     b.HasOne("RezerwacjaSal.Models.ApplicationUser", "ApplicationUser")
@@ -459,6 +424,14 @@ namespace RezerwacjaSal.Migrations
                         .WithMany("Rooms")
                         .HasForeignKey("BuildingID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RezerwacjaSal.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("RezerwacjaSal.Models.Department", "Department")
+                        .WithMany("AppUsers")
+                        .HasForeignKey("DepartmentID")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 #pragma warning restore 612, 618
         }

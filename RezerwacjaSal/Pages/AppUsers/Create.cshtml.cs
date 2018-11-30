@@ -17,11 +17,11 @@ namespace RezerwacjaSal.Pages.AppUsers
 {
     public class CreateModel : PageModel
     {
-        private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
+        private readonly RezerwacjaSalContext _context;
         private List<int> AllNumbers;
 
         public CreateModel(
-            RezerwacjaSal.Data.RezerwacjaSalContext context,
+            RezerwacjaSalContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger)
@@ -35,14 +35,6 @@ namespace RezerwacjaSal.Pages.AppUsers
         [BindProperty] // wiązanie modelu
         public ApplicationUser ApplicationUser { get; set; }
 
-        [BindProperty]
-        public Employment Employment { get; set; }
-
-        [BindProperty]
-        public Employment SecondEmployment { get; set; }
-
-        [BindProperty]
-        public bool SecondEmploymentChecked { get; set; }
 
         [BindProperty] //aby można było z tego skorzystać na stronie html i mogło zostać użyte potem w onPost
         public bool SetAutoNumber { get; set; } = true;
@@ -51,6 +43,7 @@ namespace RezerwacjaSal.Pages.AppUsers
         [Required(ErrorMessage = "ID jest wymagane.")]
         [Range(1,100000, ErrorMessage = "Tylko liczby w zakresie 1-100000")]
         public int ManualNumber { get; set; }
+
 
         public int AutoNumber { get; set; }
 
@@ -146,26 +139,6 @@ namespace RezerwacjaSal.Pages.AppUsers
                 return Page();
             }
 
-            //var newApplicationUser = new ApplicationUser();
-
-            // obsługa osoby
-            //if (await TryUpdateModelAsync<ApplicationUser>(
-            //    newApplicationUser,
-            //    "ApplicationUser",   // Prefix for form value.
-            //     s => s.FirstName, s => s.LastName, s => s.Employee, s => s.Email, s => s.PhoneNumber, s => s.Note))
-            //{
-            //    newApplicationUser.UserName = newApplicationUser.Email; // username jest emailem
-            //    if (SetAutoNumber) newApplicationUser.Number = FreeNumber;
-            //    else newApplicationUser.Number = ManualNumber;
-
-
-
-            //    _context.AppUsers.Add(newApplicationUser);
-            //    await _context.SaveChangesAsync();
-
-
-            //}
-
                 // na podstawie Register.cshtml.cs
                 var newApplicationUser = new ApplicationUser
             {
@@ -173,10 +146,11 @@ namespace RezerwacjaSal.Pages.AppUsers
                 Email = ApplicationUser.Email,
                 FirstName = ApplicationUser.FirstName,
                 LastName = ApplicationUser.LastName,
-                Employee = ApplicationUser.Employee,
                 PhoneNumber = ApplicationUser.PhoneNumber,
                 Note = ApplicationUser.Note,
                 Number = ApplicationUser.Number,
+                Employment = ApplicationUser.Employment,
+                DepartmentID = ApplicationUser.DepartmentID,
                 EmailConfirmed = true
             };
             
@@ -192,36 +166,7 @@ namespace RezerwacjaSal.Pages.AppUsers
                 ModelState.AddModelError(string.Empty, error.Description);
             }
 
-            // obsługa zatrudnienia jeśli osoba jest pracownikiem
-            if (newApplicationUser.Employee)
-            {
-                var emptyEmployment = new Employment();
-
-                if (await TryUpdateModelAsync<Employment>(
-                emptyEmployment,
-                "Employment",
-                s => s.Id, s => s.DepartmentID, s => s.Position)) 
-                {
-                    emptyEmployment.Id = newApplicationUser.Id; 
-                    _context.Employments.Add(emptyEmployment);
-                    await _context.SaveChangesAsync();
-                }
-
-                if (SecondEmploymentChecked) // drugie zatrudnienie
-                {
-                    var emptySecondEmployment = new Employment();
-
-                    if (await TryUpdateModelAsync<Employment>(
-                    emptySecondEmployment,
-                    "SecondEmployment",
-                    s => s.Id, s => s.DepartmentID, s => s.Position)) 
-                    {
-                        emptySecondEmployment.Id = newApplicationUser.Id; 
-                        _context.Employments.Add(emptySecondEmployment);
-                        await _context.SaveChangesAsync();
-                    }
-                }
-            }
+            
             return RedirectToPage("./Index");
         }
     }

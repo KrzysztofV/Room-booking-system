@@ -37,9 +37,8 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
-            ApplicationUser = await _context.AppUsers
-                .Include(s=>s.Employments)      
-                .ThenInclude(e => e.Department) 
+            ApplicationUser = await _context.AppUsers  
+                .Include(e => e.Department) 
                 .AsNoTracking()                 
                 .FirstOrDefaultAsync(m => m.Id == id);  // domyślne
 

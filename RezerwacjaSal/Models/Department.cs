@@ -18,15 +18,10 @@ namespace RezerwacjaSal.Models
         public string Name { get; set; }
 
         [Range(1,10000000000, ErrorMessage = "Numer pracownika może zawierać wyłącznie liczby.")]
-        public int Administrator { get; set; } // Number
+        public int Administrator { get; set; } 
 
-        [Range(1, 10000000000, ErrorMessage = "Numer pracownika może zawierać wyłącznie liczby.")]
-        public int Manager { get; set; } // Number
-
-        // navigation property - z którą inecją Department się łączy
-        // Encja Department odnosi się do wielu Employment (relacja jeden do wielu) więc 
-        // musi być lista ICollection<T>
-        public ICollection<Employment> Employments { get; set; }
         public ICollection<Building> Buildings { get; set; }
+
+        public ICollection<ApplicationUser> AppUsers { get; set; }
     }
 }

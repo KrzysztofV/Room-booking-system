@@ -32,12 +32,6 @@
             @Html.DisplayFor(model => model.ApplicationUser.LastName)
         </dd>
         <dt>
-            Pracownik:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Employee)
-        </dd>
-        <dt>
             Email:
         </dt>
         <dd>
@@ -50,38 +44,24 @@
             @Html.DisplayFor(model => model.ApplicationUser.PhoneNumber)
         </dd>
         <dt>
+            Pracownik:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Employment)
+        </dd>
+        <dt>
+            Wydziału:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Department.Name)
+        </dd>
+        <dt>
             Dodatkowe informacje:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ApplicationUser.Note)
         </dd>
-        @if (Model.ApplicationUser.Employee)
-        {
-            <dt>
-                Zatrudnienie:
-            </dt>
-            <dd>
-                <table class="table">
-                    <tr>
-                        <th>Pracuje w katedrze:</th>
-                        <th>Jako:</th>
-                    </tr>
-                    @*dla każdego zatrudnienia*@
-                    @foreach (var item in Model.ApplicationUser.Employments)
-                    {
-                        <tr>
-                            <td>
-                                @*podaje nazwę katedry w której pracuje pracownik*@
-                                @Html.DisplayFor(modelItem => item.Department.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Position)
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </dd>
-        }
+
     </dl>
 </div>
 <div>

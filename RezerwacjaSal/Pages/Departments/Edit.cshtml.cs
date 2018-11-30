@@ -22,7 +22,6 @@ namespace RezerwacjaSal.Pages.Departments
 
         private List<int> AllNumbers { get; set; }
         public string AdministratorIdError { get; set; }
-        public string ManagerIdError { get; set; }
         [BindProperty]
         public Department Department { get; set; }
         public IEnumerable<ApplicationUser> AppUsers { get; set; }
@@ -72,16 +71,12 @@ namespace RezerwacjaSal.Pages.Departments
             if (!AllNumbers.Contains(Department.Administrator))
             {
                 AdministratorIdError = String.Format("Nie ma takiego człeka o numerze: {0}", Department.Administrator);
-
-                if (!AllNumbers.Contains(Department.Manager))
-                    ManagerIdError = String.Format("Nie ma takiego człeka o numerze: {0}", Department.Manager);
-
                 return Page();
             }
 
             var departmentToUpdate = await _context.Departments.FindAsync(departmentid);
 
-            if (await TryUpdateModelAsync<Department>(departmentToUpdate, "Department", s => s.Name, s => s.Administrator, s => s.Manager))
+            if (await TryUpdateModelAsync<Department>(departmentToUpdate, "Department", s => s.Name, s => s.Administrator))
                 await _context.SaveChangesAsync();
 
             return Page();

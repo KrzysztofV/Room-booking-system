@@ -40,8 +40,7 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageSizeRoute = pageSize;
 
             ApplicationUser = await _context.AppUsers
-                .Include(s => s.Employments)      // wczytuje naviagtion properties z Employment
-                .ThenInclude(e => e.Department) // wczytuje naviagtion properties z Department
+                .Include(e => e.Department) // wczytuje naviagtion properties z Department
                 .AsNoTracking()                 // poprawia wydajność w przypadku gdy wczytane encje nie są modyfikowane w tej stronie
                 .FirstOrDefaultAsync(m => m.Id == id);  // domyślne
 
@@ -64,8 +63,7 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageSizeRoute = pageSize;
 
             var appUser = await _context.AppUsers
-                .Include(s => s.Employments)      // wczytuje naviagtion properties z Employment
-                .ThenInclude(e => e.Department) // wczytuje naviagtion properties z Department
+                .Include(e => e.Department) // wczytuje naviagtion properties z Department
                 .AsNoTracking()                 // poprawia wydajność w przypadku gdy wczytane encje nie są modyfikowane w tej stronie
                 .FirstOrDefaultAsync(m => m.Id == id);  // domyślne
 

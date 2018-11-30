@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-<body onload="employeeChecked(),doubleEmployeeChecked()">
+<body>
     <h3>Edycja osoby</h3>
     <hr />
     <div class="row">
@@ -36,21 +36,47 @@
                 <div class="form-group">
                     <input asp-for="ChangePassword" type="checkbox" id="passwordChecker" onclick="passwordChecked()" />
                     <span asp-validation-for="ChangePassword" class="text-danger"></span>
-                    <label class="form-check-label">Zmień hasło</label>
+                    <label class="form-check-label" style="color:red">Zmień hasło</label>
                 </div>
                 <div id="password" style="display:none">
                     <div class="form-group">
-                        <label asp-for="Input.Password">Hasło:</label>
-                        <input asp-for="Input.Password" class="form-control" />
+                        <label asp-for="Input.Password" style="color:red">Hasło:</label>
+                        <input asp-for="Input.Password" class="form-control" value="Nowe hasło" />
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.ConfirmPassword">Potwierdź hasło:</label>
-                        <input asp-for="Input.ConfirmPassword" class="form-control" />
+                        <label asp-for="Input.ConfirmPassword" style="color:red">Potwierdź hasło:</label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" value="Nowe hasło" />
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
                 </div>
-                <script>
+                <div class="form-group">
+                    <label asp-for="ApplicationUser.PhoneNumber" class="control-label">Telefon:</label>
+                    <input asp-for="ApplicationUser.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
+                </div>
+                    <div class="form-group">
+                        <label asp-for="ApplicationUser.DepartmentID" class="control-label">Wydział:</label>
+                        <select asp-for="ApplicationUser.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID" > <option value=@null>Brak</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ApplicationUser.Employment" class="control-label">Pracownik:</label>
+                        <input asp-for="ApplicationUser.Employment" class="form-control" />
+                        <span asp-validation-for="ApplicationUser.Employment" class="text-danger"></span>
+                    </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationUser.Note" class="control-label">Dodatkowe informacje:</label>
+                    <textarea asp-for="ApplicationUser.Note" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="ApplicationUser.Note" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-default" asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
+                    <input type="submit" value="Zapisz" class="btn btn-default btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
                     function passwordChecked() {
                         var checker = document.getElementById("passwordChecker").checked;
                         var password = document.getElementById('password');
@@ -60,77 +86,7 @@
                             password.style.display = 'none';
                         }
                     }
-                </script>
-
-                <div class="form-group">
-                    <label asp-for="ApplicationUser.PhoneNumber" class="control-label">Telefon:</label>
-                    <input asp-for="ApplicationUser.PhoneNumber" class="form-control" />
-                    <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ApplicationUser.Note" class="control-label">Dodatkowe informacje:</label>
-                    <textarea asp-for="ApplicationUser.Note" class="form-control" rows="5"></textarea>
-                    <span asp-validation-for="ApplicationUser.Note" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input asp-for="ApplicationUser.Employee" type="checkbox" id="employeeChecker" onclick="employeeChecked()" />
-                    <span asp-validation-for="ApplicationUser.Employee" class="text-danger"></span>
-                    <label class="form-check-label">Pracownik</label>
-                </div>
-                <script>
-                    function employeeChecked() {
-                        var checker = document.getElementById("employeeChecker").checked;
-                        var employment = document.getElementById('employment');
-                        if (checker) {
-                            employment.style.display = 'block';
-                        } else {
-                            employment.style.display = 'none';
-                        }
-                    }
-                    function doubleEmployeeChecked() {
-                        var checker = document.getElementById("doubleEmployeeChecker").checked;
-                        var employment = document.getElementById('secondEmployment');
-                        if (checker) {
-                            employment.style.display = 'block';
-                        } else {
-                            employment.style.display = 'none';
-                        }
-                    }
-                </script>
-
-                <div id="employment" style="display:none">
-                    <div class="form-group">
-                        <label asp-for="FirstEmployment.Department" class="control-label">Wydział:</label>
-                        <select asp-for="FirstEmployment.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="FirstEmployment.Position" class="control-label">Zatrudniony jako:</label>
-                        <input asp-for="FirstEmployment.Position" class="form-control" />
-                        <span asp-validation-for="FirstEmployment.Position" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input asp-for="SecondEmploymentChecked" type="checkbox" id="doubleEmployeeChecker" onclick="doubleEmployeeChecked()" />
-                        <label asp-for="SecondEmploymentChecked" class="form-check-label">Drugi etat</label>
-                    </div>
-                </div>
-                <div id="secondEmployment" style="display:none">
-                    <div class="form-group">
-                        <label asp-for="SecondEmployment.Department" class="control-label">Wydział:</label>
-                        <select asp-for="SecondEmployment.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SecondEmployment.Position" class="control-label">Zatrudniony jako:</label>
-                        <input asp-for="SecondEmployment.Position" class="form-control" />
-                        <span asp-validation-for="SecondEmployment.Position" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <a class="btn btn-default" asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
-                    <input type="submit" value="Zapisz" class="btn btn-default btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
+    </script>
 </body>
 
     @section Scripts {

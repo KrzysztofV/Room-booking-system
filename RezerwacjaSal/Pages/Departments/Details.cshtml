@@ -24,15 +24,6 @@
             @Model.AppUsers.Where(p => p.Number == Model.Department.Administrator).Select(p => p.FirstName).FirstOrDefault()
             @Model.AppUsers.Where(p => p.Number == Model.Department.Administrator).Select(p => p.LastName).FirstOrDefault()
         </dd>
-        <dt>
-            Kierownik:
-        </dt>
-        <dd>
-            @Model.Department.Manager -
-
-            @Model.AppUsers.Where(p => p.Number == Model.Department.Manager).Select(p => p.FirstName).FirstOrDefault()
-            @Model.AppUsers.Where(p => p.Number == Model.Department.Manager).Select(p => p.LastName).FirstOrDefault()
-        </dd>
     </dl>
 </div>
 

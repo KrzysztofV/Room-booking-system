@@ -34,6 +34,8 @@ namespace RezerwacjaSal.Pages.AppUsers
         public string SearchStringRoute { get; set; }
         public int? PageIndexRoute { get; set; }
         public int? PageSizeRoute { get; set; }
+        public IList<Department> Departments { get; set; }
+
 
         public async Task OnGetAsync(string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
 
@@ -120,6 +122,10 @@ namespace RezerwacjaSal.Pages.AppUsers
 
             ApplicationUser = await PaginatedList<ApplicationUser>.CreateAsync(
                     appUserIQ.AsNoTracking(), pageIndex ?? 1, PageSize);
+
+            Departments = await _context.Departments
+                    .AsNoTracking()
+                    .ToListAsync();
         }
     }
 }
