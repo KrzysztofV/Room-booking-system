@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using RezerwacjaSal.Models;
 
 namespace RezerwacjaSal.Pages.AppUsers
 {
+    [Authorize(Roles = "administrator")]
     public class DeleteModel : PageModel
     {
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;

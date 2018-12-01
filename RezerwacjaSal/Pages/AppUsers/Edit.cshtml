@@ -24,6 +24,11 @@
                     <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <input asp-for="ApplicationUser.EmailConfirmed" type="checkbox" />
+                    <span asp-validation-for="ApplicationUser.EmailConfirmed" class="text-danger"></span>
+                    <label class="form-check-label">Potwierdź użytkownika</label>
+                </div>
+                <div class="form-group">
                     <input asp-for="ChangePassword" type="checkbox" id="passwordChecker" onclick="passwordChecked()" />
                     <span asp-validation-for="ChangePassword" class="text-danger"></span>
                     <label class="form-check-label" style="color:red">Zmień hasło</label>

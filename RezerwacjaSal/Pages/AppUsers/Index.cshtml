@@ -1,6 +1,8 @@
 ﻿@page
 @using Microsoft.AspNetCore.Mvc.RazorPages
 @model RezerwacjaSal.Pages.AppUsers.IndexModel
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 @{
     ViewData["Title"] = "Index";
@@ -42,41 +44,63 @@
             <th>
                 Email
             </th>
+            @if (User.IsInRole("administrator"))
+            {
+                <th>
+                    Potwierdzenie
+                </th>
+            }
+
             <th>
                 Wydział
             </th>
-            <th>
-                Zarządzanie
-            </th>
+            @if (User.IsInRole("administrator"))
+            {
+                <th>
+                    Zarządzanie
+                </th>
+            }
+
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.ApplicationUser)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Model.Departments.Where(r => r.DepartmentID == item.DepartmentID).Select(r => r.Name).FirstOrDefault()
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Edytuj</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Szczegóły</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Usuń</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                @if (User.IsInRole("administrator")) {
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                </td>
+                }
+                <td>
+                    @Model.Departments.Where(r => r.DepartmentID == item.DepartmentID).Select(r => r.Name).FirstOrDefault()
+                </td>
+                @if (User.IsInRole("administrator"))
+                {
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Edytuj</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Szczegóły</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Usuń</a>
+                    </td>
+                }
+            </tr>
         }
+        @if (User.IsInRole("administrator"))
+        {
             <tr class="active">
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -85,8 +109,10 @@
                 <td>
                     <a class="btn btn-default btn-primary" asp-page="Create" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Dodaj nową osobę</a>
                 </td>
+
             </tr>
-    </tbody>
+        }
+        </tbody>
 </table>
 
 @* stronowanie listy *@

@@ -12,9 +12,12 @@ using RezerwacjaSal.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using RezerwacjaSal.Areas.Identity.Pages.Account;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RezerwacjaSal.Pages.AppUsers
 {
+    [Authorize(Roles = "administrator")]
+
     public class CreateModel : PageModel
     {
         private readonly RezerwacjaSalContext _context;
@@ -64,6 +67,8 @@ namespace RezerwacjaSal.Pages.AppUsers
 
             [Required]
             public string RoleName { get; set; }
+            [Required]
+            public bool EmailConfirmed { get; set; }
         }
 
         [BindProperty]
@@ -135,7 +140,7 @@ namespace RezerwacjaSal.Pages.AppUsers
                 Number = FreeNumber,
                 Employment = ApplicationUser.Employment,
                 DepartmentID = ApplicationUser.DepartmentID,
-                EmailConfirmed = true
+                EmailConfirmed = Input.EmailConfirmed
             };
             
             // Zapisanie użytkownika i jego roli

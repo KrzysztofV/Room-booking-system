@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,8 @@ using RezerwacjaSal.Models;
 
 namespace RezerwacjaSal.Pages.AppUsers
 {
+    [Authorize(Roles = "administrator")]
+
     public class EditModel : PageModel
     {
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
@@ -97,7 +100,6 @@ namespace RezerwacjaSal.Pages.AppUsers
             return Page();
         }
 
-
         public async Task<IActionResult> OnPostAsync(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
             // Przekazanie parametrów URL
@@ -135,7 +137,8 @@ namespace RezerwacjaSal.Pages.AppUsers
                  s => s.LastName, 
                  s => s.Email, 
                  s => s.PhoneNumber, 
-                 s => s.Note))
+                 s => s.Note,
+                 s => s.EmailConfirmed))
             {
                 await _context.SaveChangesAsync();
             }
