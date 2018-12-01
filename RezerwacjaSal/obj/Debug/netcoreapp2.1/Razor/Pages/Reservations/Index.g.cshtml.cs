@@ -78,7 +78,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n<p></p>\r\n<div class=\"btn-group\">\r\n    ");
             EndContext();
             BeginContext(142, 119, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "165d07ac97904d4e85a1b3884b2e2530", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a71e030aa74e4980ad75eef5ff288163", async() => {
                 BeginContext(249, 8, true);
                 WriteLiteral("Wydziały");
                 EndContext();
@@ -114,7 +114,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(267, 116, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "521f2d3f1e79411488b1b75f8d040a0a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b96b41cf5d6f452a81beb4a5ed956228", async() => {
                 BeginContext(372, 7, true);
                 WriteLiteral("Budynki");
                 EndContext();
@@ -170,7 +170,7 @@ using RezerwacjaSal;
             WriteLiteral("</h4>\r\n<hr />\r\n\r\n<p></p>\r\n    Zmień datę:\r\n<p></p>\r\n<div class=\"form-inline\">\r\n    ");
             EndContext();
             BeginContext(613, 496, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d1e970f9692744128db5d8866ef25a94", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fd65e31740e048729e87989d78f0ce4f", async() => {
                 BeginContext(673, 28, true);
                 WriteLiteral("\r\n        <input name=\"date\"");
                 EndContext();
@@ -225,7 +225,7 @@ WriteAttributeValue("", 954, Model.DepartmentIdRoute, 954, 24, false);
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(1115, 523, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a52f6070e7eb40679e0a036272e8db07", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "695944c7fc9b42d8a542138f07aec810", async() => {
                 BeginContext(1174, 28, true);
                 WriteLiteral("\r\n        <input name=\"date\"");
                 EndContext();
@@ -280,7 +280,7 @@ WriteAttributeValue("", 1453, Model.DepartmentIdRoute, 1453, 24, false);
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(1644, 521, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3f40c1659c64477dab2a952609dec88f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ef697934db12446c8d24604921a137a4", async() => {
                 BeginContext(1704, 28, true);
                 WriteLiteral("\r\n        <input name=\"date\"");
                 EndContext();
@@ -335,7 +335,7 @@ WriteAttributeValue("", 1982, Model.DepartmentIdRoute, 1982, 24, false);
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(2171, 485, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "730e92e7d94f469abc3615b069b2e4b3", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8a34b6882fe543e7ac9e853c1a8b3266", async() => {
                 BeginContext(2230, 28, true);
                 WriteLiteral("\r\n        <input name=\"date\"");
                 EndContext();
@@ -390,7 +390,7 @@ WriteAttributeValue("", 2501, Model.DepartmentIdRoute, 2501, 24, false);
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(2662, 461, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0397b03e3599457c977d7246709c4f1e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "952018cee68041e19666c70ed256a004", async() => {
                 BeginContext(2681, 28, true);
                 WriteLiteral("\r\n        <input name=\"date\"");
                 EndContext();
@@ -459,7 +459,7 @@ WriteAttributeValue("", 2959, Model.DepartmentIdRoute, 2959, 24, false);
             WriteLiteral("                <th style=\"border-color:#808080\">\r\n                    ");
             EndContext();
             BeginContext(3577, 237, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4d69a4e21b364691bea6950e623baeef", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "54b9f76db9cf4b81b44f17821d390901", async() => {
                 BeginContext(3799, 11, false);
 #line 64 "C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\Pages\Reservations\Index.cshtml"
                                                                                                                                                                                                                                             Write(item.Number);
@@ -596,7 +596,7 @@ WriteAttributeValue("", 2959, Model.DepartmentIdRoute, 2959, 24, false);
             WriteLiteral("                            ");
             EndContext();
             BeginContext(5781, 304, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "83ecc32420f94037bd50f43880e6465e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4b8d7c26176d4172be3d8196416e2282", async() => {
                 BeginContext(6046, 5, true);
                 WriteLiteral("<h6 >");
                 EndContext();
@@ -699,7 +699,7 @@ AddHtmlAttributeValue("", 6031, TooltipTitle, 6031, 13, false);
             WriteLiteral("                        <th style=\"border-color:#808080\" class=\"success\">\r\n                            ");
             EndContext();
             BeginContext(6399, 343, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "38f47bd2149246faa8c0430317da2e27", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74850d3c80af46b28e571f8b870167ea", async() => {
                 BeginContext(6724, 14, true);
                 WriteLiteral("<h6>Wolne</h6>");
                 EndContext();

@@ -6,6 +6,8 @@
 }
 <body>
     <h3>Edycja osoby</h3>
+    <h4>Numer @Model.ApplicationUser.Number</h4>
+
     <hr />
     <div class="row">
         <div class="col-md-4">
@@ -13,23 +15,11 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ApplicationUser.Id" />
                 <div class="form-group">
-                    <label asp-for="ApplicationUser.Number" class="control-label">Numer:</label>
-                    <input asp-for="ApplicationUser.Number" class="form-control" />
-                    <span class="text-danger">@Model.ErrorSameNumber</span>
+                    <label class="control-label">Rodzaj konta:</label>
+                    <select asp-for="Input.RoleName" class="form-control" asp-items="ViewBag.RoleNames"> </select>
                 </div>
                 <div class="form-group">
-
-                    <label asp-for="ApplicationUser.FirstName" class="control-label">Imię:</label>
-                    <input asp-for="ApplicationUser.FirstName" class="form-control" />
-                    <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ApplicationUser.LastName" class="control-label">Nazwisko:</label>
-                    <input asp-for="ApplicationUser.LastName" class="form-control" />
-                    <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ApplicationUser.Email" class="control-label">Email:</label>
+                    <label asp-for="ApplicationUser.Email" class="control-label">Email (nazwa użytkownika):</label>
                     <input asp-for="ApplicationUser.Email" class="form-control" />
                     <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
                 </div>
@@ -51,21 +41,31 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ApplicationUser.PhoneNumber" class="control-label">Telefon:</label>
+                    <label asp-for="ApplicationUser.FirstName" class="control-label">*Imię:</label>
+                    <input asp-for="ApplicationUser.FirstName" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationUser.LastName" class="control-label">*Nazwisko:</label>
+                    <input asp-for="ApplicationUser.LastName" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationUser.PhoneNumber" class="control-label">*Telefon:</label>
                     <input asp-for="ApplicationUser.PhoneNumber" class="form-control" />
                     <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
                 </div>
-                    <div class="form-group">
-                        <label asp-for="ApplicationUser.DepartmentID" class="control-label">Wydział:</label>
-                        <select asp-for="ApplicationUser.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID" > <option value=@null>Brak</option></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ApplicationUser.Employment" class="control-label">Pracownik:</label>
-                        <input asp-for="ApplicationUser.Employment" class="form-control" />
-                        <span asp-validation-for="ApplicationUser.Employment" class="text-danger"></span>
-                    </div>
                 <div class="form-group">
-                    <label asp-for="ApplicationUser.Note" class="control-label">Dodatkowe informacje:</label>
+                    <label asp-for="ApplicationUser.DepartmentID" class="control-label">*Wydział:</label>
+                    <select asp-for="ApplicationUser.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"> <option value=@null>Brak</option></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationUser.Employment" class="control-label">*Pracownik:</label>
+                    <input asp-for="ApplicationUser.Employment" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.Employment" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationUser.Note" class="control-label">*Dodatkowe informacje:</label>
                     <textarea asp-for="ApplicationUser.Note" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="ApplicationUser.Note" class="text-danger"></span>
                 </div>
@@ -77,16 +77,17 @@
         </div>
     </div>
     <script>
-                    function passwordChecked() {
-                        var checker = document.getElementById("passwordChecker").checked;
-                        var password = document.getElementById('password');
-                        if (checker) {
-                            password.style.display = 'block';
-                        } else {
-                            password.style.display = 'none';
-                        }
-                    }
+        function passwordChecked() {
+            var checker = document.getElementById("passwordChecker").checked;
+            var password = document.getElementById('password');
+            if (checker) {
+                password.style.display = 'block';
+            } else {
+                password.style.display = 'none';
+            }
+        }
     </script>
+    * Opcjonalne
 </body>
 
     @section Scripts {

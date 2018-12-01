@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RezerwacjaSal.Data;
 using RezerwacjaSal.Models;
 
@@ -14,10 +17,23 @@ namespace RezerwacjaSal.Pages.AppUsers
     {
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
 
-        public DeleteModel(RezerwacjaSal.Data.RezerwacjaSalContext context)
+        public DeleteModel(RezerwacjaSal.Data.RezerwacjaSalContext context,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
+            ILogger<RegisterModel> logger)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
+            _logger = logger;
         }
+
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<RegisterModel> _logger;
 
         [BindProperty]
         public ApplicationUser ApplicationUser { get; set; }
@@ -27,6 +43,7 @@ namespace RezerwacjaSal.Pages.AppUsers
         public string SearchStringRoute { get; set; }
         public int? PageIndexRoute { get; set; }
         public int? PageSizeRoute { get; set; }
+        public string Role { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
@@ -40,12 +57,15 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageSizeRoute = pageSize;
 
             ApplicationUser = await _context.AppUsers
-                .Include(e => e.Department) // wczytuje naviagtion properties z Department
-                .AsNoTracking()                 // poprawia wydajność w przypadku gdy wczytane encje nie są modyfikowane w tej stronie
-                .FirstOrDefaultAsync(m => m.Id == id);  // domyślne
+                .Include(e => e.Department) 
+                .AsNoTracking()               
+                .FirstOrDefaultAsync(m => m.Id == id);  
 
             if (ApplicationUser == null)
                 return NotFound();
+
+            var roles = await _userManager.GetRolesAsync(ApplicationUser);
+            Role = roles.First();
 
 
             return Page();
@@ -63,9 +83,9 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageSizeRoute = pageSize;
 
             var appUser = await _context.AppUsers
-                .Include(e => e.Department) // wczytuje naviagtion properties z Department
-                .AsNoTracking()                 // poprawia wydajność w przypadku gdy wczytane encje nie są modyfikowane w tej stronie
-                .FirstOrDefaultAsync(m => m.Id == id);  // domyślne
+                .Include(e => e.Department)
+                .AsNoTracking()            
+                .FirstOrDefaultAsync(m => m.Id == id); 
 
             if (appUser == null)
                 return NotFound();

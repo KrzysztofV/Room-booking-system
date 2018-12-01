@@ -23,6 +23,12 @@
             @Html.DisplayFor(model => model.ApplicationUser.Number)
         </dd>
         <dt>
+            Typ konta:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+        <dt>
             Imię:
         </dt>
         <dd>
@@ -41,7 +47,7 @@
             @Html.DisplayFor(model => model.ApplicationUser.Email)
         </dd>
         <dt>
-            Telefun:
+            Telefon:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ApplicationUser.PhoneNumber)
@@ -68,7 +74,8 @@
     </dl>
     <form method="post">
         <input type="hidden" asp-for="ApplicationUser.Id" />
-        <a class="btn btn-default"asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
-        <input type="submit" value="Usuń" class="btn btn-default btn-danger"  /> 
+        <a class="btn btn-default" asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
+        <input type="submit" value="Usuń" class="btn btn-default btn-danger" />
+
     </form>
 </div>

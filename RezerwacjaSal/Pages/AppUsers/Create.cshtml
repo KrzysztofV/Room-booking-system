@@ -6,6 +6,7 @@
 
 <body onload="automaticID()">
     <h3>Dodaj nową osobę: </h3>
+    <h4>Numer @Model.FreeNumber</h4>
 
     <hr />
     <div class="row">
@@ -13,17 +14,10 @@
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <input asp-for="SetAutoNumber" type="checkbox" id="IDchecker" onclick="automaticID()" @*checked="@Model.SetAutoNumber" *@ />
-                    <span asp-validation-for="SetAutoNumber" class="text-danger"></span>
-                    <label class="form-check-label">Automatyczne ID: @Model.AutoNumber</label>
+                    <label  class="control-label">Rodzaj konta:</label>
+                    <select asp-for="Input.RoleName" class="form-control" asp-items="ViewBag.RoleNames"> </select>
                 </div>
-                <div id="IDinput" style="display:none">
-                    <div class="form-group">
-                        <label asp-for="ManualNumber" class="control-label">ID:</label>
-                        <input asp-for="ManualNumber" class="form-control" />
-                        <span class="text-danger">@Model.DuplicateNumberExistError</span>
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <label asp-for="ApplicationUser.Email" class="control-label">Email (nazwa użytkownika):</label>
                     <input asp-for="ApplicationUser.Email" class="form-control" />
@@ -40,17 +34,17 @@
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ApplicationUser.FirstName" class="control-label">Imię:</label>
+                    <label asp-for="ApplicationUser.FirstName" class="control-label">*Imię:</label>
                     <input asp-for="ApplicationUser.FirstName" class="form-control" />
                     <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ApplicationUser.LastName" class="control-label">Nazwisko:</label>
+                    <label asp-for="ApplicationUser.LastName" class="control-label">*Nazwisko:</label>
                     <input asp-for="ApplicationUser.LastName" class="form-control" />
                     <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ApplicationUser.PhoneNumber" class="control-label">Telefon:</label>
+                    <label asp-for="ApplicationUser.PhoneNumber" class="control-label">*Telefon:</label>
                     <input asp-for="ApplicationUser.PhoneNumber" class="form-control" />
                     <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
                 </div>
@@ -66,17 +60,17 @@
                         }
                     }
                 </script>
-                    <div class="form-group">
-                        <label asp-for="ApplicationUser.DepartmentID" class="control-label">Wydział:</label>
-                        <select asp-for="ApplicationUser.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"><option value=@null>Brak</option></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ApplicationUser.Employment" class="control-label">Pracownik:</label>
-                        <input asp-for="ApplicationUser.Employment" class="form-control" />
-                        <span asp-validation-for="ApplicationUser.Employment" class="text-danger"></span>
-                    </div>
                 <div class="form-group">
-                    <label asp-for="ApplicationUser.Note" class="control-label">Dodatkowe informacje:</label>
+                    <label asp-for="ApplicationUser.DepartmentID" class="control-label">*Wydział:</label>
+                    <select asp-for="ApplicationUser.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"><option value=@null>Brak</option></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationUser.Employment" class="control-label">*Pracownik:</label>
+                    <input asp-for="ApplicationUser.Employment" class="form-control" />
+                    <span asp-validation-for="ApplicationUser.Employment" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationUser.Note" class="control-label">*Dodatkowe informacje:</label>
                     <textarea asp-for="ApplicationUser.Note" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="ApplicationUser.Note" class="text-danger"></span>
                 </div>
@@ -88,6 +82,7 @@
             </form>
         </div>
     </div>
+    * Opcjonalne
 </body>
 
 @section Scripts {

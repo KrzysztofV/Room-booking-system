@@ -20,6 +20,12 @@
             @Html.DisplayFor(model => model.ApplicationUser.Number)
         </dd>
         <dt>
+            Typ konta:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+        <dt>
             Imię:
         </dt>
         <dd>
@@ -38,7 +44,7 @@
             @Html.DisplayFor(model => model.ApplicationUser.Email)
         </dd>
         <dt>
-            Telefun:
+            Telefon:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ApplicationUser.PhoneNumber)
@@ -66,7 +72,9 @@
 </div>
 <div>
     <a class="btn btn-default" asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
-    <a class="btn btn-default btn-primary" asp-page="./Edit" asp-route-id="@Model.ApplicationUser.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Edytuj</a> 
+    <a class="btn btn-default btn-primary" asp-page="./Edit" asp-route-id="@Model.ApplicationUser.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Edytuj</a>
+    <a asp-page="./Delete" class="btn btn-default btn-danger" asp-route-id="@Model.ApplicationUser.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Usuń</a>
+
 </div>
 
 

@@ -24,30 +24,19 @@ namespace RezerwacjaSal.Pages.AppUsers
             RezerwacjaSalContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
         }
 
         [BindProperty] // wiązanie modelu
         public ApplicationUser ApplicationUser { get; set; }
 
-
-        [BindProperty] //aby można było z tego skorzystać na stronie html i mogło zostać użyte potem w onPost
-        public bool SetAutoNumber { get; set; } = true;
-
-        [BindProperty]
-        [Required(ErrorMessage = "ID jest wymagane.")]
-        [Range(1,100000, ErrorMessage = "Tylko liczby w zakresie 1-100000")]
-        public int ManualNumber { get; set; }
-
-
-        public int AutoNumber { get; set; }
-
-        public string DuplicateNumberExistError { get; set; }
         public int FreeNumber { get; private set; }
         public string SortOrderRoute { get; set; }
         public string CurrentFilterRoute { get; set; }
@@ -56,11 +45,9 @@ namespace RezerwacjaSal.Pages.AppUsers
         public int? PageSizeRoute { get; set; }
 
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-
-
-        
 
         public class InputModel
         {
@@ -74,6 +61,9 @@ namespace RezerwacjaSal.Pages.AppUsers
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            public string RoleName { get; set; }
         }
 
         [BindProperty]
@@ -81,18 +71,19 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         public async Task<IActionResult> OnGet(string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
-            // Ustalenie nowego ID dla nowej osoby
+            // Ustalenie nowego numeru dla nowej osoby
             AllNumbers = await _context.AppUsers
                 .Select(i => i.Number)
                 .ToListAsync();
 
+            // Przekazanie parametrów URL
             SortOrderRoute = sortOrder;
             CurrentFilterRoute = currentFilter;
             SearchStringRoute = searchString;
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
-            // znalezienie wolnego numeru (wyszukuje też lukę np. 1,2,..,4,5)
+            // Znalezienie wolnego numeru
             FreeNumber = 1;
             while (true)
             {
@@ -100,11 +91,9 @@ namespace RezerwacjaSal.Pages.AppUsers
                 else break;
             }
 
-            AutoNumber = FreeNumber;
-
-            ManualNumber = AutoNumber;
-
+            // Listy wyborów
             ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
+            ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", _roleManager.Roles.Where(r => r.Name == "użytkownik").Select(r => r.Name).First());
 
             return Page();
         }
@@ -112,19 +101,21 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         public async Task<IActionResult> OnPostAsync(string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
-            AllNumbers = await _context.AppUsers
-                .Select(i => i.Number)
-                .ToListAsync();
 
             if (!ModelState.IsValid)
+            {
+                ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", _roleManager.Roles.Where(r => r.Name == "użytkownik").Select(r => r.Name).First());
                 return Page();
+            }
 
+            // Przekazanie parametrów URL
             SortOrderRoute = sortOrder;
             CurrentFilterRoute = currentFilter;
             SearchStringRoute = searchString;
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
+            // Znalezienie wolnego numeru
             FreeNumber = 1;
             while (true)
             {
@@ -132,15 +123,8 @@ namespace RezerwacjaSal.Pages.AppUsers
                 else break;
             }
 
-            if (AllNumbers.Contains(ManualNumber) && !SetAutoNumber)   // własna validacja numeru pracownika
-            {
-                AutoNumber = FreeNumber;
-                DuplicateNumberExistError = "Doopanuj się! Ten numer jest już zajęty.";
-                return Page();
-            }
-
-                // na podstawie Register.cshtml.cs
-                var newApplicationUser = new ApplicationUser
+            // Nowy użytkownik
+            var newApplicationUser = new ApplicationUser
             {
                 UserName = ApplicationUser.Email,
                 Email = ApplicationUser.Email,
@@ -148,25 +132,19 @@ namespace RezerwacjaSal.Pages.AppUsers
                 LastName = ApplicationUser.LastName,
                 PhoneNumber = ApplicationUser.PhoneNumber,
                 Note = ApplicationUser.Note,
-                Number = ApplicationUser.Number,
+                Number = FreeNumber,
                 Employment = ApplicationUser.Employment,
                 DepartmentID = ApplicationUser.DepartmentID,
                 EmailConfirmed = true
             };
             
-            var result = await _userManager.CreateAsync(newApplicationUser, Input.Password);
-            if (result.Succeeded)
-            {
-                _logger.LogInformation("User created a new account with password.");
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(newApplicationUser);
-                await _signInManager.SignInAsync(newApplicationUser, isPersistent: false);
-            }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
+            // Zapisanie użytkownika i jego roli
+            var createUserResult = await _userManager.CreateAsync(newApplicationUser, Input.Password);
+            var updateReoleResult = await _userManager.AddToRoleAsync(newApplicationUser, Input.RoleName);
+            if (createUserResult.Succeeded && createUserResult.Succeeded) _logger.LogInformation("Utworzono nowego użytkownika");
+            foreach (var error in createUserResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
+            foreach (var error in updateReoleResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
-            
             return RedirectToPage("./Index");
         }
     }

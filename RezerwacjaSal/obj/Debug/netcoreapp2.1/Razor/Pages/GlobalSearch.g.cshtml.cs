@@ -145,7 +145,7 @@ using RezerwacjaSal;
             WriteLiteral("    ");
             EndContext();
             BeginContext(641, 371, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74944965ae6a474e854464c930145ca8", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0a7bb39f330d4d5ab4876efb6fd2171b", async() => {
                 BeginContext(904, 25, false);
 #line 25 "C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\Pages\GlobalSearch.cshtml"
                                                                                                                                                                                                                                                                      Write(reservation.ReservationID);
@@ -313,7 +313,7 @@ using RezerwacjaSal;
             WriteLiteral("    ");
             EndContext();
             BeginContext(1533, 118, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ba2337e2bc4646b9879773f3b68fdc10", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c725ec71ef2742b38d25554b1d61a521", async() => {
                 BeginContext(1594, 14, false);
 #line 44 "C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\Pages\GlobalSearch.cshtml"
                                                            Write(appUser.Number);
@@ -456,7 +456,7 @@ using RezerwacjaSal;
             WriteLiteral("    ");
             EndContext();
             BeginContext(2138, 106, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "29630dd8192548d6ac86c39b3595459a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "089bfa0720ad4e758d39eafb03e9483d", async() => {
                 BeginContext(2225, 15, false);
 #line 64 "C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\Pages\GlobalSearch.cshtml"
                                                                                      Write(department.Name);
@@ -578,7 +578,7 @@ using RezerwacjaSal;
             WriteLiteral("    ");
             EndContext();
             BeginContext(2714, 180, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "804b4ca17403450a915534b929a455a2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f5b1917c6f2345e29904835a74c762bc", async() => {
                 BeginContext(2841, 13, false);
 #line 83 "C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\Pages\GlobalSearch.cshtml"
                                                                                                                              Write(building.Name);
@@ -719,7 +719,7 @@ using RezerwacjaSal;
             WriteLiteral("    ");
             EndContext();
             BeginContext(3325, 242, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "54e72a3787884df8b5625d976eb89a8f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "106bd64bfb0e412a910488719bae7c2b", async() => {
                 BeginContext(3481, 11, false);
 #line 102 "C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\Pages\GlobalSearch.cshtml"
                                                                                                                                                           Write(room.Number);

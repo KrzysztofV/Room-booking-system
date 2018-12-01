@@ -23,26 +23,27 @@ namespace RezerwacjaSal.Pages.AppUsers
             RezerwacjaSal.Data.RezerwacjaSalContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
         }
 
         [BindProperty]
         public ApplicationUser ApplicationUser { get; set; }
+
         public string SortOrderRoute { get; set; }
         public string CurrentFilterRoute { get; set; }
         public string SearchStringRoute { get; set; }
         public int? PageIndexRoute { get; set; }
         public int? PageSizeRoute { get; set; }
 
-        public string ErrorSameNumber { get; set; }
-        private List<int> AllOthersNumbers;
-
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
 
@@ -50,6 +51,7 @@ namespace RezerwacjaSal.Pages.AppUsers
         public InputModel Input { get; set; }
         [BindProperty]
         public bool ChangePassword { get; set; }
+
 
 
         public class InputModel
@@ -64,77 +66,76 @@ namespace RezerwacjaSal.Pages.AppUsers
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            public string RoleName { get; set; }
         }
 
         public async Task<IActionResult> OnGet(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
-
+            // Przekazanie parametrów URL
             SortOrderRoute = sortOrder;
             CurrentFilterRoute = currentFilter;
             SearchStringRoute = searchString;
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
+            // Wczytanie danego użytkownika
             ApplicationUser = await _context.AppUsers
-                .Include(e => e.Department) // wczytuje naviagtion properties z Department
-                .AsNoTracking()                 // poprawia wydajność w przypadku gdy wczytane encje nie są modyfikowane w tej stronie
-                .FirstOrDefaultAsync(m => m.Id == id);  // dla danego ID
+                .Include(e => e.Department)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-
-
-            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
-
-
+            // Nie ma takiego użytkownika pod danym Id
             if (ApplicationUser == null)
                 return NotFound();
 
+            // Listy wyborów
+            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
+            var userRoles = await _userManager.GetRolesAsync(ApplicationUser);
+            ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", userRoles.First());
             return Page();
         }
 
 
         public async Task<IActionResult> OnPostAsync(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
+            // Przekazanie parametrów URL
             SortOrderRoute = sortOrder;
             CurrentFilterRoute = currentFilter;
             SearchStringRoute = searchString;
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
-            AllOthersNumbers = await _context.AppUsers
-                .Where(i => i.Id != id)
-                .Select(i => i.Number)
-                .ToListAsync();
-
-            if (AllOthersNumbers.Contains(ApplicationUser.Number))      // własna validacja numeru osoby
-            {
-                ErrorSameNumber = "Doopanuj się! Ten numer jest już zajęty.";
-                return Page();
-            }
-
-
             // Aktualizacja osoby
             var appUserToUpdate = await _context.AppUsers.FindAsync(id);
 
             // Zmiana hasła
-
             if (ChangePassword)
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(appUserToUpdate);
-                var result = await _userManager.ResetPasswordAsync(appUserToUpdate, token, Input.Password);
-                if (result.Succeeded) { }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                var updatePasswordResult = await _userManager.ResetPasswordAsync(appUserToUpdate, token, Input.Password);
+                if (updatePasswordResult.Succeeded) _logger.LogInformation("Zaktualizowano hasło");
+                foreach (var error in updatePasswordResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
             }
+
+                var removeReoleResult = await _userManager.RemoveFromRolesAsync(appUserToUpdate, await _userManager.GetRolesAsync(appUserToUpdate));
+                var updateReoleResult = await _userManager.AddToRoleAsync(appUserToUpdate, Input.RoleName);
+                if (updateReoleResult.Succeeded && removeReoleResult.Succeeded) _logger.LogInformation("Zaktualizowano rolę");
+                foreach (var error in updateReoleResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
 
             // Aktualizacja pozostałych danych osoby
-
             if (await TryUpdateModelAsync<ApplicationUser>(
                 appUserToUpdate,
                 "ApplicationUser",   
-                 s => s.Employment, s=> s.DepartmentID, s => s.Number, s => s.FirstName, s => s.LastName, s => s.Email, s => s.PhoneNumber, s => s.Note))
+                 s => s.Employment, 
+                 s=> s.DepartmentID, 
+                 s => s.FirstName, 
+                 s => s.LastName, 
+                 s => s.Email, 
+                 s => s.PhoneNumber, 
+                 s => s.Note))
             {
                 await _context.SaveChangesAsync();
             }

@@ -63,7 +63,7 @@ namespace RezerwacjaSal.Data
 
             var resultDefaultUserRole = await roleManager.CreateAsync(userRole);
             if (resultDefaultUserRole.Succeeded) logger.LogInformation("Utworzono rolę użytkownika.");
-
+            
             var newAdmin = new ApplicationUser
             {
                 UserName = "webapp0@outlook.com",
@@ -78,6 +78,7 @@ namespace RezerwacjaSal.Data
             };
 
             var resultDefaultAdmin = await userManager.CreateAsync(newAdmin, "Password.1");
+            await userManager.AddToRoleAsync(newAdmin, "administrator");
             if (resultDefaultAdmin.Succeeded) logger.LogInformation("Utworzono domyślnego administratora.");
 
             var newApplicationUser = new ApplicationUser
@@ -94,11 +95,8 @@ namespace RezerwacjaSal.Data
             };
 
             var resultDefaultUser = await userManager.CreateAsync(newApplicationUser, "Password.1");
+            await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
             if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
-
-
-
-       
 
             var buildings = new Building[]
             {
