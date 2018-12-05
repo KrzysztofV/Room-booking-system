@@ -10,13 +10,14 @@ namespace RezerwacjaSal.Models
 {
     public class Reservation
     {
+        [Key]
         public int ReservationID { get; set; }
 
         [Required(ErrorMessage = "Wymagany jest pokój.")]
         public int RoomID { get; set; }
 
-        [Required(ErrorMessage = "Wymagana jest osoba rezerwująca.")]
-        public int Id { get; set; }
+
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Data rezerwacji jest wymagana.")]
         [DataType(DataType.Date)]

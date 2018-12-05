@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using RezerwacjaSal.Models;
 
 namespace RezerwacjaSal.Pages.Reservations
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
@@ -214,7 +216,7 @@ namespace RezerwacjaSal.Pages.Reservations
             var reservationToUpdate = await _context.Reservations
                 .SingleOrDefaultAsync(m => m.ReservationID == reservationid);
 
-            reservationToUpdate.Id = AppUsers.Where(i => i.Number == Number).Select(i => Int32.Parse(i.Id)).FirstOrDefault();
+            reservationToUpdate.Id = AppUsers.Where(i => i.Number == Number).Select(i => i.Id).FirstOrDefault();
             reservationToUpdate.RoomID = RoomID;
             reservationToUpdate.StartTime = StartTime;
             reservationToUpdate.EndTime = EndTime;

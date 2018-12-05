@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using RezerwacjaSal.Models;
 
 namespace RezerwacjaSal.Pages.Reservations
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
@@ -121,8 +123,7 @@ namespace RezerwacjaSal.Pages.Reservations
 
             RoomId = roomid;
 
-            if (!ModelState.IsValid)
-                return Page();
+
 
             Reservations = await _context.Reservations
                 .Where(b => b.Room.BuildingID == buildingid)
@@ -141,6 +142,10 @@ namespace RezerwacjaSal.Pages.Reservations
             AppUsers = await _context.AppUsers
                 .AsNoTracking()
                 .ToListAsync();
+
+
+            if (!ModelState.IsValid)
+                return Page();
 
             Hours = new List<String>();
             Hours.Add(new DateTime(2018, 1, 1, 8, 00, 0).ToShortTimeString());
@@ -197,7 +202,7 @@ namespace RezerwacjaSal.Pages.Reservations
             DateTime.TryParse(DateInputString, out var ParseStringDate);
             newReservation.Date = ParseStringDate;
 
-            newReservation.Id = AppUsers.Where(i => i.Number == Number).Select(i => Int32.Parse(i.Id)).FirstOrDefault();
+            newReservation.Id = AppUsers.Where(i => i.Number == Number).Select(i => i.Id).FirstOrDefault();
 
             if (await TryUpdateModelAsync<Reservation>(
                 newReservation,

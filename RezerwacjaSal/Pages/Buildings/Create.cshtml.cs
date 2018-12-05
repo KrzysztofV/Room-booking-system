@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using RezerwacjaSal.Models;
 
 namespace RezerwacjaSal.Pages.Buildings
 {
+    [Authorize(Roles = "administrator")]
     public class CreateModel : PageModel
     {
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;

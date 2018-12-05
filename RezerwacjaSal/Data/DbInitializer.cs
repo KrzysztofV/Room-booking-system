@@ -77,7 +77,7 @@ namespace RezerwacjaSal.Data
                 DepartmentID = departments.Single(i => i.Name == "Automatyki i Robotyki").DepartmentID
             };
 
-            var resultDefaultAdmin = await userManager.CreateAsync(newAdmin, "Password.1");
+            var resultDefaultAdmin = await userManager.CreateAsync(newAdmin, "Asdasd.1");
             await userManager.AddToRoleAsync(newAdmin, "administrator");
             if (resultDefaultAdmin.Succeeded) logger.LogInformation("Utworzono domyślnego administratora.");
 
@@ -94,7 +94,7 @@ namespace RezerwacjaSal.Data
                 DepartmentID = departments.Single(i => i.Name == "Automatyki i Robotyki").DepartmentID
             };
 
-            var resultDefaultUser = await userManager.CreateAsync(newApplicationUser, "Password.1");
+            var resultDefaultUser = await userManager.CreateAsync(newApplicationUser, "Asdasd.1");
             await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
             if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
 

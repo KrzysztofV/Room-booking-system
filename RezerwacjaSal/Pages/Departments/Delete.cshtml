@@ -1,5 +1,8 @@
-﻿@page 
+﻿@page
+
 @model RezerwacjaSal.Pages.Departments.DeleteModel
+
+
 
 @{
     ViewData["Title"] = "Delete";
@@ -32,6 +35,6 @@
     <form method="post">
         <input type="hidden" asp-for="Department.DepartmentID" />
         <a class="btn btn-default" asp-page="Index">Lista wydziałów</a>
-        <input type="submit" value="Usuń" class="btn btn-default btn-danger"  />
+        <input type="submit" value="Usuń" class="btn btn-default btn-danger" />
     </form>
 </div>

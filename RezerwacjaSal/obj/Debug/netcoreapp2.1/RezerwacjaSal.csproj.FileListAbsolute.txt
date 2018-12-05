@@ -5,7 +5,6 @@ C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\bin\Debug\net
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\bin\Debug\netcoreapp2.1\RezerwacjaSal.pdb
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\bin\Debug\netcoreapp2.1\RezerwacjaSal.Views.dll
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\bin\Debug\netcoreapp2.1\RezerwacjaSal.Views.pdb
-C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.csprojAssemblyReference.cache
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.csproj.CoreCompileInputs.cache
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.RazorAssemblyInfo.cache
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.RazorAssemblyInfo.cs
@@ -93,3 +92,4 @@ C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\net
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.dll
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.pdb
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.csproj.CopyComplete
+C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.csprojAssemblyReference.cache

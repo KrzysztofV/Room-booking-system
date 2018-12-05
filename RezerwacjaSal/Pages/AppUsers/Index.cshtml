@@ -79,10 +79,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
-                @if (User.IsInRole("administrator")) {
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
-                </td>
+                @if (User.IsInRole("administrator"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                    </td>
                 }
                 <td>
                     @Model.Departments.Where(r => r.DepartmentID == item.DepartmentID).Select(r => r.Name).FirstOrDefault()
@@ -112,7 +113,22 @@
 
             </tr>
         }
-        </tbody>
+        else
+        {
+            <tr class="active">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
 </table>
 
 @* stronowanie listy *@

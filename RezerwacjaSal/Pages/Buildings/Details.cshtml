@@ -80,7 +80,10 @@
 
 <div>
     <a class="btn btn-default" asp-page="./Index" asp-route-departmentid="@Model.DepartmentIdRoute">Lista budynków</a>
-    <a class="btn btn-default btn-primary" asp-page="./Edit" asp-route-buildingid="@Model.Building.BuildingID" asp-route-departmentid="@Model.DepartmentIdRoute" >Edytuj</a>
+    @if (User.IsInRole("administrator"))
+    {
+        <a class="btn btn-default btn-primary" asp-page="./Edit" asp-route-buildingid="@Model.Building.BuildingID" asp-route-departmentid="@Model.DepartmentIdRoute">Edytuj</a>
+    }
 </div>
 
 

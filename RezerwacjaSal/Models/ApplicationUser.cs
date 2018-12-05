@@ -11,7 +11,7 @@ namespace RezerwacjaSal.Models
     {
         [Required(ErrorMessage = "Numer osoby jest wymagany.")]
         [Range(0, 100000, ErrorMessage = "Numer osoby może zawierać wyłącznie liczby z przedziału 0-100000")]
-        public int Number { get; set; } //primary key, domyślnie uznaje ID lub classnameID 
+        public int Number { get; set; }
 
         [Required(ErrorMessage = "Imię jest wymagane")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Imię nie może być dłuższe niż 50 znaków oraz krótsze od 2.")]

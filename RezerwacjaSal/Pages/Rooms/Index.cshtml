@@ -1,7 +1,8 @@
 ﻿@page
 
 @model RezerwacjaSal.Pages.Rooms.IndexModel
-
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 @{
     ViewData["Title"] = "Index";
 }
@@ -29,10 +30,18 @@
             <th>
                 Ilość miejsc
             </th>
-            <th>
-                Zarządzaj
-            </th>
-        </tr>
+            @if (User.IsInRole("administrator"))
+            {
+                <th>
+                    Zarządzaj
+                </th>
+            }
+            else
+            {
+               <th></th>
+            }
+
+            </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Room)
@@ -48,21 +57,45 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Spots)
                 </td>
+
+                @if (User.IsInRole("administrator"))
+                {
+                    <td>
+                        <a asp-page="./Edit" asp-route-roomid="@item.RoomID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Edytuj</a> |
+                        <a asp-page="./Details" asp-route-roomid="@item.RoomID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Szczegóły</a> |
+                        <a asp-page="./Delete" asp-route-roomid="@item.RoomID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Usuń</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-page="./Details" asp-route-roomid="@item.RoomID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Szczegóły</a> 
+                    </td>
+                }
+            </tr>
+        }
+        @if (User.IsInRole("administrator"))
+        {
+            <tr class="active">
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>
-                    <a asp-page="./Edit" asp-route-roomid="@item.RoomID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Edytuj</a> |
-                    <a asp-page="./Details" asp-route-roomid="@item.RoomID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Szczegóły</a> |
-                    <a asp-page="./Delete" asp-route-roomid="@item.RoomID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Usuń</a>
+                    <a class="btn btn-default btn-primary" asp-page="Create" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Dodaj nowy pokój</a>
                 </td>
             </tr>
         }
-        <tr class="active">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                <a class="btn btn-default btn-primary" asp-page="Create" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Dodaj nowy pokój</a>
-            </td>
-        </tr>
+        else
+        {
+            <tr class="active">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                </td>
+            </tr>
+        }
+
     </tbody>
 </table>
 

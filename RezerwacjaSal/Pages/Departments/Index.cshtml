@@ -1,5 +1,9 @@
-﻿@page 
+﻿@page
+
 @model RezerwacjaSal.Pages.Departments.IndexModel
+
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 @{
     ViewData["Title"] = "Index";
@@ -17,9 +21,12 @@
             <th>
                 Administrator
             </th>
-            <th>
-                Zarządzanie
-            </th>
+            @if (User.IsInRole("administrator"))
+            {
+                <th>
+                    Zarządzanie
+                </th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -28,7 +35,11 @@
                 <a asp-page="/Buildings/Index" asp-route-departmentid="0" style="color:#000">Wszystkie</a>
             </td>
             <td></td>
-            <td></td>
+
+            @if (User.IsInRole("administrator"))
+            {
+                <td></td>
+            }
         </tr>
         @foreach (var item in Model.Departments)
         {
@@ -44,20 +55,25 @@
                         @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.LastName).FirstOrDefault()
                     </a>
                 </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-departmentid="@item.DepartmentID">Edytuj</a> |
-                    <a asp-page="./Details" asp-route-departmentid="@item.DepartmentID">Szczegóły</a> |
-                    <a asp-page="./Delete" asp-route-departmentid="@item.DepartmentID">Usuń</a>
-                </td>
+                @if (User.IsInRole("administrator"))
+                {
+                    <td>
+                        <a asp-page="./Edit" asp-route-departmentid="@item.DepartmentID">Edytuj</a> |
+                        @*<a asp-page="./Details" asp-route-departmentid="@item.DepartmentID">Szczegóły</a> |*@
+                        <a asp-page="./Delete" asp-route-departmentid="@item.DepartmentID">Usuń</a>
+                    </td>
+                }
             </tr>
         }
         <tr class="active">
             <td></td>
             <td></td>
-
-            <td>
-                <a class="btn btn-default btn-primary" asp-page="./Create">Dodaj nowy wydział</a>
-            </td>
+            @if (User.IsInRole("administrator"))
+            {
+                <td>
+                    <a class="btn btn-default btn-primary" asp-page="./Create">Dodaj nowy wydział</a>
+                </td>
+            }
         </tr>
     </tbody>
 </table>
