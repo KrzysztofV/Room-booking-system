@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RezerwacjaSal.Data;
 using RezerwacjaSal.Models;
 
@@ -16,12 +18,23 @@ namespace RezerwacjaSal.Pages.Reservations
     [Authorize]
     public class CreateModel : PageModel
     {
-        private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
+        private readonly RezerwacjaSalContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public CreateModel(RezerwacjaSal.Data.RezerwacjaSalContext context)
+        public CreateModel(
+            RezerwacjaSal.Data.RezerwacjaSalContext context,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
             _context = context;
         }
+
         public Room Room { get; set; }
         public IList<ApplicationUser> AppUsers { get; set; }
         public IList<Reservation> Reservations { get; set; }
@@ -37,9 +50,15 @@ namespace RezerwacjaSal.Pages.Reservations
         public int RoomId { get; set; }
         [BindProperty]
         public int Number { get; set; }
+        public ApplicationUser CurrentUser { get; set; }
 
         public async Task<IActionResult> OnGetAsync( int roomid, int buildingid, int departmentid, string date, string time)
         {
+            CurrentUser = await _userManager.GetUserAsync(base.User);
+            if (CurrentUser == null)
+            {
+                return base.NotFound($"Unable to load user with ID '{_userManager.GetUserId(base.User)}'.");
+            }
             BuildingIdRoute = buildingid;
             DepartmentIdRoute = departmentid;
             
@@ -111,6 +130,11 @@ namespace RezerwacjaSal.Pages.Reservations
 
         public async Task<IActionResult> OnPostAsync(int roomid, int buildingid, int departmentid, string date)
         {
+            CurrentUser = await _userManager.GetUserAsync(base.User);
+            if (CurrentUser == null)
+            {
+                return base.NotFound($"Unable to load user with ID '{_userManager.GetUserId(base.User)}'.");
+            }
             BuildingIdRoute = buildingid;
             DepartmentIdRoute = departmentid;
 
@@ -202,7 +226,16 @@ namespace RezerwacjaSal.Pages.Reservations
             DateTime.TryParse(DateInputString, out var ParseStringDate);
             newReservation.Date = ParseStringDate;
 
-            newReservation.Id = AppUsers.Where(i => i.Number == Number).Select(i => i.Id).FirstOrDefault();
+            var currentUserRoles = await _userManager.GetRolesAsync(CurrentUser);
+            if (currentUserRoles.First() == "administrator")
+            {
+                newReservation.Id = AppUsers.Where(i => i.Number == Number).Select(i => i.Id).FirstOrDefault();
+            }
+            if (currentUserRoles.First() == "użytkownik")
+            {
+                newReservation.Id = CurrentUser.Id;
+            }
+
 
             if (await TryUpdateModelAsync<Reservation>(
                 newReservation,

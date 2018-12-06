@@ -18,9 +18,13 @@
             <th>
                 Nazwa
             </th>
-            <th>
-                Administrator
-            </th>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <th>
+                    Administrator
+                </th>
+            }
+
             @if (User.IsInRole("administrator"))
             {
                 <th>
@@ -34,7 +38,11 @@
             <td>
                 <a asp-page="/Buildings/Index" asp-route-departmentid="0" style="color:#000">Wszystkie</a>
             </td>
-            <td></td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td></td>
+            }
+
 
             @if (User.IsInRole("administrator"))
             {
@@ -47,7 +55,9 @@
                 <td>
                     <a asp-page="/Buildings/Index" asp-route-departmentid="@item.DepartmentID">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
-                <td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td>
                     <a asp-page="/AppUsers/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
                        asp-route-id="@Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p=>p.Id).FirstOrDefault()">
                         @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.FirstName).FirstOrDefault()
@@ -55,6 +65,8 @@
                         @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.LastName).FirstOrDefault()
                     </a>
                 </td>
+                }
+
                 @if (User.IsInRole("administrator"))
                 {
                     <td>
@@ -67,7 +79,10 @@
         }
         <tr class="active">
             <td></td>
-            <td></td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td></td>
+            }
             @if (User.IsInRole("administrator"))
             {
                 <td>

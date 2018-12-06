@@ -1,7 +1,8 @@
 ﻿@page
 
 @model RezerwacjaSal.Pages.Reservations.DetailsModel
-
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 @{
     ViewData["Title"] = "Details";
 }
@@ -76,7 +77,11 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Index" asp-route-date="@Model.Date.ToShortDateString()"  asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="btn btn-default">Tabela rezerwacji</a>
-    <a asp-page="./Edit" asp-route-date="@Model.Date.ToShortDateString()" asp-route-reservationid="@Model.Reservation.ReservationID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="btn btn-default btn-primary" >Edytuj</a>
-    <a asp-page="./Delete" asp-route-date="@Model.Date.ToShortDateString()" asp-route-reservationid="@Model.Reservation.ReservationID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="btn btn-default btn-danger" >Usuń</a>
+    <a asp-page="./Index" asp-route-date="@Model.Date.ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="btn btn-default">Tabela rezerwacji</a>
+
+    @if (Model.CurrentUser.Id == Model.Reservation.Id || HttpContext.User.IsInRole("administrator"))
+    {
+        <a asp-page="./Edit" asp-route-date="@Model.Date.ToShortDateString()" asp-route-reservationid="@Model.Reservation.ReservationID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="btn btn-default btn-primary">Edytuj</a>
+        <a asp-page="./Delete" asp-route-date="@Model.Date.ToShortDateString()" asp-route-reservationid="@Model.Reservation.ReservationID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="btn btn-default btn-danger">Usuń</a>
+    }
 </div>

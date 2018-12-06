@@ -26,7 +26,6 @@ namespace RezerwacjaSal.Models
         public string GPS_N { get; set; }
         public string GPS_E { get; set; }
 
-        // property jest rozpoznawane jako klucz obcy kiedy się nazywa <navigation property name><primary key property name>
         public Department Department { get; set; }
 
         public ICollection<Room> Rooms { get; set; }

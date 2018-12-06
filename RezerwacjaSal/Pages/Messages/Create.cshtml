@@ -9,47 +9,12 @@
 <h3>Wyślij wiadomość do administratora systemu</h3>
 <h5>Jeśli masz jakiś problem albo tak sobie chcesz pogadać.</h5>
 <hr />
-
+<h4 style="color:forestgreen">@Model.Info</h4>
 <div class="row">
     <div class="col-md-8">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <span class="text-danger">@Model.EmailNotFoundError</span>
-            <div class="form-group">
-                <input type="checkbox" id="Cheker" onclick="Checked()" /> <label>Osoba z systemu</label>
-            </div>
-            <script>
-                function Checked() {
-                    var checker = document.getElementById("Cheker").checked;
-                    var Number = document.getElementById('Number');
-                    var Name = document.getElementById('Name');
-                    var Email = document.getElementById('Email');
-                    if (checker) {
-                        Number.style.display = 'block';
-                        Name.style.display = 'none';
-                        Email.style.display = 'none';
-                    } else {
-                        Number.style.display = 'none';
-                        Name.style.display = 'block';
-                        Email.style.display = 'block';
-                    }
-                }
-            </script>
-            <div class="form-group" id="Number" style="display:none">
-                <label asp-for="Message.Id" class="control-label">Numer osoby:</label>
-                <input asp-for="@Model.Number" class="form-control" />
-                <span class="text-danger">@Model.AppUserNotFoundError</span>
-            </div>
-            <div class="form-group" id="Name" style="display:block">
-                <label asp-for="Message.Name" class="control-label">Imię: <text style="color:lightgray">(opcjonalne)</text></label>
-                <input asp-for="Message.Name" class="form-control" />
-                <span asp-validation-for="Message.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group" id="Email">
-                <label asp-for="Message.Email" class="control-label">Email: <text style="color:lightgray">(opcjonalne)</text></label><br>
-                Na ten email zostanie wysłana wiadomość zwrotna:
-                <input asp-for="Message.Email" class="form-control" />
-            </div>
+
             <div class="form-group">
                 <label asp-for="Message.MessageSubject" class="control-label">Temat wiadomości:</label>
                 <input asp-for="Message.MessageSubject" class="form-control" />
@@ -66,12 +31,12 @@
             <div class="form-group">
                 <input type="submit" value="Wyślij" class="btn btn-default btn-primary" />
             </div>
+            Na twój email zostanie wysłana wiadomość zwrotna.
         </form>
     </div>
 </div>
 
-<h4 style="color:forestgreen">@Model.EmailSendStatus</h4>
-<h4 style="color:red">@Model.EmailSendError</h4>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

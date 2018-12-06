@@ -9,6 +9,7 @@ namespace RezerwacjaSal.Models
 {
     public class Message
     {
+        [Key]
         public int MessageID { get; set; }
 
         [EmailAddress(ErrorMessage = "To nie jest poprawny adres e-mail.")]
@@ -22,7 +23,7 @@ namespace RezerwacjaSal.Models
         public string MessageContent { get; set; }
         public string IP { get; set; }
         public DateTime Date { get; set; }
-        public int? Id { get; set; }
+        public string Id { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
 

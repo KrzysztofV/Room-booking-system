@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,16 @@ namespace RezerwacjaSal.Pages.Reservations
     public class DeleteModel : PageModel
     {
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public DeleteModel(RezerwacjaSal.Data.RezerwacjaSalContext context)
+        public DeleteModel(
+            RezerwacjaSal.Data.RezerwacjaSalContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
+            _userManager = userManager;
+            _roleManager = roleManager;
             _context = context;
         }
 
@@ -27,6 +35,7 @@ namespace RezerwacjaSal.Pages.Reservations
         public int DepartmentIdRoute { get; private set; }
         public DateTime Date { get; private set; }
         public int ReservationIdRoute { get; private set; }
+        public ApplicationUser CurrentUser { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int reservationid, int buildingid, int departmentid, string date)
         {
@@ -54,6 +63,12 @@ namespace RezerwacjaSal.Pages.Reservations
 
         public async Task<IActionResult> OnPostAsync(int reservationid, int buildingid, int departmentid, string date)
         {
+            CurrentUser = await _userManager.GetUserAsync(base.User);
+            if (CurrentUser == null)
+            {
+                return base.NotFound($"Unable to load user with ID '{_userManager.GetUserId(base.User)}'.");
+            }
+
             BuildingIdRoute = buildingid;
             DepartmentIdRoute = departmentid;
 
@@ -62,12 +77,16 @@ namespace RezerwacjaSal.Pages.Reservations
 
             Reservation = await _context.Reservations.FindAsync(reservationid);
 
+            
+
             if (Reservation != null)
             {
-                _context.Reservations.Remove(Reservation);
-                await _context.SaveChangesAsync();
+                if (CurrentUser.Id == Reservation.Id)
+                {
+                    _context.Reservations.Remove(Reservation);
+                    await _context.SaveChangesAsync();
+                }
             }
-
             return Redirect("./Index" + "?" + "buildingid=" + BuildingIdRoute.ToString() + "&departmentid=" + DepartmentIdRoute.ToString() + "&date=" + Date.ToShortDateString());
         }
     }

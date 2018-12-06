@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,9 +17,16 @@ namespace RezerwacjaSal.Pages.Reservations
     public class EditModel : PageModel
     {
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public EditModel(RezerwacjaSal.Data.RezerwacjaSalContext context)
+        public EditModel(
+            RezerwacjaSal.Data.RezerwacjaSalContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
+            _userManager = userManager;
+            _roleManager = roleManager;
             _context = context;
         }
 
@@ -48,6 +56,7 @@ namespace RezerwacjaSal.Pages.Reservations
         public DateTime StartTime { get; set; }
         [BindProperty]
         public DateTime EndTime { get; set; }
+        public ApplicationUser CurrentUser { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int reservationid, int buildingid, int departmentid, string date)
         {
@@ -114,6 +123,12 @@ namespace RezerwacjaSal.Pages.Reservations
 
         public async Task<IActionResult> OnPostAsync(int reservationid, int roomid, int buildingid, int departmentid, string date)
         {
+            CurrentUser = await _userManager.GetUserAsync(base.User);
+            if (CurrentUser == null)
+            {
+                return base.NotFound($"Unable to load user with ID '{_userManager.GetUserId(base.User)}'.");
+            }
+
             BuildingIdRoute = buildingid;
             DepartmentIdRoute = departmentid;
 
@@ -216,7 +231,17 @@ namespace RezerwacjaSal.Pages.Reservations
             var reservationToUpdate = await _context.Reservations
                 .SingleOrDefaultAsync(m => m.ReservationID == reservationid);
 
-            reservationToUpdate.Id = AppUsers.Where(i => i.Number == Number).Select(i => i.Id).FirstOrDefault();
+            var currentUserRoles = await _userManager.GetRolesAsync(CurrentUser);
+
+            if (currentUserRoles.First() == "administrator")
+            {
+                reservationToUpdate.Id = AppUsers.Where(i => i.Number == Number).Select(i => i.Id).FirstOrDefault();
+            }
+            if (currentUserRoles.First() == "użytkownik")
+            {
+                reservationToUpdate.Id = CurrentUser.Id;
+            }
+
             reservationToUpdate.RoomID = RoomID;
             reservationToUpdate.StartTime = StartTime;
             reservationToUpdate.EndTime = EndTime;

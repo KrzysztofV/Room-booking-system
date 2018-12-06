@@ -68,7 +68,6 @@ C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\net
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\GlobalSearch.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\Index.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\Messages\Create.g.cshtml.cs
-C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\Messages\HiddenList.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\Privacy.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\Reservations\Create.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\Reservations\Delete.g.cshtml.cs
@@ -93,3 +92,4 @@ C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\net
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.pdb
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.csproj.CopyComplete
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\RezerwacjaSal.csprojAssemblyReference.cache
+C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.1\Razor\Pages\Messages\List.g.cshtml.cs
