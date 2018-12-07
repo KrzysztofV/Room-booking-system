@@ -75,7 +75,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("<p></p>\r\n<div class=\"btn-group\">\r\n    ");
             EndContext();
             BeginContext(239, 119, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "90d13ae6c9d74bfbae4fa6d03249c89c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e029cc8245914d0db5faa69b028a9397", async() => {
                 BeginContext(346, 8, true);
                 WriteLiteral("Wydziały");
                 EndContext();
@@ -111,7 +111,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(364, 116, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e8c8727971554ea98ba7c0c2131144a5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9175bc528a74482eb31deca919fd5f11", async() => {
                 BeginContext(469, 7, true);
                 WriteLiteral("Budynki");
                 EndContext();
@@ -147,7 +147,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(486, 205, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f488652ee18844eb93f98f3528352ef7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aecb1a13501d43b7acc7409243c52272", async() => {
                 BeginContext(677, 10, true);
                 WriteLiteral("Rezerwacje");
                 EndContext();
@@ -301,7 +301,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(2244, 212, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "81365dd39ca2483f80a9606405b94c5a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "362d1e5fcb4d41788cd521d53f6ac70d", async() => {
                 BeginContext(2435, 17, true);
                 WriteLiteral("Tabela rezerwacji");
                 EndContext();
@@ -364,7 +364,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("        ");
             EndContext();
             BeginContext(2577, 271, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "31ce40ef57644a88b94b86963c64b9d6", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2cefce2e768d477a9449b569fa0fb091", async() => {
                 BeginContext(2838, 6, true);
                 WriteLiteral("Edytuj");
                 EndContext();
@@ -427,7 +427,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(2858, 270, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d9177ab8f666468cbd05ff87174618a0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "71bc50a22b994c1b8da6d9caca194a11", async() => {
                 BeginContext(3120, 4, true);
                 WriteLiteral("Usuń");
                 EndContext();

@@ -54,10 +54,10 @@ namespace RezerwacjaSal.Pages.Reservations
 
         public async Task<IActionResult> OnGetAsync( int roomid, int buildingid, int departmentid, string date, string time)
         {
-            CurrentUser = await _userManager.GetUserAsync(base.User);
+            CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
             if (CurrentUser == null)
             {
-                return base.NotFound($"Unable to load user with ID '{_userManager.GetUserId(base.User)}'.");
+                return base.NotFound($"Unable to load user with ID '{_userManager.GetUserId(HttpContext.User)}'.");
             }
             BuildingIdRoute = buildingid;
             DepartmentIdRoute = departmentid;

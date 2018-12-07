@@ -138,7 +138,8 @@ namespace RezerwacjaSal.Pages.AppUsers
                  s => s.Email, 
                  s => s.PhoneNumber, 
                  s => s.Note,
-                 s => s.EmailConfirmed))
+                 s => s.EmailConfirmed,
+                 s => s.PhoneNumberConfirmed))
             {
                 await _context.SaveChangesAsync();
             }

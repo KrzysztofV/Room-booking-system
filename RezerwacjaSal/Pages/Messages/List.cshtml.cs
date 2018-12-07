@@ -21,14 +21,31 @@ namespace RezerwacjaSal.Pages.Messages
             _context = context;
         }
 
-        public IList<Message> Message { get;set; }
+        public IList<Message> Messages { get; set; }
+        public Message Message { get; set; }
 
         public async Task OnGetAsync()
         {
-            Message = await _context.Messages
+            Messages = await _context.Messages
                 .Include(m => m.ApplicationUser)
-                .AsNoTracking()
+                .AsNoTracking().OrderByDescending(r=>r.Date)
                 .ToListAsync();
         }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            Messages = await _context.Messages
+                .AsNoTracking()
+                .ToListAsync();
+
+            foreach (var message in Messages)
+            {
+                _context.Messages.Remove(message);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./List");
+        }
+
     }
 }

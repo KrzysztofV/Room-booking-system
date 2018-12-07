@@ -8,21 +8,27 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using RezerwacjaSal.Data;
 using RezerwacjaSal.Models;
 
 namespace RezerwacjaSal.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
+        private readonly RezerwacjaSalContext _context;
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
+            RezerwacjaSalContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
@@ -37,6 +43,10 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account.Manage
 
         [BindProperty]
         public InputModel Input { get; set; }
+        [BindProperty]
+        public ApplicationUser ApplicationUser { get; set; }
+
+
 
         public class InputModel
         {
@@ -47,6 +57,7 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -60,13 +71,15 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
+            ApplicationUser = await _context.AppUsers
+                .Include(e => e.Department)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.UserName == userName);
 
             Input = new InputModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -109,8 +122,29 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            var userName = await _userManager.GetUserNameAsync(user);
+            if (Input.Email != userName)
+            {
+                var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.Email);
+                if (!setUserNameResult.Succeeded)
+                {
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    throw new InvalidOperationException($"Unexpected error occurred setting username for user with ID '{userId}'.");
+                }
+            }
+
+            if (await TryUpdateModelAsync<ApplicationUser>(
+                user,
+                "ApplicationUser",
+                 s => s.FirstName,
+                 s => s.LastName))
+            {
+                await _context.SaveChangesAsync();
+            }
+
+
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Twój profil został zaktualizowany";
             return RedirectToPage();
         }
 
@@ -141,7 +175,7 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account.Manage
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "Wysłano email weryfikacyjny. Proszę sprawdź swoją skrzynkę emailową.";
             return RedirectToPage();
         }
     }

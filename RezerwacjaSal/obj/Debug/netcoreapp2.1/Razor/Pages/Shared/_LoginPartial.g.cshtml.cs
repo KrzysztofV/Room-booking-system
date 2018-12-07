@@ -76,12 +76,12 @@ using RezerwacjaSal;
             WriteLiteral("    ");
             EndContext();
             BeginContext(205, 540, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9cd02f5b428c4687b8f21bb730701939", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "94c0b69984174369ba9716423bb08396", async() => {
                 BeginContext(370, 86, true);
                 WriteLiteral("\r\n        <ul class=\"nav navbar-nav navbar-right\">\r\n            <li>\r\n                ");
                 EndContext();
                 BeginContext(456, 105, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "10e74583e6a347e397fa4fa1a679e55f", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d038baf748234aad822eab1ed60b94ee", async() => {
                     BeginContext(528, 29, false);
 #line 11 "C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\Pages\Shared\_LoginPartial.cshtml"
                                                                                   Write(UserManager.GetUserName(User));
@@ -158,7 +158,7 @@ else
             WriteLiteral("    <ul class=\"nav navbar-nav navbar-right\">\r\n        <li>");
             EndContext();
             BeginContext(817, 65, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a55428ab58c14a3f9f0cd30c0563dd39", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6a5e3277cb7041979bccfcd2e33daa7f", async() => {
                 BeginContext(869, 9, true);
                 WriteLiteral("Rejestruj");
                 EndContext();
@@ -182,7 +182,7 @@ else
             WriteLiteral("</li>\r\n        <li>");
             EndContext();
             BeginContext(901, 60, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1b429bc22d8f4a6fa63da307239c962e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6a68c87d7e24499ba69d96692095187c", async() => {
                 BeginContext(950, 7, true);
                 WriteLiteral("Zaloguj");
                 EndContext();

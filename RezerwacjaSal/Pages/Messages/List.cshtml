@@ -5,62 +5,71 @@
     ViewData["Title"] = "HiddenList";
 }
 
-<h3>Lista wiadomości</h3>
-
+<h3>Lista ostatnich wiadomości</h3>
+<h4>Liczba wiadomości: @Model.Messages.Count()</h4>
+<h3>
+    <a href="https://outlook.live.com/mail/inbox">Skrzynka email</a>
+</h3>
+<form method="post">
+    <input type="submit" value="Wyczyść" class="btn btn-default btn-danger" />
+</form>
 
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Message[0].Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Message[0].Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Message[0].MessageSubject)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Message[0].MessageContent)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Message[0].IP)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Message[0].Date)
-                </th>
             <th>
-                @Html.DisplayNameFor(model => model.Message[0].ApplicationUser)
+                Data
             </th>
-            </tr>
+            <th>
+                Email
+            </th>
+            <th>
+                Numer
+            </th>
+            <th>
+                Imię nazwisko
+            </th>
+            <th>
+                Temat
+            </th>
+            @*<th>
+                    Treść
+                </th>*@
+            <th>
+                IP
+            </th>
+
+
+        </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Message)
+        @foreach (var item in Model.Messages)
         {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MessageSubject)
-                    </td>
-                    <td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MessageSubject)
+                </td>
+                @*<td>
                         @Html.DisplayFor(modelItem => item.MessageContent)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IP)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName)
-                    </td>
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.IP)
+                </td>
 
-                </tr>
+
+            </tr>
         }
     </tbody>
 </table>

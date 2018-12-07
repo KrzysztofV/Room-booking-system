@@ -32,19 +32,7 @@ namespace RezerwacjaSal.Data
                 return;   // są więc nie nadpisuj bazy danych 
             }
 
-            var departments = new Department[]
-{
-            new Department { Name = "Automatyki i Robotyki", Administrator = 6},
-            new Department { Name = "Informatyki", Administrator = 7 },
-            new Department { Name = "Materiałoznastwa", Administrator =  8 },
-            new Department { Name = "Elektrotechniki", Administrator =  11 },
-            new Department { Name = "Miernictwa", Administrator = 12 },
-};
-            foreach (Department c in departments)
-            {
-                context.Departments.Add(c);
-            }
-            context.SaveChanges();
+
 
             var adminRole = new IdentityRole
             {
@@ -73,8 +61,8 @@ namespace RezerwacjaSal.Data
                 Note = "Administrator systemu Bulbulator",
                 Number = 0,
                 EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
                 Employment = "Administrator systemu",
-                DepartmentID = departments.Single(i => i.Name == "Automatyki i Robotyki").DepartmentID
             };
 
             var resultDefaultAdmin = await userManager.CreateAsync(newAdmin, "Asdasd.1");
@@ -90,13 +78,109 @@ namespace RezerwacjaSal.Data
                 Note = "Przykładowy użytkownik",
                 Number = 1,
                 EmailConfirmed = true,
-                Employment = "Taki tam ...",
-                DepartmentID = departments.Single(i => i.Name == "Automatyki i Robotyki").DepartmentID
+                PhoneNumberConfirmed = true,
             };
 
             var resultDefaultUser = await userManager.CreateAsync(newApplicationUser, "Asdasd.1");
             await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
             if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
+
+            newApplicationUser = new ApplicationUser
+            {
+                UserName = "jan@gmail.com",
+                Email = "jan@gmail.com",
+                FirstName = "Jan",
+                LastName = "Kowalski",
+                Note = "Przykładowy użytkownik",
+                Number = 2,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+            };
+
+            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, "Asdasd.1");
+            await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
+            if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
+
+            newApplicationUser = new ApplicationUser
+            {
+                UserName = "brajanusz@gmail.com",
+                Email = "brajanusz@gmail.com",
+                FirstName = "Brajanusz",
+                LastName = "Kowalski",
+                Note = "Przykładowy użytkownik",
+                Number = 3,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+            };
+
+            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, "Asdasd.1");
+            await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
+            if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
+
+            newApplicationUser = new ApplicationUser
+            {
+                UserName = "Dzesika@gmail.com",
+                Email = "Dzesika@gmail.com",
+                FirstName = "Dżesika",
+                LastName = "Kowalska",
+                Note = "Przykładowy użytkownik",
+                Number = 4,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+            };
+
+            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, "Asdasd.1");
+            await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
+            if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
+
+            newApplicationUser = new ApplicationUser
+            {
+                UserName = "Piter@gmail.com",
+                Email = "Piter@gmail.com",
+                FirstName = "Piter",
+                LastName = "Kowalski",
+                Note = "Przykładowy użytkownik",
+                Number = 5,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+            };
+
+            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, "Asdasd.1");
+            await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
+            if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
+
+            newApplicationUser = new ApplicationUser
+            {
+                UserName = "Dzordz@gmail.com",
+                Email = "Dzordz@gmail.com",
+                FirstName = "Dżordż",
+                LastName = "Kowalski",
+                Note = "Przykładowy użytkownik",
+                Number = 6,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+            };
+
+            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, "Asdasd.1");
+            await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
+            if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
+
+
+            var departments = new Department[]
+{
+            new Department { Name = "Automatyki i Robotyki", Administrator = 2},
+            new Department { Name = "Informatyki", Administrator = 3 },
+            new Department { Name = "Materiałoznastwa", Administrator =  4 },
+            new Department { Name = "Elektrotechniki", Administrator = 5 },
+            new Department { Name = "Miernictwa", Administrator = 6 },
+};
+            foreach (Department c in departments)
+            {
+                context.Departments.Add(c);
+            }
+            context.SaveChanges();
+
+
 
             var buildings = new Building[]
             {

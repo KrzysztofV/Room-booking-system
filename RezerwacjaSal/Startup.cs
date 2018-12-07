@@ -51,6 +51,19 @@ namespace RezerwacjaSal
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default Password settings. - nie dzia³a
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequiredUniqueChars = 0;
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedPhoneNumber = true;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddRazorPagesOptions(options =>
@@ -67,25 +80,9 @@ namespace RezerwacjaSal
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Default Password settings.
-                options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 4;
-                options.Password.RequiredUniqueChars = 0;
-            });
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Default SignIn settings.
-                options.SignIn.RequireConfirmedEmail = false;
-                options.SignIn.RequireConfirmedPhoneNumber = false;
-            });
 
-            //services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

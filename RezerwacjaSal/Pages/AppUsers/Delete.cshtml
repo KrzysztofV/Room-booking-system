@@ -49,8 +49,21 @@
         <dt>
             Telefon:
         </dt>
+
         <dd>
             @Html.DisplayFor(model => model.ApplicationUser.PhoneNumber)
+        </dd>
+        <dt>
+            Potwierdzony email:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.EmailConfirmed)
+        </dd>
+        <dt>
+            Zatwierdzone konto:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.PhoneNumberConfirmed)
         </dd>
         <dt>
             Pracownik:

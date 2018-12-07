@@ -71,25 +71,35 @@ namespace RezerwacjaSal.Pages.Messages
 
             var newMessage = new Message();
 
-            DateTime Now = DateTime.Now;
-            Message.Date = Now;
 
-            Message.Id = CurrentUser.Id;
-            Message.Email = CurrentUser.Email;
-
+            newMessage.Name = CurrentUser.FirstName + " " + CurrentUser.LastName;
+            newMessage.Date = DateTime.Now;
+            newMessage.Id = CurrentUser.Id;
+            newMessage.Email = CurrentUser.Email;
 
             if (await TryUpdateModelAsync<Message>(
                 newMessage,
                 "Message", 
-                 s => s.Name, s => s.MessageSubject, s => s.MessageContent, s => s.IP))
+                 s => s.MessageSubject, s => s.MessageContent, s => s.IP))
             {
                 _context.Messages.Add(newMessage);
                 await _context.SaveChangesAsync();
             }
 
-            if (Message.Email != null )
+            var userMassage = newMessage.MessageContent;
+            userMassage = userMassage + "\n \n \n Wiadomość wygenerowana automatycznie. Prosimy na nią nie odpowiadać.";
+            userMassage = userMassage + "\n System rezerwacji sal - Bulbulatron 3000.";
+
+            var userSubject = " - Potwierdzenie wysłania wiadomości";
+            userSubject = newMessage.MessageSubject + userSubject;
+
+            if (newMessage.Email != null )
             {
-                await _emailSender.SendEmailAsync(Message.Email, Message.MessageSubject, Message.MessageContent);
+                await _emailSender.SendEmailAsync(newMessage.Email, userSubject, userMassage);
+
+                var adminSubject = newMessage.Name + " - Wysyła: " + newMessage.MessageSubject;
+                var adminMassage = "Email: " + newMessage.Email + "\n " + "Imię i nazwisko: " + newMessage.Name + "\n " + "Numer użytkownika: " +  CurrentUser.Number + "\n " + "Treść wiadomości: " + newMessage.MessageContent;
+                await _emailSender.SendEmailAsync("webapp0@outlook.com", adminSubject, adminMassage);
             }
 
             Info = "Wiadomość wysłano.";

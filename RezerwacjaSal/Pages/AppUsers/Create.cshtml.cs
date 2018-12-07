@@ -69,6 +69,9 @@ namespace RezerwacjaSal.Pages.AppUsers
             public string RoleName { get; set; }
             [Required]
             public bool EmailConfirmed { get; set; }
+
+            public bool PhoneConfirmed { get; set; }
+
         }
 
         [BindProperty]
@@ -140,7 +143,8 @@ namespace RezerwacjaSal.Pages.AppUsers
                 Number = FreeNumber,
                 Employment = ApplicationUser.Employment,
                 DepartmentID = ApplicationUser.DepartmentID,
-                EmailConfirmed = Input.EmailConfirmed
+                EmailConfirmed = Input.EmailConfirmed,
+                PhoneNumberConfirmed = Input.PhoneConfirmed
             };
             
             // Zapisanie użytkownika i jego roli

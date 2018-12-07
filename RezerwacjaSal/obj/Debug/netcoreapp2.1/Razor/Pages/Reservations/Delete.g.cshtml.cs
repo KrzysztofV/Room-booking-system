@@ -75,7 +75,7 @@ using RezerwacjaSal;
             WriteLiteral("<p></p>\r\n<div class=\"btn-group\">\r\n    ");
             EndContext();
             BeginContext(144, 119, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "935209964090472eb8d5de3dc0335776", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e7fe392f19504b44a688e2288b7d203a", async() => {
                 BeginContext(251, 8, true);
                 WriteLiteral("Wydziały");
                 EndContext();
@@ -111,7 +111,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(269, 116, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ed3361ef44bd4957a3a58b16c7199bdc", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d7507757cd444579bb11e0014348103c", async() => {
                 BeginContext(374, 7, true);
                 WriteLiteral("Budynki");
                 EndContext();
@@ -147,7 +147,7 @@ using RezerwacjaSal;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(391, 205, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "832ca974fb17481d80e937bffed92177", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2bbdbcec11c444bfac42f7918696eda8", async() => {
                 BeginContext(582, 10, true);
                 WriteLiteral("Rezerwacje");
                 EndContext();
@@ -301,12 +301,12 @@ using RezerwacjaSal;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n\r\n    ");
             EndContext();
             BeginContext(2164, 451, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a6f278d994f542d0b7f118634618cd54", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0eb62e9f2e124b62ab19bc30517e0957", async() => {
                 BeginContext(2184, 10, true);
                 WriteLiteral("\r\n        ");
                 EndContext();
                 BeginContext(2194, 59, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "c8b490c6abce4f22898fb77fe7aa598a", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "0e8298ecdead499c80b59a7e2ca1d9e2", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -331,7 +331,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                 WriteLiteral("\r\n        ");
                 EndContext();
                 BeginContext(2263, 253, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3c96d461bc8948b2a233a8d11baffb48", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "64355a10616043649cd3fafac27566b9", async() => {
                     BeginContext(2508, 4, true);
                     WriteLiteral("Wróć");
                     EndContext();

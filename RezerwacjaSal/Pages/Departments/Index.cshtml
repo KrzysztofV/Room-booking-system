@@ -57,13 +57,26 @@
                 </td>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <td>
-                    <a asp-page="/AppUsers/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
-                       asp-route-id="@Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p=>p.Id).FirstOrDefault()">
+                <td>
+                    @if (User.IsInRole("administrator"))
+                    {
+                        <a asp-page="/AppUsers/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
+                           asp-route-id="@Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p=>p.Id).FirstOrDefault()">
+                            @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.FirstName).FirstOrDefault()
+                            &shy;
+                            @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.LastName).FirstOrDefault()
+                        </a>
+                    }
+                    else
+                    {
                         @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.FirstName).FirstOrDefault()
-                        &shy;
+                        <a>
+                        
+                        </a>
                         @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.LastName).FirstOrDefault()
-                    </a>
+
+                    }
+
                 </td>
                 }
 

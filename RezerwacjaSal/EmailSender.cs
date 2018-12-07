@@ -23,16 +23,8 @@ namespace RezerwacjaSal
 
             MailMessage mailMessage = new MailMessage();
             mailMessage.To.Add(email);
-
-            var Subject = "Potwierdzenie wysłania wiadomości - system rezerwacji sal - ";
-            Subject = Subject + subject;
-            mailMessage.Subject = Subject;
-
-            var Body = message;
-            Body = Body + "\n \n \n Wiadomość wygenerowana automatycznie. Prosimy na nią nie odpowiadać.";
-            Body = Body + "\n System rezerwacji sal - Bulbulatron 2000.";
-            mailMessage.Body = Body;
-
+            mailMessage.Subject = subject;
+            mailMessage.Body = message;
             mailMessage.From = new MailAddress(EmailLogin);
             try
             {
