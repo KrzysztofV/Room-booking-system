@@ -32,6 +32,7 @@ namespace RezerwacjaSal.Models
 
         public string Employment { get; set; }
 
+
         public Department Department { get; set; }
 
         public ICollection<Message> Messages { get; set; }

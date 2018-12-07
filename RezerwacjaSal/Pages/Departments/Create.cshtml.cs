@@ -39,7 +39,7 @@ namespace RezerwacjaSal.Pages.Departments
                 return Page();
 
             AllAppUsersIDs = await _context.AppUsers
-                .Select(i => Int32.Parse(i.Id))
+                .Select(i => i.Number)
                 .ToListAsync();
 
             AllDepartmentsNames = await _context.Departments

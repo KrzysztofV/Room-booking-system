@@ -72,7 +72,7 @@ using RezerwacjaSal.Areas.Identity.Pages.Account.Manage;
             WriteLiteral("\r\n<h2>Zarządzanie kontem</h2>\r\n\r\n<div>\r\n    <h4>Zmiana ustawiń konta</h4>\r\n    <hr />\r\n    <div class=\"row\">\r\n        <div class=\"col-md-3\">\r\n            ");
             EndContext();
             BeginContext(208, 29, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "40e195d4773848fab1046d22a7c5a67e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "201f2bc0b1394fde850620779b65488b", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_PartialTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.PartialTagHelper>();

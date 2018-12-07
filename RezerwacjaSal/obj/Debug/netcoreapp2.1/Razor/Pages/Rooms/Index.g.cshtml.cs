@@ -75,7 +75,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("<p>\r\n</p>\r\n<div class=\"btn-group\">\r\n\r\n    ");
             EndContext();
             BeginContext(232, 119, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "33e83562ade1411594a36f20dd15371a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3c0d06b4ca60406a898d4b3edec2e098", async() => {
                 BeginContext(339, 8, true);
                 WriteLiteral("Wydziały");
                 EndContext();
@@ -111,7 +111,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(357, 116, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ef6432f7a6364059a3dd5315e3738ee0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f8e017818ffd42b084d45405997dc636", async() => {
                 BeginContext(462, 7, true);
                 WriteLiteral("Budynki");
                 EndContext();
@@ -257,7 +257,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("                    <td>\r\n                        ");
             EndContext();
             BeginContext(1830, 159, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8925a8312ed548e79fa5df0a440809ba", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fabe1d457af7498c9da4783c3d94b8a3", async() => {
                 BeginContext(1979, 6, true);
                 WriteLiteral("Edytuj");
                 EndContext();
@@ -310,7 +310,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral(" |\r\n                        ");
             EndContext();
             BeginContext(2017, 165, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b22b8cec7174484966c1234fb14e8de", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0f5a5dfccce848da901d8db37eec6ab3", async() => {
                 BeginContext(2169, 9, true);
                 WriteLiteral("Szczegóły");
                 EndContext();
@@ -363,7 +363,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral(" |\r\n                        ");
             EndContext();
             BeginContext(2210, 159, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cc7f9a1162b8413b85da472a2ce1cb7d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a6ac545ae33b4f80a2abaf411eb759eb", async() => {
                 BeginContext(2361, 4, true);
                 WriteLiteral("Usuń");
                 EndContext();
@@ -426,7 +426,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("                    <td>\r\n                        ");
             EndContext();
             BeginContext(2508, 165, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d4842233b8ae46b09b6d1b0d65335793", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "76d902bfbc35432b8efd5e83e8a2706b", async() => {
                 BeginContext(2660, 9, true);
                 WriteLiteral("Szczegóły");
                 EndContext();
@@ -504,7 +504,7 @@ using Microsoft.AspNetCore.Authorization;
             WriteLiteral("            <tr class=\"active\">\r\n                <td></td>\r\n                <td></td>\r\n                <td></td>\r\n                <td>\r\n                    ");
             EndContext();
             BeginContext(2965, 173, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d12d9f5af8ed4df28057b4f6c55733aa", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ba46998db1cc4a35a17affeb9f2747a6", async() => {
                 BeginContext(3118, 16, true);
                 WriteLiteral("Dodaj nowy pokój");
                 EndContext();

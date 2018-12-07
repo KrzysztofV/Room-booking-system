@@ -51,10 +51,10 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Niepoprawny adres email")]
             public string Email { get; set; }
 
-            [Phone]
+            [Phone(ErrorMessage = "Niepoprawny numer telefonu")]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 

@@ -17,7 +17,7 @@ namespace RezerwacjaSal.Models
         [StringLength(50, ErrorMessage = "Nazwa wydziału nie może być dłuższa niż 50 znaków.")]
         public string Name { get; set; }
 
-        [Range(1,10000000000, ErrorMessage = "Numer pracownika może zawierać wyłącznie liczby.")]
+        [Range(0,10000000000, ErrorMessage = "Numer pracownika może zawierać wyłącznie liczby.")]
         public int Administrator { get; set; } 
 
         public ICollection<Building> Buildings { get; set; }

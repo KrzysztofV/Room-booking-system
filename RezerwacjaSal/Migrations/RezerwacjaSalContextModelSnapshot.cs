@@ -231,11 +231,9 @@ namespace RezerwacjaSal.Migrations
 
             modelBuilder.Entity("RezerwacjaSal.Models.Message", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("MessageID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId");
 
                     b.Property<DateTime>("Date");
 
@@ -243,47 +241,45 @@ namespace RezerwacjaSal.Migrations
 
                     b.Property<string>("IP");
 
+                    b.Property<string>("Id");
+
                     b.Property<string>("MessageContent")
                         .IsRequired();
-
-                    b.Property<int>("MessageID");
 
                     b.Property<string>("MessageSubject")
                         .IsRequired();
 
                     b.Property<string>("Name");
 
-                    b.HasKey("Id");
+                    b.HasKey("MessageID");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("Id");
 
                     b.ToTable("Message");
                 });
 
             modelBuilder.Entity("RezerwacjaSal.Models.Reservation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ReservationID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId");
 
                     b.Property<DateTime>("Date");
 
                     b.Property<DateTime>("EndTime");
 
+                    b.Property<string>("Id");
+
                     b.Property<string>("Note")
                         .HasMaxLength(200);
-
-                    b.Property<int>("ReservationID");
 
                     b.Property<int>("RoomID");
 
                     b.Property<DateTime>("StartTime");
 
-                    b.HasKey("Id");
+                    b.HasKey("ReservationID");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("Id");
 
                     b.HasIndex("RoomID");
 
@@ -319,10 +315,10 @@ namespace RezerwacjaSal.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int?>("DepartmentID")
-                        .HasMaxLength(100);
+                    b.Property<int?>("DepartmentID");
 
-                    b.Property<string>("Employment");
+                    b.Property<string>("Employment")
+                        .HasMaxLength(100);
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -401,14 +397,14 @@ namespace RezerwacjaSal.Migrations
                 {
                     b.HasOne("RezerwacjaSal.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Messages")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("Id");
                 });
 
             modelBuilder.Entity("RezerwacjaSal.Models.Reservation", b =>
                 {
                     b.HasOne("RezerwacjaSal.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("Id");
 
                     b.HasOne("RezerwacjaSal.Models.Room", "Room")
                         .WithMany("Reservations")

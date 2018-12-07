@@ -74,7 +74,7 @@ using RezerwacjaSal;
             WriteLiteral("</h4>\r\n<h3>\r\n    <a href=\"https://outlook.live.com/mail/inbox\">Skrzynka email</a>\r\n</h3>\r\n");
             EndContext();
             BeginContext(277, 109, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "78b1d798b0ec4ceabae9bf8e191b7c8e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e738434afe044861b1a2d28e41dc6268", async() => {
                 BeginContext(297, 82, true);
                 WriteLiteral("\r\n    <input type=\"submit\" value=\"Wyczyść\" class=\"btn btn-default btn-danger\" />\r\n");
                 EndContext();

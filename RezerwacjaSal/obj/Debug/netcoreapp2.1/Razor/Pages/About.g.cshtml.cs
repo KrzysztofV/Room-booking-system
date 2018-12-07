@@ -67,7 +67,7 @@ using RezerwacjaSal;
             WriteLiteral("<h3>System rezerwacji sal</h3>\r\n<h4>i takie tam</h4>\r\n<hr />\r\n<div class=\"row\">\r\n    <div class=\"col-md-3\">\r\n        ");
             EndContext();
             BeginContext(184, 154, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "dbf5477a9f2f4687b8d3c7c39f821197", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "bb3af9db5cb44d4d858f577f7d7056a5", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -106,7 +106,7 @@ using RezerwacjaSal;
 ");
             EndContext();
             BeginContext(735, 88, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "d96d05ab622d45238315fda37f57811e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "5bc462f925ed4cfb978f24d36f3e17f6", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

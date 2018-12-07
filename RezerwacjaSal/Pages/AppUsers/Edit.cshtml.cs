@@ -60,18 +60,28 @@ namespace RezerwacjaSal.Pages.AppUsers
         public class InputModel
         {
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
+            [StringLength(100, ErrorMessage = "Hasło musi zawierać conajmniej 8 znaków w tym więlką, małą literę i znak numeryczny.")]
+
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Nowe hasło i jego powierdzenie się nie zgadzają.")]
             public string ConfirmPassword { get; set; }
 
             [Required]
             public string RoleName { get; set; }
+
+            [Required]
+            [EmailAddress(ErrorMessage = "Niepoprawny adres email")]
+            public string Email { get; set; }
+
+            [Phone(ErrorMessage = "Niepoprawny numer telefonu")]
+            [Display(Name = "Phone number")]
+            public string PhoneNumber { get; set; }
+
         }
 
         public async Task<IActionResult> OnGet(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
@@ -93,6 +103,13 @@ namespace RezerwacjaSal.Pages.AppUsers
             if (ApplicationUser == null)
                 return NotFound();
 
+            var email = await _userManager.GetEmailAsync(ApplicationUser);
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(ApplicationUser);
+            Input = new InputModel
+            {
+                Email = email,
+                PhoneNumber = phoneNumber,
+            };
             // Listy wyborów
             ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
             var userRoles = await _userManager.GetRolesAsync(ApplicationUser);
@@ -102,6 +119,16 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         public async Task<IActionResult> OnPostAsync(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
+            // Aktualizacja osoby
+            var appUserToUpdate = await _context.AppUsers.FindAsync(id);
+            if (!ModelState.IsValid)
+            {
+                ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
+                var userRoles = await _userManager.GetRolesAsync(appUserToUpdate);
+                ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", userRoles.First());
+                return Page();
+            }
+
             // Przekazanie parametrów URL
             SortOrderRoute = sortOrder;
             CurrentFilterRoute = currentFilter;
@@ -109,8 +136,7 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
-            // Aktualizacja osoby
-            var appUserToUpdate = await _context.AppUsers.FindAsync(id);
+
 
             // Zmiana hasła
             if (ChangePassword)
@@ -121,11 +147,32 @@ namespace RezerwacjaSal.Pages.AppUsers
                 foreach (var error in updatePasswordResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
             }
 
-                var removeReoleResult = await _userManager.RemoveFromRolesAsync(appUserToUpdate, await _userManager.GetRolesAsync(appUserToUpdate));
-                var updateReoleResult = await _userManager.AddToRoleAsync(appUserToUpdate, Input.RoleName);
-                if (updateReoleResult.Succeeded && removeReoleResult.Succeeded) _logger.LogInformation("Zaktualizowano rolę");
-                foreach (var error in updateReoleResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
+            var removeReoleResult = await _userManager.RemoveFromRolesAsync(appUserToUpdate, await _userManager.GetRolesAsync(appUserToUpdate));
+            var updateReoleResult = await _userManager.AddToRoleAsync(appUserToUpdate, Input.RoleName);
+            if (updateReoleResult.Succeeded && removeReoleResult.Succeeded) _logger.LogInformation("Zaktualizowano rolę");
+            foreach (var error in updateReoleResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
+            var email = await _userManager.GetEmailAsync(appUserToUpdate);
+            if (Input.Email != email)
+            {
+                var setEmailResult = await _userManager.SetEmailAsync(appUserToUpdate, Input.Email);
+                if (!setEmailResult.Succeeded)
+                {
+                    var userId = await _userManager.GetUserIdAsync(appUserToUpdate);
+                    throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
+                }
+            }
+
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(appUserToUpdate);
+            if (Input.PhoneNumber != phoneNumber)
+            {
+                var setPhoneResult = await _userManager.SetPhoneNumberAsync(appUserToUpdate, Input.PhoneNumber);
+                if (!setPhoneResult.Succeeded)
+                {
+                    var userId = await _userManager.GetUserIdAsync(appUserToUpdate);
+                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
+                }
+            }
 
             // Aktualizacja pozostałych danych osoby
             if (await TryUpdateModelAsync<ApplicationUser>(
@@ -135,8 +182,6 @@ namespace RezerwacjaSal.Pages.AppUsers
                  s=> s.DepartmentID, 
                  s => s.FirstName, 
                  s => s.LastName, 
-                 s => s.Email, 
-                 s => s.PhoneNumber, 
                  s => s.Note,
                  s => s.EmailConfirmed,
                  s => s.PhoneNumberConfirmed))

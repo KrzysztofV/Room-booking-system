@@ -113,12 +113,12 @@ using RezerwacjaSal;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n\r\n    ");
             EndContext();
             BeginContext(767, 239, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b329c2546e8d4cc28f3412812a48edbb", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14f6f1cb624f41429dd026df97dd4737", async() => {
                 BeginContext(787, 10, true);
                 WriteLiteral("\r\n        ");
                 EndContext();
                 BeginContext(797, 114, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a1beafe723fe424892bf9d16367024c5", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fc381ba87eb24397ac2c9737354c9eb9", async() => {
                     BeginContext(893, 14, true);
                     WriteLiteral("Lista budynków");
                     EndContext();

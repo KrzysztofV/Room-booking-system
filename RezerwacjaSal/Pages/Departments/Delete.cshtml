@@ -26,9 +26,9 @@
             Administrator
         </dt>
         <dd>
-            @Model.AppUsers.Where(p => Int32.Parse(p.Id) == Model.Department.Administrator).Select(p => p.FirstName).FirstOrDefault()
+            @Model.AppUsers.Where(p => p.Number == Model.Department.Administrator).Select(p => p.FirstName).FirstOrDefault()
             &shy;
-            @Model.AppUsers.Where(p => Int32.Parse(p.Id) == Model.Department.Administrator).Select(p => p.LastName).FirstOrDefault()
+            @Model.AppUsers.Where(p => p.Number == Model.Department.Administrator).Select(p => p.LastName).FirstOrDefault()
         </dd>
     </dl>
 

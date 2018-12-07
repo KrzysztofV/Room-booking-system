@@ -81,8 +81,8 @@ namespace RezerwacjaSal.Migrations
                     FirstName = table.Column<string>(maxLength: 50, nullable: true),
                     LastName = table.Column<string>(maxLength: 50, nullable: true),
                     Note = table.Column<string>(maxLength: 200, nullable: true),
-                    DepartmentID = table.Column<int>(maxLength: 100, nullable: true),
-                    Employment = table.Column<string>(nullable: true)
+                    DepartmentID = table.Column<int>(nullable: true),
+                    Employment = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -207,23 +207,22 @@ namespace RezerwacjaSal.Migrations
                 name: "Message",
                 columns: table => new
                 {
-                    MessageID = table.Column<int>(nullable: false),
+                    MessageID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     MessageSubject = table.Column<string>(nullable: false),
                     MessageContent = table.Column<string>(nullable: false),
                     IP = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ApplicationUserId = table.Column<string>(nullable: true)
+                    Id = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Message", x => x.Id);
+                    table.PrimaryKey("PK_Message", x => x.MessageID);
                     table.ForeignKey(
-                        name: "FK_Message_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Message_AspNetUsers_Id",
+                        column: x => x.Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -256,22 +255,21 @@ namespace RezerwacjaSal.Migrations
                 name: "Reservation",
                 columns: table => new
                 {
-                    ReservationID = table.Column<int>(nullable: false),
-                    RoomID = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
+                    ReservationID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoomID = table.Column<int>(nullable: false),
+                    Id = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: false),
-                    Note = table.Column<string>(maxLength: 200, nullable: true),
-                    ApplicationUserId = table.Column<string>(nullable: true)
+                    Note = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservation", x => x.Id);
+                    table.PrimaryKey("PK_Reservation", x => x.ReservationID);
                     table.ForeignKey(
-                        name: "FK_Reservation_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Reservation_AspNetUsers_Id",
+                        column: x => x.Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -333,14 +331,14 @@ namespace RezerwacjaSal.Migrations
                 column: "DepartmentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Message_ApplicationUserId",
+                name: "IX_Message_Id",
                 table: "Message",
-                column: "ApplicationUserId");
+                column: "Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservation_ApplicationUserId",
+                name: "IX_Reservation_Id",
                 table: "Reservation",
-                column: "ApplicationUserId");
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservation_RoomID",

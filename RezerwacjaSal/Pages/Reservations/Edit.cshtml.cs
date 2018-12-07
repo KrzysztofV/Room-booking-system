@@ -79,7 +79,7 @@ namespace RezerwacjaSal.Pages.Reservations
 
             Rooms = await _context.Rooms
                 .Where(b => b.BuildingID == Reservation.Room.BuildingID)
-                .AsNoTracking()
+                .AsNoTracking().OrderBy(r => r.Number)
                 .ToListAsync();
 
             if (Reservation == null)
@@ -139,8 +139,7 @@ namespace RezerwacjaSal.Pages.Reservations
 
             ReservationIdRoute = reservationid;
 
-            if (!ModelState.IsValid)
-                return Page();
+
 
             AllNumbers = await _context.AppUsers
                 .Select(i => i.Number)
@@ -168,7 +167,7 @@ namespace RezerwacjaSal.Pages.Reservations
 
             Rooms = await _context.Rooms
                 .Where(b => b.BuildingID == Reservation.Room.BuildingID)
-                .AsNoTracking()
+                .AsNoTracking().OrderBy(r => r.Number)
                 .ToListAsync();
 
             Hours = new List<String>();
@@ -227,6 +226,12 @@ namespace RezerwacjaSal.Pages.Reservations
                 NumberError = String.Format("Nie ma takiego człeka o numerze: {0}", Number);
                 return Page();
             }
+
+
+
+
+            if (!ModelState.IsValid)
+                return Page();
 
             var reservationToUpdate = await _context.Reservations
                 .SingleOrDefaultAsync(m => m.ReservationID == reservationid);
