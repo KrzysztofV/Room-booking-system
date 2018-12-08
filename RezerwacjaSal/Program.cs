@@ -47,7 +47,6 @@ namespace RezerwacjaSal
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseApplicationInsights()
                 .UseStartup<Startup>()
                 .UseSetting("detailedErrors", "true")
                 .UseIISIntegration()

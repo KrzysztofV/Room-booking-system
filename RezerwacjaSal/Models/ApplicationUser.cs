@@ -36,5 +36,6 @@ namespace RezerwacjaSal.Models
         public Department Department { get; set; }
 
         public ICollection<Message> Messages { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }

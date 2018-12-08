@@ -32,7 +32,7 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Password)]
-            [StringLength(100, ErrorMessage = "Hasło musi zawierać conajmniej 8 znaków w tym więlką, małą literę i znak numeryczny.")]
+            [StringLength(100, ErrorMessage = "Hasło musi zawierać conajmniej 8 znaków w tym więlką, małą literę i znak numeryczny.", MinimumLength = 8)]
 
             public string Password { get; set; }
 

@@ -29,26 +29,36 @@ namespace RezerwacjaSal.Data
         {   // fluent API
 
             modelBuilder.Entity<Message>().ToTable("Message");
-            modelBuilder.Entity<Department>().ToTable("Department")
+            modelBuilder.Entity<Department>()
                 .ToTable("Department")
                 .HasMany(r => r.AppUsers)
                 .WithOne(r => r.Department)
                 .OnDelete(DeleteBehavior.SetNull);
-            modelBuilder.Entity<Building>().ToTable("Building")
+            modelBuilder.Entity<Building>()
                 .ToTable("Building")
                 .HasOne(r => r.Department)
                 .WithMany(r => r.Buildings)
                 .OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<Room>().ToTable("Room")
+            modelBuilder.Entity<Room>()
                 .ToTable("Room")
                 .HasOne(r => r.Building)
                 .WithMany(r => r.Rooms)
                 .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Reservation>()
                 .ToTable("Reservation")
-                .HasOne(r => r.Room)                // ponieważ występuje kaskada buildingID -> roomID to trzeba takie coś aby przy usuwaniu się nie wykrzaczało 
-                .WithMany(b => b.Reservations)      // jeden pokój może posiadać wiele rezerwacji. Najwyraźniej trzeba to tu określić 
-                .OnDelete(DeleteBehavior.Cascade); // modyfikacja domyślnego zachowania przy usuwaniu 
+                .HasOne(r => r.Room)                
+                .WithMany(b => b.Reservations)      
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ApplicationUser>()
+                .ToTable("ApplicationUser")
+                .HasMany(b => b.Reservations)
+                .WithOne(r => r.ApplicationUser)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ApplicationUser>()
+                .ToTable("ApplicationUser")
+                .HasMany(b => b.Messages)
+                .WithOne(r => r.ApplicationUser)
+                .OnDelete(DeleteBehavior.Cascade);
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -68,7 +68,7 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
-            [StringLength(100, ErrorMessage = "Hasło musi zawierać conajmniej 8 znaków w tym więlką, małą literę i znak numeryczny.")]
+            [StringLength(100, ErrorMessage = "Hasło musi zawierać conajmniej 8 znaków w tym więlką, małą literę i znak numeryczny.", MinimumLength = 8)]
 
             public string Password { get; set; }
 
@@ -121,7 +121,7 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account
                         $"Potwierdź swoje konto klikając -> {callbackUrl}");
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    return RedirectToPage("RegisterSucces");
                 }
                 foreach (var error in result.Errors)
                 {

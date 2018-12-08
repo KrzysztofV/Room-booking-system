@@ -43,6 +43,8 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account.Manage
             [Required]
             [DataType(DataType.Password)]
             [Display(Name = "New password")]
+            [StringLength(100, ErrorMessage = "Hasło musi zawierać conajmniej 8 znaków w tym więlką, małą literę i znak numeryczny.", MinimumLength = 8)]
+
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
