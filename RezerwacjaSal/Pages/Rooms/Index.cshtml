@@ -10,10 +10,10 @@
 </p>
 <div class="btn-group">
 
-    <a class="btn btn-default" asp-page="/Departments/Index" asp-route-departmentid="@Model.DepartmentIdRoute">Wydziały</a>
-    <a class="btn btn-default" asp-page="/Buildings/Index" asp-route-departmentid="@Model.DepartmentIdRoute">Budynki</a>
+    <a class="btn btn-secondary" asp-page="/Departments/Index" asp-route-departmentid="@Model.DepartmentIdRoute">Wydziały</a>
+    <a class="btn btn-secondary" asp-page="/Buildings/Index" asp-route-departmentid="@Model.DepartmentIdRoute">Budynki</a>
 </div>
-
+<hr />
 <h3>Pokoje w budynku @Model.Buildings.Where(i => i.BuildingID == Model.BuildingIdRoute).Select(n => n.Name).SingleOrDefault()</h3>
 <h4>Adres: @Model.Buildings.Where(i => i.BuildingID == Model.BuildingIdRoute).Select(a => a.Address).SingleOrDefault()</h4>
 <hr />

@@ -132,8 +132,8 @@
 
 @* stronowanie listy *@
 @{
-    var prevDisabled = !Model.ApplicationUser.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.ApplicationUser.HasNextPage ? "disabled" : "";
+    var prevDisabled = !Model.ApplicationUser.HasPreviousPage ? "page-item disabled" : "page-item" ;
+    var nextDisabled = !Model.ApplicationUser.HasNextPage ? "page-item disabled" : "page-item";
 }
 
 
@@ -142,8 +142,8 @@
 
     @if (Model.PageSize == 15)
     {
-        <li class="active">
-            <a asp-route-sortOrder="@Model.CurrentSort"
+        <li class="page-item active">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
                asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="15">15</a>
@@ -151,8 +151,8 @@
     }
     else
     {
-        <li>
-            <a asp-route-sortOrder="@Model.CurrentSort"
+        <li class="page-item">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
                asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="15">15</a>
@@ -160,8 +160,8 @@
     }
     @if (Model.PageSize == 50)
     {
-        <li class="active">
-            <a asp-route-sortOrder="@Model.CurrentSort"
+        <li class="page-item active">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
                asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="50">50</a>
@@ -169,8 +169,8 @@
     }
     else
     {
-        <li>
-            <a asp-route-sortOrder="@Model.CurrentSort"
+        <li class="page-item">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
                asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="50">50</a>
@@ -178,8 +178,8 @@
     }
     @if (Model.PageSize == 200)
     {
-        <li class="active">
-            <a asp-route-sortOrder="@Model.CurrentSort"
+        <li class="page-item active">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
                asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="200">200</a>
@@ -187,8 +187,8 @@
     }
     else
     {
-        <li>
-            <a asp-route-sortOrder="@Model.CurrentSort"
+        <li class="page-item">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
                asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
                asp-route-currentFilter="@Model.CurrentFilter"
                asp-route-pageSize="200">200</a>
@@ -196,14 +196,25 @@
     }
 </ul>
 
-<div style="float:right">
+
+
+
+<ul class="pagination justify-content-center">
+    <li class="@prevDisabled"
+        
+        >
+        <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+           asp-route-pageIndex="@(Model.ApplicationUser.PageIndex - 1)"
+           asp-route-currentFilter="@Model.CurrentFilter"
+           asp-route-pageSize="@Model.PageSize">Wcześniejsza strona</a>
+    </li>
     @for (var i = 1; i <= Model.ApplicationUser.TotalPages; i++)
     {
-        <ul class="pagination">
+
             @if (Model.ApplicationUser.PageIndex == i)
             {
-                <li class="active">
-                    <a asp-route-sortOrder="@Model.CurrentSort"
+                <li class="page-item active">
+                    <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
                        asp-route-pageIndex="@i"
                        asp-route-currentFilter="@Model.CurrentFilter"
                        asp-route-pageSize="@Model.PageSize">@i</a>
@@ -211,28 +222,17 @@
             }
             else
             {
-                <li>
-                    <a asp-route-sortOrder="@Model.CurrentSort"
+                <li class="page-item">
+                    <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
                        asp-route-pageIndex="@i"
                        asp-route-currentFilter="@Model.CurrentFilter"
                        asp-route-pageSize="@Model.PageSize">@i</a>
                 </li>
             }
-        </ul>
 
     }
-</div>
-
-
-<ul class="pager">
-    <li class="@prevDisabled">
-        <a asp-route-sortOrder="@Model.CurrentSort"
-           asp-route-pageIndex="@(Model.ApplicationUser.PageIndex - 1)"
-           asp-route-currentFilter="@Model.CurrentFilter"
-           asp-route-pageSize="@Model.PageSize">Wcześniejsza strona</a>
-    </li>
     <li class="@nextDisabled">
-        <a asp-route-sortOrder="@Model.CurrentSort"
+        <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
            asp-route-pageIndex="@(Model.ApplicationUser.PageIndex + 1)"
            asp-route-currentFilter="@Model.CurrentFilter"
            asp-route-pageSize="@Model.PageSize">Następna strona</a>

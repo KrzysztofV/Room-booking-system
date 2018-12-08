@@ -11,7 +11,8 @@
 
 <h3>Dostępność sal</h3>
 <h4>Wybierz wydział</h4>
-<hr />
+<h5><br /> </h5>
+
 <table class="table table-striped table-hover ">
     <thead>
         <tr class="info">
@@ -57,27 +58,27 @@
                 </td>
                 @if (User.Identity.IsAuthenticated)
                 {
-                <td>
-                    @if (User.IsInRole("administrator"))
-                    {
-                        <a asp-page="/AppUsers/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
-                           asp-route-id="@Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p=>p.Id).FirstOrDefault()">
+                    <td>
+                        @if (User.IsInRole("administrator"))
+                        {
+                            <a asp-page="/AppUsers/Details" data-toggle="tooltip" title="Kliknij aby zobaczyć osobę"
+                               asp-route-id="@Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p=>p.Id).FirstOrDefault()">
+                                @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.FirstName).FirstOrDefault()
+                                &shy;
+                                @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.LastName).FirstOrDefault()
+                            </a>
+                        }
+                        else
+                        {
                             @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.FirstName).FirstOrDefault()
-                            &shy;
+                            <a>
+
+                            </a>
                             @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.LastName).FirstOrDefault()
-                        </a>
-                    }
-                    else
-                    {
-                        @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.FirstName).FirstOrDefault()
-                        <a>
-                        
-                        </a>
-                        @Model.AppUsers.Where(p => p.Number == item.Administrator).Select(p => p.LastName).FirstOrDefault()
 
-                    }
+                        }
 
-                </td>
+                    </td>
                 }
 
                 @if (User.IsInRole("administrator"))
