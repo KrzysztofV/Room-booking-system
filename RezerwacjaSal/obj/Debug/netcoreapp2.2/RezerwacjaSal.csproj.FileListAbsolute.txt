@@ -66,7 +66,6 @@ C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\net
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\Razor\Pages\Departments\Edit.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\Razor\Pages\Departments\Index.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\Razor\Pages\Error.g.cshtml.cs
-C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\Razor\Pages\GlobalSearch.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\Razor\Pages\Index.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\Razor\Pages\Messages\Create.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\Razor\Pages\Messages\List.g.cshtml.cs

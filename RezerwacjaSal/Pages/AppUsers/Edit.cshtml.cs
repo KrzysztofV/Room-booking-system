@@ -59,7 +59,6 @@ namespace RezerwacjaSal.Pages.AppUsers
         {
             [Required]
             [DataType(DataType.Password)]
-            [StringLength(100, ErrorMessage = "Hasło musi zawierać conajmniej 8 znaków w tym więlką, małą literę i znak numeryczny.", MinimumLength = 8)]
 
             [Display(Name = "Password")]
             public string Password { get; set; }

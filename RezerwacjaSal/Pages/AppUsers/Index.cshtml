@@ -15,7 +15,9 @@
     <form asp-page="./Index" method="get" class="form-inline">
 
         <input asp-for="@Model.CurrentFilter" class="form-control" style="width:300px" />
+        &nbsp;
         <button class="btn btn-primary" type="submit">Szukaj</button>
+
         <a class="btn btn-default" asp-page="./Index">Cała lista</a>
     </form>
 </div>

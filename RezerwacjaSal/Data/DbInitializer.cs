@@ -54,7 +54,7 @@ namespace RezerwacjaSal.Data
                 FirstName = "Admin",
                 LastName = "Admin",
                 Note = "Administrator systemu Bulbulator",
-                Number = 0,
+                Number = 1,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 Employment = "Administrator systemu",
@@ -71,7 +71,7 @@ namespace RezerwacjaSal.Data
                 FirstName = "Kowalski",
                 LastName = "Kowalski",
                 Note = "Przykładowy użytkownik",
-                Number = 1,
+                Number = 2,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
             };
@@ -87,7 +87,7 @@ namespace RezerwacjaSal.Data
                 FirstName = "Jan",
                 LastName = "Kowalski",
                 Note = "Przykładowy użytkownik",
-                Number = 2,
+                Number = 3,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
             };
@@ -103,7 +103,7 @@ namespace RezerwacjaSal.Data
                 FirstName = "Brajanusz",
                 LastName = "Kowalski",
                 Note = "Przykładowy użytkownik",
-                Number = 3,
+                Number = 4,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
             };
@@ -119,7 +119,7 @@ namespace RezerwacjaSal.Data
                 FirstName = "Dżesika",
                 LastName = "Kowalska",
                 Note = "Przykładowy użytkownik",
-                Number = 4,
+                Number = 5,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
             };
@@ -135,7 +135,7 @@ namespace RezerwacjaSal.Data
                 FirstName = "Piter",
                 LastName = "Kowalski",
                 Note = "Przykładowy użytkownik",
-                Number = 5,
+                Number = 6,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
             };
@@ -151,7 +151,7 @@ namespace RezerwacjaSal.Data
                 FirstName = "Dżordż",
                 LastName = "Kowalski",
                 Note = "Przykładowy użytkownik",
-                Number = 6,
+                Number = 7,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
             };

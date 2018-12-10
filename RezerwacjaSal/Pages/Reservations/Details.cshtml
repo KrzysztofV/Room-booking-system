@@ -13,18 +13,13 @@
     <a class="btn btn-secondary" asp-page="./Index" asp-route-date="@Model.Date.ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Rezerwacje</a>
 
 </div>
+<hr />
 <h3>Szczegóły rezerwacji</h3>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
 
-        <dt>
-            ID rezerwacji:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Reservation.ReservationID)
-        </dd>
         <dt>
             Data:
         </dt>
