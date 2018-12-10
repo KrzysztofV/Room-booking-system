@@ -15,12 +15,10 @@
 <h3>
     Rezerwacje dla budynku @Model.Building.Name.SingleOrDefault()
 </h3>
-<h4 style="color:#0086d3"> @Model.Date.ToLongDateString()</h4>
+<h4> @Model.Date.ToLongDateString()</h4>
 <hr />
 
-<p></p>
-    Zmień datę:
-<p></p>
+
 <div class="form-inline">
     <form method="get" style="float: left; margin-right: 50px;">
         <input name="date" value="@Model.Date.ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:200px" />
@@ -28,34 +26,24 @@
         <input name="departmentid" value="@Model.DepartmentIdRoute" class="form-control" style="display:none" />
         <button type="submit" class="btn btn-primary">Wybierz</button>
     </form>
-    <form method="get" style="float: left; margin-right: 3px;">
-        <input name="date" value="@Model.Date.AddDays(-1).ToShortDateString()" class="form-control" style="display:none" />
-        <input name="buildingid" value="@Model.BuildingIdRoute" class="form-control" style="display:none" />
-        <input name="departmentid" value="@Model.DepartmentIdRoute" class="form-control" style="display:none" />
-        <button type="submit" class="btn btn-default" style="color:#0086d3">Dzień wcześniej</button>
-    </form>
-    <form method="get" style="float: left; margin-right: 50px;">
-        <input name="date" value="@Model.Date.AddDays(1).ToShortDateString()" class="form-control" style="display:none" />
-        <input name="buildingid" value="@Model.BuildingIdRoute" class="form-control" style="display:none" />
-        <input name="departmentid" value="@Model.DepartmentIdRoute" class="form-control" style="display:none" />
-        <button type="submit" class="btn btn-default" style="color:#0086d3">Dzień później</button>
-    </form>
-    <form method="get" style="float: left; margin-right: 3px;">
-        <input name="date" value="@DateTime.Today.ToShortDateString()" class="form-control" style="display:none" />
-        <input name="buildingid" value="@Model.BuildingIdRoute" class="form-control" style="display:none" />
-        <input name="departmentid" value="@Model.DepartmentIdRoute" class="form-control" style="display:none" />
-        <button type="submit" class="btn btn-default">Dzisiaj</button>
-    </form>
-    <form method="get">
-        <input name="date" value="@Model.Date.AddDays(7).ToShortDateString()" class="form-control" style="display:none" />
-        <input name="buildingid" value="@Model.BuildingIdRoute" class="form-control" style="display:none" />
-        <input name="departmentid" value="@Model.DepartmentIdRoute" class="form-control" style="display:none" />
-        <button type="submit" class="btn btn-default">Następny tydzień</button>
-    </form>
+
+    <ul class="pagination justify-content-center" style="margin:20px 0">
+
+        <li class="page-item">
+            <a asp-route-date="@Model.Date.AddDays(-1).ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="page-link">Dzień wcześniej</a>
+        </li>
+        <li class="page-item">
+            <a asp-route-date="@DateTime.Today.ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="page-link">Dzisiaj</a>
+        </li>
+        <li class="page-item">
+            <a asp-route-date="@Model.Date.AddDays(1).ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="page-link">Dzień później</a>
+        </li>
+    </ul>
 </div>
+
 <p></p>
 @*tabela od góry do dołu, od lewej do prawej*@
-<table class="table table-bordered table-hover table-condensed table-striped" style="border-color:#808080">
+<table class="table table-bordered table-hover table-sm table-striped" style="border-color:#808080">
     @*Pierwszy wiersz z pokojami*@
     <thead>
         <tr class="info">
@@ -87,7 +75,7 @@
                     @if (reservation != null)
                     {
                         {
-                            <th style="border-color:#808080" class="danger">
+                            <th style="border-color:#808080" class="table-danger">
                                 @{
                                     var Id = reservation.ReservationID;
                                     var FirstName = Model.AppUsers.Where(p => p.Id == Model.Reservations.Where(r => r.ReservationID == Id).Select(i => i.Id).First()).Select(p => p.FirstName).FirstOrDefault();
@@ -114,7 +102,7 @@
                     else
                     {
                         @*Możliwość dodania rezerwacji*@
-                        <th style="border-color:#808080" class="success">
+                        <th style="border-color:#808080" class="table-success">
                             <a asp-page="./Create" style="color:green" asp-route-date="@Model.Date.ToShortDateString()" asp-route-roomid="@room.RoomID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" asp-route-time="@hour.ToShortTimeString()" data-toggle="tooltip" title="Kliknij aby utworzyć rezerwację"><h6>Wolne</h6></a>
                         </th>
                     }

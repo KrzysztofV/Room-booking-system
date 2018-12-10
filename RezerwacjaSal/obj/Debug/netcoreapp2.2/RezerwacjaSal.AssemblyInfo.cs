@@ -14,11 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RezerwacjaSal")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Kontynuacja projektu IO jako AI")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("0.9.9.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.9.9")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("RezerwacjaSal")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RezerwacjaSal")]
-[assembly: System.Reflection.AssemblyVersionAttribute("0.9.9.0")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Wygenerowane przez klasę WriteCodeFragment programu MSBuild.
 
