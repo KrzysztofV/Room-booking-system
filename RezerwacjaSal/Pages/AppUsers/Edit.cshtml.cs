@@ -57,9 +57,9 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         public class InputModel
         {
+            // TODO nie działa walidacja hasła
             [Required]
             [DataType(DataType.Password)]
-
             [Display(Name = "Password")]
             public string Password { get; set; }
 

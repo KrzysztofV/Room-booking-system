@@ -12,11 +12,12 @@ namespace RezerwacjaSal.Models
         [Required(ErrorMessage = "Numer osoby jest wymagany.")]
         [Range(0, 100000, ErrorMessage = "Numer osoby może zawierać wyłącznie liczby z przedziału 0-100000")]
         public int Number { get; set; }
-
+        // TODO nie działa walidacja polskich znaków
         [Required(ErrorMessage = "Imię jest wymagane")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Imię nie może być dłuższe niż 50 znaków oraz krótsze od 2.")]
         [RegularExpression(@"^[A-Z]+[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ""'\s-]*$", ErrorMessage = "Imię może zawierać wyłącznie znaki a-z oraz musi się zaczynać od dużej litery")]
         public string FirstName { get; set; }
+        // TODO nie działa walidacja polskich znaków
 
         [Required(ErrorMessage = "Nazwisko jest wymagane.")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Nazwisko nie może być dłuższe niż 50 znaków oraz krótsze od 2.")]

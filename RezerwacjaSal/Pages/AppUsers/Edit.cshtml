@@ -1,4 +1,5 @@
-﻿@page 
+﻿@page
+
 @model RezerwacjaSal.Pages.AppUsers.EditModel
 
 @{
@@ -100,6 +101,6 @@
     * Opcjonalne
 </body>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

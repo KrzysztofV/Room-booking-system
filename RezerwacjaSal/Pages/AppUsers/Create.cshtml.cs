@@ -54,8 +54,8 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         public class InputModel
         {
+            // TODO nie działa walidacja hasła
             [Required]
-            [StringLength(100, ErrorMessage = "Hasło musi zawierać conajmniej 8 znaków w tym więlką, małą literę i znak numeryczny.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
