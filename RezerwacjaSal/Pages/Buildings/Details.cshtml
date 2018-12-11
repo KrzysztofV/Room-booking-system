@@ -1,6 +1,7 @@
 ﻿@page
 @model RezerwacjaSal.Pages.Buildings.DetailsModel
 
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -34,16 +35,16 @@
 @*Mapy bing*@
 @*@{
 
-    var link = "https://www.bing.com/maps/embed?h=400&w=500&cp=" + Model.MapN + "~" + Model.MapE + "&lvl=" + Model.MapZoom + "&typ=d&sty=h&src=SHELL&FORM=MBEDV8";
-    var link2 = "https://www.bing.com/maps?cp=" + Model.MapN + "~" + Model.MapE + "&amp;sty=h&amp;lvl=19&amp;FORM=MBEDLD";
-}
-<div>
-    <iframe width="500" height="400" frameborder="0" src="@link" scrolling="no"></iframe>
-    <div style="white-space: nowrap; text-align: center; width: 500px; padding: 6px 0;">
-        <a id="largeMapLink" target="_blank" href="@link2">Wyświetl większą mapę</a>
+        var link = "https://www.bing.com/maps/embed?h=400&w=500&cp=" + Model.MapN + "~" + Model.MapE + "&lvl=" + Model.MapZoom + "&typ=d&sty=h&src=SHELL&FORM=MBEDV8";
+        var link2 = "https://www.bing.com/maps?cp=" + Model.MapN + "~" + Model.MapE + "&amp;sty=h&amp;lvl=19&amp;FORM=MBEDLD";
+    }
+    <div>
+        <iframe width="500" height="400" frameborder="0" src="@link" scrolling="no"></iframe>
+        <div style="white-space: nowrap; text-align: center; width: 500px; padding: 6px 0;">
+            <a id="largeMapLink" target="_blank" href="@link2">Wyświetl większą mapę</a>
+        </div>
     </div>
-</div>
-<p></p>*@
+    <p></p>*@
 
 <style>
     #map {
@@ -73,7 +74,7 @@
     }
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqUPXGLnI6TBQRSaU2YRZ5RkOJ42c1Jzo&callback=initMap"
+<script src=@Model.GoogleAPIkey
         async defer></script>
 <p></p>
 

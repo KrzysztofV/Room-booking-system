@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,16 @@ namespace RezerwacjaSal
 {
     public class EmailSender : IEmailSender
     {
+        public EmailSender(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+        public IConfiguration Configuration { get; }
+
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            var EmailPassword = "Plazmotronix";
-            var EmailLogin = "webapp0@outlook.com";
+            var EmailPassword = Configuration.GetConnectionString("EmailPassword");
+            var EmailLogin = Configuration.GetConnectionString("EmailLogin");
 
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp-mail.outlook.com";
