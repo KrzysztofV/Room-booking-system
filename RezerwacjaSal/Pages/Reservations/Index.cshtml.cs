@@ -94,7 +94,7 @@ namespace RezerwacjaSal.Pages.Reservations
                             .AsNoTracking()
                             .ToListAsync();
         }
-    
+
     }
-    
+
 }

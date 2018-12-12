@@ -46,7 +46,7 @@ namespace RezerwacjaSal.Pages.Reservations
         public int Number { get; set; }
         [BindProperty]
         public int RoomID { get; private set; }
-        
+
         [BindProperty]
         public string DateInputString { get; set; }
         public string ErrorString { get; private set; }
@@ -152,7 +152,7 @@ namespace RezerwacjaSal.Pages.Reservations
                 .ToListAsync();
 
             Reservations = await _context.Reservations
-                .Where(r => r.ReservationID!= reservationid)
+                .Where(r => r.ReservationID != reservationid)
                 .Where(b => b.Room.BuildingID == buildingid)
                 .Where(d => d.Date == ParseStringDate)
                 .Where(r => r.RoomID == Reservation.RoomID)
@@ -225,11 +225,7 @@ namespace RezerwacjaSal.Pages.Reservations
 
             if (ErrorString != null) return Page();
 
-            if (!AllNumbers.Contains(Number))
-            {
-                NumberError = String.Format("Nie ma takiego człeka o numerze: {0}", Number);
-                return Page();
-            }
+
 
 
 
@@ -244,6 +240,11 @@ namespace RezerwacjaSal.Pages.Reservations
 
             if (currentUserRoles.First() == "administrator")
             {
+                if (!AllNumbers.Contains(Number))
+                {
+                    NumberError = String.Format("Nie ma takiego człeka o numerze: {0}", Number);
+                    return Page();
+                }
                 reservationToUpdate.Id = AppUsers.Where(i => i.Number == Number).Select(i => i.Id).FirstOrDefault();
             }
             if (currentUserRoles.First() == "użytkownik")

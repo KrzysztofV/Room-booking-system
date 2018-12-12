@@ -52,7 +52,7 @@ namespace RezerwacjaSal.Pages.Reservations
         public int Number { get; set; }
         public ApplicationUser CurrentUser { get; set; }
 
-        public async Task<IActionResult> OnGetAsync( int roomid, int buildingid, int departmentid, string date, string time)
+        public async Task<IActionResult> OnGetAsync(int roomid, int buildingid, int departmentid, string date, string time)
         {
             CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
             if (CurrentUser == null)
@@ -61,7 +61,7 @@ namespace RezerwacjaSal.Pages.Reservations
             }
             BuildingIdRoute = buildingid;
             DepartmentIdRoute = departmentid;
-            
+
             DateTime.TryParse(date, out var ParseDate);
             Date = ParseDate;
 
@@ -72,8 +72,8 @@ namespace RezerwacjaSal.Pages.Reservations
 
             Room = await _context.Rooms
                     .Where(i => i.RoomID == roomid)
-                    .Include(b=>b.Building)
-                    .ThenInclude(d=>d.Department)
+                    .Include(b => b.Building)
+                    .ThenInclude(d => d.Department)
                     .AsNoTracking()
                     .FirstOrDefaultAsync();
 
@@ -215,11 +215,6 @@ namespace RezerwacjaSal.Pages.Reservations
 
             if (ErrorString != null) return Page();
 
-            if (!AllNumbers.Contains(Number))
-            {
-                NumberError = String.Format("Nie ma takiego człeka o numerze: {0}", Number);
-                return Page();
-            }
 
             var newReservation = new Reservation();
 
@@ -229,6 +224,11 @@ namespace RezerwacjaSal.Pages.Reservations
             var currentUserRoles = await _userManager.GetRolesAsync(CurrentUser);
             if (currentUserRoles.First() == "administrator")
             {
+                if (!AllNumbers.Contains(Number))
+                {
+                    NumberError = String.Format("Nie ma takiego człeka o numerze: {0}", Number);
+                    return Page();
+                }
                 newReservation.Id = AppUsers.Where(i => i.Number == Number).Select(i => i.Id).FirstOrDefault();
             }
             if (currentUserRoles.First() == "użytkownik")
