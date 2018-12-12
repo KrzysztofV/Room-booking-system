@@ -14,10 +14,10 @@ namespace RezerwacjaSal.Models
         [Required(ErrorMessage = "Numer pokoju jest wymagany.")]
         public int Number { get; set; }
 
-        [StringLength(50, ErrorMessage = "Opis rodzaju pomieszczenia nie może być dłuższy niż 50 znaków.")]
+        [StringLength(50, ErrorMessage = "Opis nie może być dłuższy niż 50 znaków")]
         public string Type { get; set; }
 
-        [StringLength(100, ErrorMessage = "Opis wyposażenia nie może być dłuższy niż 100 znaków.")]
+        [StringLength(200, ErrorMessage = "Opis wyposażenia nie może być dłuższy niż 200 znaków.")]
         public string Equipment { get; set; }
 
         [Range(1, 100000, ErrorMessage = "Tylko liczby.")]

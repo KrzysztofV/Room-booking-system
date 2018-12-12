@@ -12,17 +12,13 @@ namespace RezerwacjaSal.Data
     // Inicjalizacja bazy danych jakimiś przykładowymi danymi 
     public class DbInitializer
     {
-        public DbInitializer(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-        public static IConfiguration Configuration { get; set; }
 
         public static async Task InitializeAsync(
             RezerwacjaSalContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            ILogger<DbInitializer> logger)
+            ILogger<DbInitializer> logger,
+            IConfiguration configuration)
         {
 
             context.Database.EnsureCreated();
@@ -55,8 +51,8 @@ namespace RezerwacjaSal.Data
             
             var newAdmin = new ApplicationUser
             {
-                UserName = Configuration.GetConnectionString("AdminLogin"),
-                Email = Configuration.GetConnectionString("AdminLogin"),
+                UserName = configuration.GetValue<string>("Admin:Login"),
+                Email = configuration.GetValue<string>("Admin:Login"),
                 FirstName = "Admin",
                 LastName = "Admin",
                 Note = "Administrator systemu Bulbulator",
@@ -66,7 +62,7 @@ namespace RezerwacjaSal.Data
                 Employment = "Administrator systemu",
             };
 
-            var resultDefaultAdmin = await userManager.CreateAsync(newAdmin, Configuration.GetConnectionString("AdminPassword"));
+            var resultDefaultAdmin = await userManager.CreateAsync(newAdmin, configuration.GetValue<string>("Admin:Password"));
             await userManager.AddToRoleAsync(newAdmin, "administrator");
             if (resultDefaultAdmin.Succeeded) logger.LogInformation("Utworzono domyślnego administratora.");
 
@@ -82,7 +78,7 @@ namespace RezerwacjaSal.Data
                 PhoneNumberConfirmed = true,
             };
 
-            var resultDefaultUser = await userManager.CreateAsync(newApplicationUser, Configuration.GetConnectionString("UserPassword"));
+            var resultDefaultUser = await userManager.CreateAsync(newApplicationUser, configuration.GetValue<string>("User:Password"));
             await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
             if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
 
@@ -98,7 +94,7 @@ namespace RezerwacjaSal.Data
                 PhoneNumberConfirmed = true,
             };
 
-            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, Configuration.GetConnectionString("UserPassword"));
+            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, configuration.GetValue<string>("User:Password"));
             await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
             if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
 
@@ -114,7 +110,7 @@ namespace RezerwacjaSal.Data
                 PhoneNumberConfirmed = true,
             };
 
-            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, Configuration.GetConnectionString("UserPassword"));
+            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, configuration.GetValue<string>("User:Password"));
             await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
             if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
 
@@ -130,7 +126,7 @@ namespace RezerwacjaSal.Data
                 PhoneNumberConfirmed = true,
             };
 
-            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, Configuration.GetConnectionString("UserPassword"));
+            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, configuration.GetValue<string>("User:Password"));
             await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
             if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
 
@@ -146,7 +142,7 @@ namespace RezerwacjaSal.Data
                 PhoneNumberConfirmed = true,
             };
 
-            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, Configuration.GetConnectionString("UserPassword"));
+            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, configuration.GetValue<string>("User:Password"));
             await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
             if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
 
@@ -162,7 +158,7 @@ namespace RezerwacjaSal.Data
                 PhoneNumberConfirmed = true,
             };
 
-            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, Configuration.GetConnectionString("UserPassword"));
+            resultDefaultUser = await userManager.CreateAsync(newApplicationUser, configuration.GetValue<string>("User:Password"));
             await userManager.AddToRoleAsync(newApplicationUser, "użytkownik");
             if (resultDefaultUser.Succeeded) logger.LogInformation("Utworzono domyślnego użytkownika.");
 

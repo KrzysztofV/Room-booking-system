@@ -54,7 +54,6 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         public class InputModel
         {
-            // TODO nie działa walidacja hasła
             [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -62,7 +61,7 @@ namespace RezerwacjaSal.Pages.AppUsers
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "Nowe hasło i jego poteierdzenie się nie zgadzają.")]
+            [Compare("Password", ErrorMessage = "Nowe hasło i jego potwierdzenie się nie zgadzają.")]
             public string ConfirmPassword { get; set; }
 
             [Required]
@@ -109,13 +108,6 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         public async Task<IActionResult> OnPostAsync(string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
-
-            if (!ModelState.IsValid)
-            {
-                ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", _roleManager.Roles.Where(r => r.Name == "użytkownik").Select(r => r.Name).First());
-                return Page();
-            }
-
             // Przekazanie parametrów URL
             SortOrderRoute = sortOrder;
             CurrentFilterRoute = currentFilter;
@@ -123,41 +115,58 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
-            // Znalezienie wolnego numeru
-            AllNumbers = await _context.AppUsers
-                .Select(i => i.Number)
-                .ToListAsync();
-            FreeNumber = 1;
-            while (true)
+            if (ModelState.IsValid)
             {
-                if (AllNumbers.Contains(FreeNumber)) FreeNumber++;
-                else break;
+                // Znalezienie wolnego numeru
+                AllNumbers = await _context.AppUsers
+                    .Select(i => i.Number)
+                    .ToListAsync();
+                FreeNumber = 1;
+                while (true)
+                {
+                    if (AllNumbers.Contains(FreeNumber)) FreeNumber++;
+                    else break;
+                }
+
+                // Nowy użytkownik
+                var newApplicationUser = new ApplicationUser
+                {
+                    UserName = ApplicationUser.Email,
+                    Email = ApplicationUser.Email,
+                    FirstName = ApplicationUser.FirstName,
+                    LastName = ApplicationUser.LastName,
+                    PhoneNumber = ApplicationUser.PhoneNumber,
+                    Note = ApplicationUser.Note,
+                    Number = FreeNumber,
+                    Employment = ApplicationUser.Employment,
+                    DepartmentID = ApplicationUser.DepartmentID,
+                    EmailConfirmed = Input.EmailConfirmed,
+                    PhoneNumberConfirmed = Input.PhoneConfirmed
+                };
+
+                // Zapisanie użytkownika i jego roli
+                var createUserResult = await _userManager.CreateAsync(newApplicationUser, Input.Password);
+                if (createUserResult.Succeeded)
+                {
+                    _logger.LogInformation("Utworzono nowego użytkownika");
+                    var updateReoleResult = await _userManager.AddToRoleAsync(newApplicationUser, Input.RoleName);
+                    if (updateReoleResult.Succeeded)
+                    {
+                        _logger.LogInformation("Dodano rolę nowemu użytkownikowi.");
+                        return RedirectToPage("./Index");
+                    }
+                    else
+                        foreach (var error in updateReoleResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
+                }
+                else
+                    foreach (var error in createUserResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
+
             }
+            // If we got this far, something failed, redisplay form
+            ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", _roleManager.Roles.Where(r => r.Name == "użytkownik").Select(r => r.Name).First());
+            return Page();
 
-            // Nowy użytkownik
-            var newApplicationUser = new ApplicationUser
-            {
-                UserName = ApplicationUser.Email,
-                Email = ApplicationUser.Email,
-                FirstName = ApplicationUser.FirstName,
-                LastName = ApplicationUser.LastName,
-                PhoneNumber = ApplicationUser.PhoneNumber,
-                Note = ApplicationUser.Note,
-                Number = FreeNumber,
-                Employment = ApplicationUser.Employment,
-                DepartmentID = ApplicationUser.DepartmentID,
-                EmailConfirmed = Input.EmailConfirmed,
-                PhoneNumberConfirmed = Input.PhoneConfirmed
-            };
-            
-            // Zapisanie użytkownika i jego roli
-            var createUserResult = await _userManager.CreateAsync(newApplicationUser, Input.Password);
-            var updateReoleResult = await _userManager.AddToRoleAsync(newApplicationUser, Input.RoleName);
-            if (createUserResult.Succeeded && createUserResult.Succeeded) _logger.LogInformation("Utworzono nowego użytkownika");
-            foreach (var error in createUserResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
-            foreach (var error in updateReoleResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
-            return RedirectToPage("./Index");
         }
     }
 }

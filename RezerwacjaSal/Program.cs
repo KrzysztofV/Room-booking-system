@@ -33,7 +33,8 @@ namespace RezerwacjaSal
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     var dbInitializerLogger = services.GetRequiredService<ILogger<DbInitializer>>();
-                    DbInitializer.InitializeAsync(context, userManager, roleManager, dbInitializerLogger).Wait();
+                    var configuration = services.GetRequiredService<IConfiguration>();
+                    DbInitializer.InitializeAsync(context, userManager, roleManager, dbInitializerLogger, configuration).Wait();
                 }
                 catch (Exception ex)
                 {

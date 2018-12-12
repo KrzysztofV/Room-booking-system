@@ -38,7 +38,7 @@ namespace RezerwacjaSal.Areas.Identity.Pages.Account.Manage
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "Nowe hasło i jego poteierdzenie się nie zgadzają.")]
+            [Compare("NewPassword", ErrorMessage = "Nowe hasło i jego potwierdzenie się nie zgadzają.")]
             public string ConfirmPassword { get; set; }
         }
 

@@ -14,7 +14,7 @@ namespace RezerwacjaSal.Models
         public int DepartmentID { get; set; }
 
         [Required(ErrorMessage = "Nazwa wydziału jest wymagana.")]
-        [StringLength(50, ErrorMessage = "Nazwa wydziału nie może być dłuższa niż 50 znaków.")]
+        [StringLength(100, ErrorMessage = "Nazwa wydziału nie może być dłuższa niż 100 znaków.")]
         public string Name { get; set; }
 
         [Range(0,10000000000, ErrorMessage = "Numer pracownika może zawierać wyłącznie liczby.")]

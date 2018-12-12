@@ -19,8 +19,8 @@ namespace RezerwacjaSal
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            var EmailPassword = Configuration.GetConnectionString("EmailPassword");
-            var EmailLogin = Configuration.GetConnectionString("EmailLogin");
+            var EmailPassword = Configuration.GetValue<string>("Email:Password");
+            var EmailLogin = Configuration.GetValue<string>("Email:Login");
 
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp-mail.outlook.com";

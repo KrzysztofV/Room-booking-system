@@ -34,7 +34,7 @@ namespace RezerwacjaSal.Models
         [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime EndTime { get; set; }
 
-        [StringLength(200, ErrorMessage = "Notatka nie może być dłuższa niż 200 znaków.")]
+        [StringLength(300, ErrorMessage = "Notatka nie może być dłuższa niż 300 znaków.")]
         public string Note { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }

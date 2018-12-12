@@ -17,9 +17,10 @@ namespace RezerwacjaSal.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Temat wiadomości jest wymagany.")]
+        [StringLength(200, ErrorMessage = "Temat nie może być dłuższy niż 200 znaków.")]
         public string MessageSubject { get; set; }
 
-        [Required(ErrorMessage = "Treść wiadomości jest wymagana.")]
+        [StringLength(1000, ErrorMessage = "Treść wiadomości nie może być dłuższa niż 1000 znaków.")]
         public string MessageContent { get; set; }
         public string IP { get; set; }
         public DateTime Date { get; set; }

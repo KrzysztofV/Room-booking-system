@@ -57,7 +57,6 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         public class InputModel
         {
-            // TODO nie działa walidacja hasła
             [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -117,8 +116,16 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         public async Task<IActionResult> OnPostAsync(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
+            // Przekazanie parametrów URL
+            SortOrderRoute = sortOrder;
+            CurrentFilterRoute = currentFilter;
+            SearchStringRoute = searchString;
+            PageIndexRoute = pageIndex;
+            PageSizeRoute = pageSize;
+
             // Aktualizacja osoby
             var appUserToUpdate = await _context.AppUsers.FindAsync(id);
+
             if (!ModelState.IsValid)
             {
                 ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
@@ -127,29 +134,43 @@ namespace RezerwacjaSal.Pages.AppUsers
                 return Page();
             }
 
-            // Przekazanie parametrów URL
-            SortOrderRoute = sortOrder;
-            CurrentFilterRoute = currentFilter;
-            SearchStringRoute = searchString;
-            PageIndexRoute = pageIndex;
-            PageSizeRoute = pageSize;
-
-
-
             // Zmiana hasła
             if (ChangePassword)
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(appUserToUpdate);
                 var updatePasswordResult = await _userManager.ResetPasswordAsync(appUserToUpdate, token, Input.Password);
                 if (updatePasswordResult.Succeeded) _logger.LogInformation("Zaktualizowano hasło");
-                foreach (var error in updatePasswordResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
+                else
+                {
+                    foreach (var error in updatePasswordResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
+                    ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
+                    var userRoles = await _userManager.GetRolesAsync(appUserToUpdate);
+                    ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", userRoles.First());
+                    return Page();
+                }
             }
 
-            var removeReoleResult = await _userManager.RemoveFromRolesAsync(appUserToUpdate, await _userManager.GetRolesAsync(appUserToUpdate));
-            var updateReoleResult = await _userManager.AddToRoleAsync(appUserToUpdate, Input.RoleName);
-            if (updateReoleResult.Succeeded && removeReoleResult.Succeeded) _logger.LogInformation("Zaktualizowano rolę");
-            foreach (var error in updateReoleResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
+            // Zmiana roli
+            var userRole = await _userManager.GetRolesAsync(appUserToUpdate);
+            if (userRole.First() != Input.RoleName)
+            {
+                var removeReoleResult = await _userManager.RemoveFromRolesAsync(appUserToUpdate, await _userManager.GetRolesAsync(appUserToUpdate));
+                var updateReoleResult = await _userManager.AddToRoleAsync(appUserToUpdate, Input.RoleName);
+                if (updateReoleResult.Succeeded && removeReoleResult.Succeeded)
+                {
+                    _logger.LogInformation("Zaktualizowano rolę");
+                }
+                else
+                {
+                    foreach (var error in updateReoleResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
+                    ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
+                    var userRoles = await _userManager.GetRolesAsync(appUserToUpdate);
+                    ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", userRoles.First());
+                    return Page();
+                }
+            }
 
+            // Zmiana email i nazwy użytkownika
             var email = await _userManager.GetEmailAsync(appUserToUpdate);
             if (Input.Email != email)
             {
@@ -159,8 +180,15 @@ namespace RezerwacjaSal.Pages.AppUsers
                     var userId = await _userManager.GetUserIdAsync(appUserToUpdate);
                     throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
                 }
+                var setUsernameResult = await _userManager.SetUserNameAsync(appUserToUpdate, Input.Email);
+                if (!setUsernameResult.Succeeded)
+                {
+                    var userId = await _userManager.GetUserIdAsync(appUserToUpdate);
+                    throw new InvalidOperationException($"Unexpected error occurred setting username for user with ID '{userId}'.");
+                }
             }
 
+            // Zmiana telefonu
             var phoneNumber = await _userManager.GetPhoneNumberAsync(appUserToUpdate);
             if (Input.PhoneNumber != phoneNumber)
             {
@@ -172,14 +200,16 @@ namespace RezerwacjaSal.Pages.AppUsers
                 }
             }
 
+
+
             // Aktualizacja pozostałych danych osoby
             if (await TryUpdateModelAsync<ApplicationUser>(
                 appUserToUpdate,
-                "ApplicationUser",   
-                 s => s.Employment, 
-                 s=> s.DepartmentID, 
-                 s => s.FirstName, 
-                 s => s.LastName, 
+                "ApplicationUser",
+                 s => s.Employment,
+                 s => s.DepartmentID,
+                 s => s.FirstName,
+                 s => s.LastName,
                  s => s.Note,
                  s => s.EmailConfirmed,
                  s => s.PhoneNumberConfirmed))
@@ -188,6 +218,7 @@ namespace RezerwacjaSal.Pages.AppUsers
             }
 
             return RedirectToPage("./Index");
+
         }
 
         private bool AppUserExists(int id)
