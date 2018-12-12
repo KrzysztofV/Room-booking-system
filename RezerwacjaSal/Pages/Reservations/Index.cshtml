@@ -1,0 +1,117 @@
+﻿@page
+@model RezerwacjaSal.Pages.Reservations.IndexModel
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p></p>
+<div class="btn-group">
+    <a class="btn btn-secondary" asp-page="/Departments/Index" asp-route-departmentid="@Model.DepartmentIdRoute">Wydziały</a>
+    <a class="btn btn-secondary" asp-page="/Buildings/Index" asp-route-departmentid="@Model.DepartmentIdRoute">Budynki</a>
+</div>
+<hr />
+<h3>
+    Rezerwacje dla budynku @Model.Building.Name.SingleOrDefault()
+</h3>
+<h4> @Model.Date.ToLongDateString()</h4>
+<hr />
+
+
+<div class="form-inline">
+    <form method="get" style="float: left; margin-right: 50px;">
+        <input name="date" value="@Model.Date.ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:200px" />
+        <input name="buildingid" value="@Model.BuildingIdRoute" class="form-control" style="display:none" />
+        <input name="departmentid" value="@Model.DepartmentIdRoute" class="form-control" style="display:none" />
+        <button type="submit" class="btn btn-primary">Wybierz</button>
+    </form>
+
+    <ul class="pagination justify-content-center" style="margin:20px 0">
+
+        <li class="page-item">
+            <a asp-route-date="@Model.Date.AddDays(-1).ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="page-link">Dzień wcześniej</a>
+        </li>
+        <li class="page-item">
+            <a asp-route-date="@DateTime.Today.ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="page-link">Dzisiaj</a>
+        </li>
+        <li class="page-item">
+            <a asp-route-date="@Model.Date.AddDays(1).ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="page-link">Dzień później</a>
+        </li>
+    </ul>
+</div>
+
+<p></p>
+@*tabela od góry do dołu, od lewej do prawej*@
+<table class="table table-bordered table-hover table-sm table-striped" style="border-color:#808080">
+    @*Pierwszy wiersz z pokojami*@
+    <thead>
+        <tr class="info">
+            <th style="border-color:#808080">Godziny \ Pokoje</th>
+            @foreach (var item in Model.Rooms)
+            {
+                <th style="border-color:#808080">
+                    <a asp-page="/Rooms/Details" data-toggle="tooltip" title="Kliknij aby przejść do szczegółów" asp-route-roomid="@item.RoomID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">@item.Number</a>
+                </th>
+            }
+        </tr>
+    </thead>
+    @*Pozostałe wiersze*@
+    <tbody>
+        @foreach (var hour in Model.Hours)
+        {
+            <tr>
+                @*Godziny - pierwsza kolumna*@
+                <th style="border-color:#808080">
+                    @hour.ToShortTimeString() - @hour.AddMinutes(30).ToShortTimeString()
+                </th>
+                @*Dla pokoi - pozostałe kolumny*@
+                @foreach (var room in Model.Rooms)
+                {
+                    //Rezerwacja dla danego pokoju room o danej godzinie hour
+                    var reservation = Model.Reservations.Where(r => r.RoomID == room.RoomID).FirstOrDefault(r => r.StartTime.TimeOfDay <= hour.TimeOfDay && r.EndTime.TimeOfDay >= hour.AddMinutes(30).TimeOfDay);
+
+                    // Jeśli istnieje rezerwacja -> odnośnik do szczegółów rezerwacji
+                    @if (reservation != null)
+                    {
+                        {
+                            <th style="border-color:#808080" class="table-danger">
+                                @{
+                                    var Id = reservation.ReservationID;
+                                    var FirstName = Model.AppUsers.Where(p => p.Id == Model.Reservations.Where(r => r.ReservationID == Id).Select(i => i.Id).First()).Select(p => p.FirstName).FirstOrDefault();
+                                    var LastName = Model.AppUsers.Where(p => p.Id == Model.Reservations.Where(r => r.ReservationID == Id).Select(i => i.Id).First()).Select(p => p.LastName).FirstOrDefault();
+                                    var Beginning = reservation.StartTime.ToShortTimeString();
+                                    var Ending = reservation.EndTime.ToShortTimeString();
+                                    var TooltipTitleLogged = "ID: " + Id.ToString() + "\n" + Beginning + " - " + Ending + "\nKliknij aby przejść do szczegółów";
+                                    var TooltipTitleUnlogged = "Kliknij aby się zalogować i zobaczyć szczegóły";
+                                }
+                                @if (HttpContext.User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-page="./Details" style="color:darkred" asp-route-reservationid="@Id" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" asp-route-date="@Model.Date.ToShortDateString()" data-toggle="tooltip" title="@TooltipTitleLogged"><h6>@FirstName<br />@LastName</h6></a>
+
+                                }
+                                else
+                                {
+                                    <a asp-page="./Details" style="color:darkred" asp-route-reservationid="@Id" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" asp-route-date="@Model.Date.ToShortDateString()" data-toggle="tooltip" title="@TooltipTitleUnlogged"><h6>Zajęte</h6></a>
+                                }
+                            </th>
+                        }
+
+                    }
+                    // Jeśli nie ma rezerwacji
+                    else
+                    {
+                        @*Możliwość dodania rezerwacji*@
+                        <th style="border-color:#808080" class="table-success">
+                            <a asp-page="./Create" style="color:green" asp-route-date="@Model.Date.ToShortDateString()" asp-route-roomid="@room.RoomID" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" asp-route-time="@hour.ToShortTimeString()" data-toggle="tooltip" title="Kliknij aby utworzyć rezerwację"><h6>Wolne</h6></a>
+                        </th>
+                    }
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

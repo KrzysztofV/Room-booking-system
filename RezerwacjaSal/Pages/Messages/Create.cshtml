@@ -1,0 +1,43 @@
+﻿@page
+@model RezerwacjaSal.Pages.Messages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<h3>Wyślij wiadomość do administratora systemu</h3>
+<h5>Jeśli masz jakiś problem albo tak sobie chcesz pogadać.</h5>
+<hr />
+<h4 style="color:forestgreen">@Model.Info</h4>
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Message.MessageSubject" class="control-label">Temat wiadomości:</label>
+                <input asp-for="Message.MessageSubject" class="form-control" />
+                <span asp-validation-for="Message.MessageSubject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message.MessageContent" class="control-label">Treść:</label>
+                <textarea asp-for="Message.MessageContent" class="form-control" rows="15"></textarea>
+                <span asp-validation-for="Message.MessageContent" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none">
+                <input asp-for="Message.IP" value="@HttpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString()" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Wyślij" class="btn btn-default btn-primary" />
+            </div>
+            Na twój email zostanie wysłana wiadomość zwrotna.
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

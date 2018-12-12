@@ -1,0 +1,50 @@
+﻿@page
+@model RezerwacjaSal.Pages.Buildings.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Dodawanie nowego budynku</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Building.Name" class="control-label">Nazwa:</label>
+                <input asp-for="Building.Name" class="form-control" />
+                <span asp-validation-for="Building.Name" class="text-danger"></span>
+                <span class="text-danger">@Model.DuplicateNameExistError</span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Building.Address" class="control-label">Adres:</label>
+                <input asp-for="Building.Address" class="form-control" />
+                <span asp-validation-for="Building.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Building.DepartmentID" class="control-label">Wydział:</label>
+                <select asp-for="Building.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Building.GPS_E" class="control-label">Współrzędna E:</label>
+                <input asp-for="Building.GPS_E" class="form-control" />
+                <span asp-validation-for="Building.GPS_E" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Building.GPS_N" class="control-label">Współrzędna N:</label>
+                <input asp-for="Building.GPS_N" class="form-control" />
+                <span asp-validation-for="Building.GPS_N" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-default" asp-page="./Index" asp-route-departmentid="@Model.DepartmentIdRoute">Lista budynków</a>
+                <input type="submit" value="Utwórz" class="btn btn-default btn-primary"  />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,242 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@model RezerwacjaSal.Pages.AppUsers.IndexModel
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Spis osób</h3>
+
+<p>Szukaj po imieniu, nazwisku lub numerze:</p>
+<div>
+    <form asp-page="./Index" method="get" class="form-inline">
+
+        <input asp-for="@Model.CurrentFilter" class="form-control" style="width:300px" />
+        &nbsp;
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+
+        <a class="btn btn-default" asp-page="./Index">Cała lista</a>
+    </form>
+</div>
+<p></p>
+<table class="table table-striped table-hover table-condensed">
+    <thead>
+        <tr class="info">
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NumberSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    Numer
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.FirstNameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    Imię
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.LastNameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    Nazwisko
+                </a>
+            </th>
+            <th>
+                Email
+            </th>
+            @if (User.IsInRole("administrator"))
+            {
+                <th>
+                    Potwierdzenie email/admin
+                </th>
+            }
+
+            <th>
+                Wydział
+            </th>
+            @if (User.IsInRole("administrator"))
+            {
+                <th>
+                    Zarządzanie
+                </th>
+            }
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ApplicationUser)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            @if (User.IsInRole("administrator"))
+            {
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
+
+            </td>
+            }
+            <td>
+                @Model.Departments.Where(r => r.DepartmentID == item.DepartmentID).Select(r => r.Name).FirstOrDefault()
+            </td>
+            @if (User.IsInRole("administrator"))
+            {
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Edytuj</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Szczegóły</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Usuń</a>
+                </td>
+            }
+        </tr>
+        }
+        @if (User.IsInRole("administrator"))
+        {
+            <tr class="active">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a class="btn btn-default btn-primary" asp-page="Create" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Dodaj nową osobę</a>
+                </td>
+
+            </tr>
+        }
+        else
+        {
+            <tr class="active">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@* stronowanie listy *@
+@{
+    var prevDisabled = !Model.ApplicationUser.HasPreviousPage ? "page-item disabled" : "page-item" ;
+    var nextDisabled = !Model.ApplicationUser.HasNextPage ? "page-item disabled" : "page-item";
+}
+
+
+
+<ul class="pagination">
+
+    @if (Model.PageSize == 15)
+    {
+        <li class="page-item active">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               asp-route-pageSize="15">15</a>
+        </li>
+    }
+    else
+    {
+        <li class="page-item">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               asp-route-pageSize="15">15</a>
+        </li>
+    }
+    @if (Model.PageSize == 50)
+    {
+        <li class="page-item active">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               asp-route-pageSize="50">50</a>
+        </li>
+    }
+    else
+    {
+        <li class="page-item">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               asp-route-pageSize="50">50</a>
+        </li>
+    }
+    @if (Model.PageSize == 200)
+    {
+        <li class="page-item active">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               asp-route-pageSize="200">200</a>
+        </li>
+    }
+    else
+    {
+        <li class="page-item">
+            <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+               asp-route-pageIndex="@(Model.ApplicationUser.PageIndex)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               asp-route-pageSize="200">200</a>
+        </li>
+    }
+</ul>
+
+
+
+
+<ul class="pagination justify-content-center">
+    <li class="@prevDisabled"
+        
+        >
+        <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+           asp-route-pageIndex="@(Model.ApplicationUser.PageIndex - 1)"
+           asp-route-currentFilter="@Model.CurrentFilter"
+           asp-route-pageSize="@Model.PageSize">Wcześniejsza strona</a>
+    </li>
+    @for (var i = 1; i <= Model.ApplicationUser.TotalPages; i++)
+    {
+
+            @if (Model.ApplicationUser.PageIndex == i)
+            {
+                <li class="page-item active">
+                    <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+                       asp-route-pageIndex="@i"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-pageSize="@Model.PageSize">@i</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+                       asp-route-pageIndex="@i"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-pageSize="@Model.PageSize">@i</a>
+                </li>
+            }
+
+    }
+    <li class="@nextDisabled">
+        <a class="page-link" asp-route-sortOrder="@Model.CurrentSort"
+           asp-route-pageIndex="@(Model.ApplicationUser.PageIndex + 1)"
+           asp-route-currentFilter="@Model.CurrentFilter"
+           asp-route-pageSize="@Model.PageSize">Następna strona</a>
+    </li>
+</ul>

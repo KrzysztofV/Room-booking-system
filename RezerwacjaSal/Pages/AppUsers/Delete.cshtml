@@ -1,0 +1,94 @@
+﻿
+@page 
+@model RezerwacjaSal.Pages.AppUsers.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>Usuwanie</h3>
+
+@*wiadomość w przypadku blędu usuwania*@ 
+<p class="text-danger">@Model.ErrorMessage</p>
+
+<h4>Czy jesteś pewien, że chcesz usunąć tą osobę?</h4>
+<h5 style="color:red">Usunięcie tej osoby spowoduje też usunięcie wszystkich powiązanych z nią rezerwacji.</h5>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Numer:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Number)
+        </dd>
+        <dt>
+            Typ konta:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+        <dt>
+            Imię:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.FirstName)
+        </dd>
+        <dt>
+            Nazwisko:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.LastName)
+        </dd>
+        <dt>
+            Email:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
+        </dd>
+        <dt>
+            Telefon:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.PhoneNumber)
+        </dd>
+        <dt>
+            Potwierdzony email:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.EmailConfirmed)
+        </dd>
+        <dt>
+            Zatwierdzone konto:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.PhoneNumberConfirmed)
+        </dd>
+        <dt>
+            Pracownik:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Employment)
+        </dd>
+        <dt>
+            Wydziału:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Department.Name)
+        </dd>
+        <dt>
+            Dodatkowe informacje:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Note)
+        </dd>
+
+    </dl>
+    <form method="post">
+        <input type="hidden" asp-for="ApplicationUser.Id" />
+        <a class="btn btn-default" asp-page="./Index" asp-route-sortOrder="@Model.SortOrderRoute" asp-route-currentFilter="@Model.CurrentFilterRoute" asp-route-searchString="@Model.SearchStringRoute" asp-route-pageIndex="@Model.PageIndexRoute" asp-route-pageSize="@Model.PageSizeRoute">Lista osób</a>
+        <input type="submit" value="Usuń" class="btn btn-default btn-danger" />
+
+    </form>
+</div>

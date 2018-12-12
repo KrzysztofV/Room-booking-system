@@ -1,0 +1,76 @@
+﻿
+
+@page
+@model RezerwacjaSal.Pages.Reservations.EditModel
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewData["Title"] = "Edit";
+}
+<p></p>
+<div class="btn-group">
+    <a class="btn btn-secondary" asp-page="/Departments/Index" asp-route-departmentid="@Model.DepartmentIdRoute">Wydziały</a>
+    <a class="btn btn-secondary" asp-page="/Buildings/Index" asp-route-departmentid="@Model.DepartmentIdRoute">Budynki</a>
+    <a class="btn btn-secondary" asp-page="./Index" asp-route-date="@Model.Date.ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute">Rezerwacje</a>
+
+</div>
+<hr />
+<h3>Edycja rezerwacji</h3>
+
+<h5>Budynek: @Model.Reservation.Room.Building.Name</h5>
+<h5>Wydział: @Model.Reservation.Room.Building.Department.Name</h5>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Reservation.ReservationID" />
+            @if (HttpContext.User.IsInRole("administrator"))
+            {
+                <div class="form-group">
+                    <label asp-for="Reservation.ApplicationUser.Number" class="control-label">Numer osoby:</label>
+                    <input asp-for="@Model.Number" class="form-control">
+                    <span asp-validation-for="Reservation.ApplicationUser.Number" class="text-danger"></span>
+                    @Model.Reservation.ApplicationUser.FirstName @Model.Reservation.ApplicationUser.LastName
+                    <span class="text-danger">@Model.NumberError</span>
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="Reservation.RoomID" class="control-label">Pokój:</label>
+                <select asp-for="Reservation.RoomID" class="form-control" asp-items="ViewBag.Rooms"></select>
+                <span asp-validation-for="Reservation.RoomID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.Date" class="control-label">Data:</label>
+                <input asp-for="@Model.DateInputString" value="@Model.Reservation.Date.ToString("yyyy-MM-dd")" type="date" class="form-control" />
+                <span asp-validation-for="Reservation.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.StartTime" class="control-label">Czas rozpoczęcia:</label>
+                <select asp-for="@Model.StartTime" class="form-control" asp-items="ViewBag.StartTime" ></select>
+                <span asp-validation-for="Reservation.StartTime" class="text-danger"></span>
+                <span class="text-danger">@Model.ErrorString</span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.EndTime" class="control-label">Czas zakończenia:</label>
+                <select asp-for="@Model.EndTime" class="form-control" asp-items="ViewBag.EndTime"></select>
+                <span asp-validation-for="Reservation.EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.Note" class="control-label">Notatka:</label>
+                <textarea asp-for="Reservation.Note" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Reservation.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a asp-page="./Details" asp-route-reservationid="@Model.ReservationIdRoute" asp-route-date="@Model.Date.ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" class="btn btn-default">Wróć</a>
+                <input type="submit" value="Zapisz" class="btn btn-default btn-primary" asp-route-reservationid="@Model.ReservationIdRoute" asp-route-date="@Model.Date.ToShortDateString()" asp-route-buildingid="@Model.BuildingIdRoute" asp-route-departmentid="@Model.DepartmentIdRoute" />
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
