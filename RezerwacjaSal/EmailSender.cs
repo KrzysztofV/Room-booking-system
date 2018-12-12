@@ -11,16 +11,13 @@ namespace RezerwacjaSal
 {
     public class EmailSender : IEmailSender
     {
-        public EmailSender(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-        public IConfiguration Configuration { get; }
+
+
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            var EmailPassword = Configuration.GetValue<string>("Email:Password");
-            var EmailLogin = Configuration.GetValue<string>("Email:Login");
+            var EmailPassword = Environment.GetEnvironmentVariable("EmailPassword");
+            var EmailLogin = "webapp0@outlook.com";
 
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp-mail.outlook.com";

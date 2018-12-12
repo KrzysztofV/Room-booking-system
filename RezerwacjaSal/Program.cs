@@ -33,8 +33,7 @@ namespace RezerwacjaSal
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     var dbInitializerLogger = services.GetRequiredService<ILogger<DbInitializer>>();
-                    var configuration = services.GetRequiredService<IConfiguration>();
-                    DbInitializer.InitializeAsync(context, userManager, roleManager, dbInitializerLogger, configuration).Wait();
+                    DbInitializer.InitializeAsync(context, userManager, roleManager, dbInitializerLogger).Wait();
                 }
                 catch (Exception ex)
                 {
@@ -48,6 +47,7 @@ namespace RezerwacjaSal
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseApplicationInsights()
                 .UseStartup<Startup>()
                 .UseSetting("detailedErrors", "true")
                 .UseIISIntegration()

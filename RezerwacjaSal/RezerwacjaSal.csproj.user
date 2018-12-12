@@ -11,7 +11,11 @@
     <WebStackScaffolding_DbContextTypeFullName>RezerwacjaSal.Data.RezerwacjaSalContext</WebStackScaffolding_DbContextTypeFullName>
     <RazorPage_SelectedScaffolderID>Microsoft.AspNet.Scaffolding.Mvc.RazorPageScaffolder</RazorPage_SelectedScaffolderID>
     <RazorPage_SelectedScaffolderCategoryPath>root/Common/RazorPage</RazorPage_SelectedScaffolderCategoryPath>
-    <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
-    <AutoRefresh>false</AutoRefresh>
+    <NameOfLastUsedPublishProfile>RezerwacjaSal - Web Deploy</NameOfLastUsedPublishProfile>
+    <AutoRefresh>true</AutoRefresh>
+    <ActiveDebugProfile>IIS Express</ActiveDebugProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

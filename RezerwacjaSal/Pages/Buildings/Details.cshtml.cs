@@ -20,13 +20,10 @@ namespace RezerwacjaSal.Pages.Buildings
 
         private readonly RezerwacjaSal.Data.RezerwacjaSalContext _context;
 
-        public IConfiguration Configuration { get; }
 
-        public DetailsModel(RezerwacjaSal.Data.RezerwacjaSalContext context,
-                            IConfiguration configuration)
+        public DetailsModel(RezerwacjaSal.Data.RezerwacjaSalContext context)
         {
             _context = context;
-            Configuration = configuration;
         }
         public int DepartmentIdRoute { get; set; }
         public Building Building { get; set; }
@@ -57,7 +54,7 @@ namespace RezerwacjaSal.Pages.Buildings
                 MapZoom = 5;
             }
 
-            GoogleAPIkey = Configuration.GetConnectionString("GoogleAPIkey");
+
 
             if (Building == null)
                 return NotFound();

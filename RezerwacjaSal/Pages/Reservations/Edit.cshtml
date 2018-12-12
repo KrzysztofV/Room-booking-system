@@ -47,7 +47,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Reservation.StartTime" class="control-label">Czas rozpoczęcia:</label>
-                <select asp-for="@Model.StartTime" class="form-control" asp-items="ViewBag.StartTime"></select>
+                <select asp-for="@Model.StartTime" class="form-control" asp-items="ViewBag.StartTime" ></select>
                 <span asp-validation-for="Reservation.StartTime" class="text-danger"></span>
                 <span class="text-danger">@Model.ErrorString</span>
             </div>

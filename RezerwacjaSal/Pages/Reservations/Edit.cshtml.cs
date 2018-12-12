@@ -34,6 +34,7 @@ namespace RezerwacjaSal.Pages.Reservations
         [BindProperty]
         public Reservation Reservation { get; set; }
         public IList<Room> Rooms { get; set; }
+        public List<string> Hours { get; private set; }
 
         private List<int> AllNumbers;
 
@@ -45,8 +46,7 @@ namespace RezerwacjaSal.Pages.Reservations
         public int Number { get; set; }
         [BindProperty]
         public int RoomID { get; private set; }
-        public List<string> Hours { get; private set; }
-
+        
         [BindProperty]
         public string DateInputString { get; set; }
         public string ErrorString { get; private set; }
@@ -85,32 +85,34 @@ namespace RezerwacjaSal.Pages.Reservations
             if (Reservation == null)
                 return NotFound();
 
-            Hours = new List<String>();
-            Hours.Add(new DateTime(2018, 1, 1, 8, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 8, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 9, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 9, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 10, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 10, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 11, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 11, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 12, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 12, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 13, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 13, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 14, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 14, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 15, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 15, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 16, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 16, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 17, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 17, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 18, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 18, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 19, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 19, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 20, 00, 0).ToShortTimeString());
+            Hours = new List<String>
+            {
+                new DateTime(2018, 1, 1, 8, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 8, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 9, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 9, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 10, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 10, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 11, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 11, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 12, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 12, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 13, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 13, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 14, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 14, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 15, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 15, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 16, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 16, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 17, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 17, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 18, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 18, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 19, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 19, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 20, 00, 0).ToShortTimeString()
+            };
 
             ViewData["StartTime"] = new SelectList(Hours, Reservation.StartTime.ToShortTimeString());
             ViewData["EndTime"] = new SelectList(Hours, Reservation.EndTime.ToShortTimeString());
@@ -170,32 +172,34 @@ namespace RezerwacjaSal.Pages.Reservations
                 .AsNoTracking().OrderBy(r => r.Number)
                 .ToListAsync();
 
-            Hours = new List<String>();
-            Hours.Add(new DateTime(2018, 1, 1, 8, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 8, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 9, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 9, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 10, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 10, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 11, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 11, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 12, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 12, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 13, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 13, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 14, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 14, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 15, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 15, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 16, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 16, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 17, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 17, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 18, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 18, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 19, 00, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 19, 30, 0).ToShortTimeString());
-            Hours.Add(new DateTime(2018, 1, 1, 20, 00, 0).ToShortTimeString());
+            Hours = new List<String>
+            {
+                new DateTime(2018, 1, 1, 8, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 8, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 9, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 9, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 10, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 10, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 11, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 11, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 12, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 12, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 13, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 13, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 14, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 14, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 15, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 15, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 16, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 16, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 17, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 17, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 18, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 18, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 19, 00, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 19, 30, 0).ToShortTimeString(),
+                new DateTime(2018, 1, 1, 20, 00, 0).ToShortTimeString()
+            };
 
 
 

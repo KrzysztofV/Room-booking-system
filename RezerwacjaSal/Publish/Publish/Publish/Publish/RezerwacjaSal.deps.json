@@ -64,7 +64,9 @@
           "Microsoft.ApplicationInsights.WindowsServer": "2.8.1",
           "Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel": "2.8.1",
           "Microsoft.AspNetCore.Hosting": "2.2.0",
-          "Microsoft.Extensions.Configuration": "2.2.0",
+          "Microsoft.Extensions.
+            
+            ": "2.2.0",
           "Microsoft.Extensions.Configuration.Json": "2.2.0",
           "Microsoft.Extensions.DiagnosticAdapter": "2.2.0",
           "Microsoft.Extensions.Logging.Abstractions": "2.2.0",

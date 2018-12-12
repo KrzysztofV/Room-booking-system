@@ -217,7 +217,8 @@ namespace RezerwacjaSal.Pages.AppUsers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { sortOrder = SortOrderRoute, currentFilter = CurrentFilterRoute, searchString = SearchStringRoute, pageIndex = PageIndexRoute, pageSize = PageSizeRoute });
+
 
         }
 

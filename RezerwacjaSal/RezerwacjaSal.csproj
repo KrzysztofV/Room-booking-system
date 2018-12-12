@@ -1,9 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
+    <!--<TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>-->
+    <!--Dla Windows-->
+    <!--<PropertyGroup>
+      <TargetFramework>netcoreapp2.2</TargetFramework>
+      <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    </PropertyGroup>-->
+    <!--Dla Azure-->
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
     <Description>Kontynuacja projektu IO jako AI</Description>
     <Version>1.0.0</Version>
+    <UserSecretsId>932fbb8b-1b9c-48e4-8f41-941f64d6510a</UserSecretsId>
+    <StartupObject></StartupObject>
+    <ApplicationInsightsResourceId>/subscriptions/0e79f104-7669-4de9-be4a-6459f4db5853/resourcegroups/RezerwacjaSalResourceGroup/providers/microsoft.insights/components/RezerwacjaSal</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/0e79f104-7669-4de9-be4a-6459f4db5853/resourcegroups/RezerwacjaSalResourceGroup/providers/microsoft.insights/components/RezerwacjaSal</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="BundlerMinifier.Core" Version="2.8.391" />
@@ -18,5 +32,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 </Project>

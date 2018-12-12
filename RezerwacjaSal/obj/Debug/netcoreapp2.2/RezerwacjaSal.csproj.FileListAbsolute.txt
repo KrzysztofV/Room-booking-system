@@ -92,4 +92,3 @@ C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\net
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\RezerwacjaSal.csproj.CopyComplete
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\RegisterSucces.g.cshtml.cs
 C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\Razor\Pages\Shared\_Layout.g.cshtml.cs
-C:\Users\krzys\source\repos\KrzysztofV\rezerwacjasal\RezerwacjaSal\obj\Debug\netcoreapp2.2\RezerwacjaSal.csprojAssemblyReference.cache

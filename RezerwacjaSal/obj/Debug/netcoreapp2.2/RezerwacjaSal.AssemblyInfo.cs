@@ -11,6 +11,7 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("932fbb8b-1b9c-48e4-8f41-941f64d6510a")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("RezerwacjaSal")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Kontynuacja projektu IO jako AI")]

@@ -12,6 +12,10 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
+        "EmailPassword": "Bulbulatorelektronowy",
+        "AdminPassword": "Asdasd.1",
+        "GoogleAPIkey": "https://maps.googleapis.com/maps/api/js?key=AIzaSyAqUPXGLnI6TBQRSaU2YRZ5RkOJ42c1Jzo&callback=initMap",
+        "UserPassword": "Asdasd.1",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
