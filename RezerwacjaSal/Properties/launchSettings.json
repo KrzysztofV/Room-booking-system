@@ -30,6 +30,7 @@
         "AdminPassword": "Asdasd.1",
         "GoogleAPIkey": "https://maps.googleapis.com/maps/api/js?key=AIzaSyAqUPXGLnI6TBQRSaU2YRZ5RkOJ42c1Jzo&callback=initMap",
         "UserPassword": "Asdasd.1",
+        "CertPassword": "Bulbulatorelektronowy",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"

@@ -40,9 +40,19 @@
                             <li class="nav-item">
                                 <a class="nav-link text-black" asp-area="" asp-page="/AppUsers/Index">Osoby</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-black" asp-area="" asp-page="/Messages/Create">Wyślij wiadomość</a>
-                            </li>
+                            @if (User.IsInRole("administrator"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-black" asp-area="" asp-page="/Messages/List">Lista wiadomości</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-black" asp-area="" asp-page="/Messages/Create">Wyślij wiadomość</a>
+                                </li>
+                               
+                            }
                         }
                         <li class="nav-item">
                             <a class="nav-link text-black" asp-area="" asp-page="/About">Informacje</a>
