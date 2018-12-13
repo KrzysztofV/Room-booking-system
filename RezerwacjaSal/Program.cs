@@ -13,6 +13,8 @@ using RezerwacjaSal.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using RezerwacjaSal.Models;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using System.Net;
 
 namespace RezerwacjaSal
 {
@@ -47,6 +49,21 @@ namespace RezerwacjaSal
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureKestrel((context, options) =>
+                {
+                    options.Limits.MaxConcurrentConnections = 100;
+                    options.Limits.MaxConcurrentUpgradedConnections = 100;
+                    options.Limits.MaxRequestBodySize = 10 * 1024;
+                    options.Limits.MinRequestBodyDataRate =
+                        new MinDataRate(bytesPerSecond: 100, gracePeriod: TimeSpan.FromSeconds(10));
+                    options.Limits.MinResponseDataRate =
+                        new MinDataRate(bytesPerSecond: 100, gracePeriod: TimeSpan.FromSeconds(10));
+                    options.Listen(IPAddress.Parse("0.0.0.0"), 80);
+                    options.Listen(IPAddress.Parse("0.0.0.0"), 443, listenOptions =>
+                    {
+                        listenOptions.UseHttps("bulbulator.pfx", Environment.GetEnvironmentVariable("CertPassword"));
+                    });
+                })
                 .UseApplicationInsights()
                 .UseStartup<Startup>()
                 .UseSetting("detailedErrors", "true")
