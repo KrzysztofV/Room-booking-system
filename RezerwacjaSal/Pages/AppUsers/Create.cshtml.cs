@@ -21,7 +21,17 @@ namespace RezerwacjaSal.Pages.AppUsers
     public class CreateModel : PageModel
     {
         private readonly RezerwacjaSalContext _context;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<RegisterModel> _logger;
         private List<int> AllNumbers;
+        public int FreeNumber { get; private set; }
+        public string SortOrderRoute { get; set; }
+        public string CurrentFilterRoute { get; set; }
+        public string SearchStringRoute { get; set; }
+        public int? PageIndexRoute { get; set; }
+        public int? PageSizeRoute { get; set; }
 
         public CreateModel(
             RezerwacjaSalContext context,
@@ -37,24 +47,10 @@ namespace RezerwacjaSal.Pages.AppUsers
             _logger = logger;
         }
 
-        [BindProperty] // wiązanie modelu
-        public ApplicationUser ApplicationUser { get; set; }
-
-        public int FreeNumber { get; private set; }
-        public string SortOrderRoute { get; set; }
-        public string CurrentFilterRoute { get; set; }
-        public string SearchStringRoute { get; set; }
-        public int? PageIndexRoute { get; set; }
-        public int? PageSizeRoute { get; set; }
-
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
-
         public class InputModel
         {
-            [Required]
+            public ApplicationUser ApplicationUser { get; set; }
+
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -66,11 +62,6 @@ namespace RezerwacjaSal.Pages.AppUsers
 
             [Required]
             public string RoleName { get; set; }
-            [Required]
-            public bool EmailConfirmed { get; set; }
-
-            public bool PhoneConfirmed { get; set; }
-
         }
 
         [BindProperty]
@@ -78,7 +69,7 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         public async Task<IActionResult> OnGet(string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
         {
-            // Ustalenie nowego numeru dla nowej osoby
+            // Wszystkie zajęte numery osób
             AllNumbers = await _context.AppUsers
                 .Select(i => i.Number)
                 .ToListAsync();
@@ -128,28 +119,15 @@ namespace RezerwacjaSal.Pages.AppUsers
                     else break;
                 }
 
-                // Nowy użytkownik
-                var newApplicationUser = new ApplicationUser
-                {
-                    UserName = ApplicationUser.Email,
-                    Email = ApplicationUser.Email,
-                    FirstName = ApplicationUser.FirstName,
-                    LastName = ApplicationUser.LastName,
-                    PhoneNumber = ApplicationUser.PhoneNumber,
-                    Note = ApplicationUser.Note,
-                    Number = FreeNumber,
-                    Employment = ApplicationUser.Employment,
-                    DepartmentID = ApplicationUser.DepartmentID,
-                    EmailConfirmed = Input.EmailConfirmed,
-                    PhoneNumberConfirmed = Input.PhoneConfirmed
-                };
+                Input.ApplicationUser.Number = FreeNumber;
+                Input.ApplicationUser.UserName = Input.ApplicationUser.Email;
 
                 // Zapisanie użytkownika i jego roli
-                var createUserResult = await _userManager.CreateAsync(newApplicationUser, Input.Password);
+                var createUserResult = await _userManager.CreateAsync(Input.ApplicationUser, Input.Password);
                 if (createUserResult.Succeeded)
                 {
                     _logger.LogInformation("Utworzono nowego użytkownika");
-                    var updateReoleResult = await _userManager.AddToRoleAsync(newApplicationUser, Input.RoleName);
+                    var updateReoleResult = await _userManager.AddToRoleAsync(Input.ApplicationUser, Input.RoleName);
                     if (updateReoleResult.Succeeded)
                     {
                         _logger.LogInformation("Dodano rolę nowemu użytkownikowi.");
@@ -163,6 +141,7 @@ namespace RezerwacjaSal.Pages.AppUsers
 
             }
             // If we got this far, something failed, redisplay form
+            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
             ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", _roleManager.Roles.Where(r => r.Name == "użytkownik").Select(r => r.Name).First());
             return Page();
 

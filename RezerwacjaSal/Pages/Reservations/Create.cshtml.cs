@@ -39,7 +39,7 @@ namespace RezerwacjaSal.Pages.Reservations
         public IList<ApplicationUser> AppUsers { get; set; }
         public IList<Reservation> Reservations { get; set; }
 
-        public List<String> Hours;
+        public List<string> Hours { get; set; }
         public DateTime Date { get; private set; }
 
         private List<int> AllNumbers;

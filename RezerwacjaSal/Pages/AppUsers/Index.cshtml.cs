@@ -42,12 +42,13 @@ namespace RezerwacjaSal.Pages.AppUsers
         public async Task OnGetAsync(string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
 
         {
+
+            // Przekazanie parametrów URL
             SortOrderRoute = sortOrder;
             CurrentFilterRoute = currentFilter;
             SearchStringRoute = searchString;
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
-
             CurrentSort = sortOrder;
 
             if (String.IsNullOrEmpty(sortOrder))

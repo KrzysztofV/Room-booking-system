@@ -34,9 +34,6 @@ namespace RezerwacjaSal.Pages.AppUsers
             _logger = logger;
         }
 
-        [BindProperty]
-        public ApplicationUser ApplicationUser { get; set; }
-
         public string SortOrderRoute { get; set; }
         public string CurrentFilterRoute { get; set; }
         public string SearchStringRoute { get; set; }
@@ -50,13 +47,13 @@ namespace RezerwacjaSal.Pages.AppUsers
 
         [BindProperty]
         public InputModel Input { get; set; }
-        [BindProperty]
-        public bool ChangePassword { get; set; }
-
-
 
         public class InputModel
         {
+            public ApplicationUser ApplicationUser { get; set; }
+
+            public bool ChangePassword { get; set; }
+
             [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -71,14 +68,6 @@ namespace RezerwacjaSal.Pages.AppUsers
             [Required]
             public string RoleName { get; set; }
 
-            [Required]
-            [EmailAddress(ErrorMessage = "Niepoprawny adres email")]
-            public string Email { get; set; }
-
-            [Phone(ErrorMessage = "Niepoprawny numer telefonu")]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-
         }
 
         public async Task<IActionResult> OnGet(string id, string sortOrder, string currentFilter, string searchString, int? pageIndex, int? pageSize)
@@ -91,25 +80,18 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageSizeRoute = pageSize;
 
             // Wczytanie danego użytkownika
-            ApplicationUser = await _context.AppUsers
+            Input.ApplicationUser = await _context.AppUsers
                 .Include(e => e.Department)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             // Nie ma takiego użytkownika pod danym Id
-            if (ApplicationUser == null)
+            if (Input.ApplicationUser == null)
                 return NotFound();
 
-            var email = await _userManager.GetEmailAsync(ApplicationUser);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(ApplicationUser);
-            Input = new InputModel
-            {
-                Email = email,
-                PhoneNumber = phoneNumber,
-            };
             // Listy wyborów
             ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
-            var userRoles = await _userManager.GetRolesAsync(ApplicationUser);
+            var userRoles = await _userManager.GetRolesAsync(Input.ApplicationUser);
             ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", userRoles.First());
             return Page();
         }
@@ -124,38 +106,38 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageSizeRoute = pageSize;
 
             // Aktualizacja osoby
-            var appUserToUpdate = await _context.AppUsers.FindAsync(id);
+            var updatedApplicationUser = await _context.AppUsers.FindAsync(id);
 
             if (!ModelState.IsValid)
             {
                 ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
-                var userRoles = await _userManager.GetRolesAsync(appUserToUpdate);
+                var userRoles = await _userManager.GetRolesAsync(updatedApplicationUser);
                 ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", userRoles.First());
                 return Page();
             }
 
             // Zmiana hasła
-            if (ChangePassword)
+            if (Input.ChangePassword)
             {
-                var token = await _userManager.GeneratePasswordResetTokenAsync(appUserToUpdate);
-                var updatePasswordResult = await _userManager.ResetPasswordAsync(appUserToUpdate, token, Input.Password);
+                var token = await _userManager.GeneratePasswordResetTokenAsync(updatedApplicationUser);
+                var updatePasswordResult = await _userManager.ResetPasswordAsync(updatedApplicationUser, token, Input.Password);
                 if (updatePasswordResult.Succeeded) _logger.LogInformation("Zaktualizowano hasło");
                 else
                 {
                     foreach (var error in updatePasswordResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
                     ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
-                    var userRoles = await _userManager.GetRolesAsync(appUserToUpdate);
+                    var userRoles = await _userManager.GetRolesAsync(updatedApplicationUser);
                     ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", userRoles.First());
                     return Page();
                 }
             }
 
             // Zmiana roli
-            var userRole = await _userManager.GetRolesAsync(appUserToUpdate);
+            var userRole = await _userManager.GetRolesAsync(updatedApplicationUser);
             if (userRole.First() != Input.RoleName)
             {
-                var removeReoleResult = await _userManager.RemoveFromRolesAsync(appUserToUpdate, await _userManager.GetRolesAsync(appUserToUpdate));
-                var updateReoleResult = await _userManager.AddToRoleAsync(appUserToUpdate, Input.RoleName);
+                var removeReoleResult = await _userManager.RemoveFromRolesAsync(updatedApplicationUser, await _userManager.GetRolesAsync(updatedApplicationUser));
+                var updateReoleResult = await _userManager.AddToRoleAsync(updatedApplicationUser, Input.RoleName);
                 if (updateReoleResult.Succeeded && removeReoleResult.Succeeded)
                 {
                     _logger.LogInformation("Zaktualizowano rolę");
@@ -164,47 +146,46 @@ namespace RezerwacjaSal.Pages.AppUsers
                 {
                     foreach (var error in updateReoleResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
                     ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
-                    var userRoles = await _userManager.GetRolesAsync(appUserToUpdate);
+                    var userRoles = await _userManager.GetRolesAsync(updatedApplicationUser);
                     ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", userRoles.First());
                     return Page();
                 }
             }
 
             // Zmiana email i nazwy użytkownika
-            var email = await _userManager.GetEmailAsync(appUserToUpdate);
-            if (Input.Email != email)
+            var email = await _userManager.GetEmailAsync(updatedApplicationUser);
+            if (Input.ApplicationUser.Email != email)
             {
-                var setEmailResult = await _userManager.SetEmailAsync(appUserToUpdate, Input.Email);
+                var setEmailResult = await _userManager.SetEmailAsync(updatedApplicationUser, Input.ApplicationUser.Email);
                 if (!setEmailResult.Succeeded)
                 {
-                    var userId = await _userManager.GetUserIdAsync(appUserToUpdate);
+                    var userId = await _userManager.GetUserIdAsync(updatedApplicationUser);
                     throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
                 }
-                var setUsernameResult = await _userManager.SetUserNameAsync(appUserToUpdate, Input.Email);
+                var setUsernameResult = await _userManager.SetUserNameAsync(updatedApplicationUser, Input.ApplicationUser.Email);
                 if (!setUsernameResult.Succeeded)
                 {
-                    var userId = await _userManager.GetUserIdAsync(appUserToUpdate);
+                    var userId = await _userManager.GetUserIdAsync(updatedApplicationUser);
                     throw new InvalidOperationException($"Unexpected error occurred setting username for user with ID '{userId}'.");
                 }
             }
 
             // Zmiana telefonu
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(appUserToUpdate);
-            if (Input.PhoneNumber != phoneNumber)
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(updatedApplicationUser);
+            if (Input.ApplicationUser.PhoneNumber != phoneNumber)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(appUserToUpdate, Input.PhoneNumber);
+                var setPhoneResult = await _userManager.SetPhoneNumberAsync(updatedApplicationUser, Input.ApplicationUser.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    var userId = await _userManager.GetUserIdAsync(appUserToUpdate);
+                    var userId = await _userManager.GetUserIdAsync(updatedApplicationUser);
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
 
 
-
             // Aktualizacja pozostałych danych osoby
             if (await TryUpdateModelAsync<ApplicationUser>(
-                appUserToUpdate,
+                updatedApplicationUser,
                 "ApplicationUser",
                  s => s.Employment,
                  s => s.DepartmentID,
