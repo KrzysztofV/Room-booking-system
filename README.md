@@ -1,1 +1,1 @@
-Projekt rozwijany. 
+Projekt końcowy.
