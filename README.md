@@ -1,1 +1,1 @@
-Projekt końcowy.
+Projekt zakończony
