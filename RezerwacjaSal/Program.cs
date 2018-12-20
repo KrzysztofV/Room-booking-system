@@ -49,6 +49,9 @@ namespace RezerwacjaSal
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+
+                // Odkomentować w przypadku samo hostowania
+
                 //.ConfigureKestrel((context, options) =>
                 //{
                 //    options.Limits.MaxConcurrentConnections = 100;

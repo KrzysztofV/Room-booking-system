@@ -89,6 +89,10 @@ namespace RezerwacjaSal.Pages.AppUsers
                 else break;
             }
 
+            Input = new InputModel
+            {
+            };
+
             // Listy wyborów
             ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
             ViewData["RoleNames"] = new SelectList(_roleManager.Roles, "Name", "Name", _roleManager.Roles.Where(r => r.Name == "użytkownik").Select(r => r.Name).First());

@@ -79,11 +79,14 @@ namespace RezerwacjaSal.Pages.AppUsers
             PageIndexRoute = pageIndex;
             PageSizeRoute = pageSize;
 
-            // Wczytanie danego użytkownika
-            Input.ApplicationUser = await _context.AppUsers
+            Input = new InputModel
+            {
+                // Wczytanie danego użytkownika
+                ApplicationUser = await _context.AppUsers
                 .Include(e => e.Department)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id)
+            };
 
             // Nie ma takiego użytkownika pod danym Id
             if (Input.ApplicationUser == null)
@@ -186,7 +189,7 @@ namespace RezerwacjaSal.Pages.AppUsers
             // Aktualizacja pozostałych danych osoby
             if (await TryUpdateModelAsync<ApplicationUser>(
                 updatedApplicationUser,
-                "ApplicationUser",
+                "Input.ApplicationUser",
                  s => s.Employment,
                  s => s.DepartmentID,
                  s => s.FirstName,

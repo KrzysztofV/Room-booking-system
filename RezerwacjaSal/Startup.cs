@@ -53,7 +53,6 @@ namespace RezerwacjaSal
 
             services.Configure<IdentityOptions>(options =>
             {
-                // Default Password settings. - nie dzia³a
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
@@ -62,7 +61,7 @@ namespace RezerwacjaSal
                 options.Password.RequiredUniqueChars = 0;
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = true;
-                options.SignIn.RequireConfirmedPhoneNumber = false;
+                options.SignIn.RequireConfirmedPhoneNumber = true;
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
