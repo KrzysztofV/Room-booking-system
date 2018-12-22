@@ -50,8 +50,6 @@ namespace RezerwacjaSal
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
 
-                // Odkomentować w przypadku samo hostowania
-
                 .ConfigureKestrel((context, options) =>
                 {
                     options.Limits.MaxConcurrentConnections = 100;
@@ -67,6 +65,7 @@ namespace RezerwacjaSal
                         listenOptions.UseHttps("bulbulator.pfx", Environment.GetEnvironmentVariable("CertPassword"));
                     });
                 })
+
                 .UseApplicationInsights()
                 .UseStartup<Startup>()
                 .UseSetting("detailedErrors", "true")

@@ -50,18 +50,22 @@ namespace RezerwacjaSal.Pages.Rooms
 
         public async Task<IActionResult> OnPostAsync(int roomid, int buildingid, int departmentid)
         {
+            BuildingIdRoute = buildingid;
+            DepartmentIdRoute = departmentid;
+
             ViewData["Building"] = new SelectList(_context.Buildings, "BuildingID", "Name", buildingid);
 
             if (!ModelState.IsValid)
                 return Page();
 
             AllRoomNumbers = await _context.Rooms
+                .Where(r => r.BuildingID == buildingid)
                 .Select(i => i.Number)
                 .ToListAsync();
 
             if (AllRoomNumbers.Contains(Room.Number))
             {
-                SameNumberError = "Doopanuj się! Już istnieje pokój o tym numerze.";
+                SameNumberError = "Już istnieje pokój o tym numerze.";
                 return Page();
             }
 
@@ -74,7 +78,7 @@ namespace RezerwacjaSal.Pages.Rooms
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index", new { buildingid = buildingid, departmentid = departmentid });
+            return RedirectToPage("./Index", new { buildingid = BuildingIdRoute, departmentid = DepartmentIdRoute });
         }
     }
 }

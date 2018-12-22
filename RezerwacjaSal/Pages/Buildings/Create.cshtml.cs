@@ -38,6 +38,8 @@ namespace RezerwacjaSal.Pages.Buildings
 
         public async Task<IActionResult> OnPostAsync(int departmentid)
         {
+            DepartmentIdRoute = departmentid;
+
             if (!ModelState.IsValid)
                 return Page();
 
@@ -63,7 +65,7 @@ namespace RezerwacjaSal.Pages.Buildings
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index", new { departmentid = departmentid });
+            return RedirectToPage("./Index", new { departmentid = DepartmentIdRoute });
         }
     }
 }

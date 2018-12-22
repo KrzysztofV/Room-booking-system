@@ -47,6 +47,9 @@ namespace RezerwacjaSal.Pages.Buildings
 
         public async Task<IActionResult> OnPostAsync(int buildingid, int departmentid)
         {
+            DepartmentIdRoute = departmentid;
+
+
             ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Name");
 
             if (!ModelState.IsValid)
@@ -74,7 +77,7 @@ namespace RezerwacjaSal.Pages.Buildings
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index", new { departmentid = departmentid });
+            return RedirectToPage("./Index", new { departmentid = DepartmentIdRoute });
 
         }
 
